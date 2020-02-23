@@ -29,8 +29,9 @@
 
 ### 新建分支
 
+1. 请 fork 这个仓库
 1. 在 `single-spa.js.org` 仓库的任何目录下执行 `git checkout master`
-1. 执行 `git pull origin master` 确保你的代码是最小的。
+1. 执行 `git pull origin master` 确保你的代码是最新的。
 1. 执行 `git checkout -b the-name-of-my-branch` 创建一个新的分支 (起一个合适的分支名字来替换 `the-name-of-my-branch`)
 
 ### 挑选章节进行翻译
@@ -48,6 +49,5 @@
 
 1. `git add . && git commit -m "My message"` (在 `My message` 出填入提交信息, 比如`修改页面顶部logo`) to 暂存和提交代码
 1. `git push my-fork-name the-name-of-my-branch`
-1. 去[zh-hans.single-spa.js.org repo](https://github.com/single-spa/zh-hans.single-spa.js.org)你应该看到你最近推送的新分支。
-1. 遵循GitHub的指示。
+1. 去自己 fork 仓库下查找新提交的 `my-fork-name` 分支，发起Pull Request。
 1. 如果方便，请把改动截图一并提交。
