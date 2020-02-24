@@ -1,11 +1,11 @@
 const path = require('path');
-const repoUrl = 'https://github.com/single-spa/single-spa.js.org';
+const repoUrl = 'https://github.com/single-spa/zh-hans.single-spa.js.org';
 const libRepoUrl = 'https://github.com/single-spa/single-spa';
 
 module.exports = {
   title: 'single-spa',
   tagline: 'a javascript framework for front-end microservices',
-  url: 'https://single-spa.github.io/single-spa.js.org',
+  url: 'https://single-spa.github.io/zh-hans.single-spa.js.org',
   baseUrl: '/',
   projectName: 'single-spa',
   favicon: 'img/logo-blue-favicon.ico',
