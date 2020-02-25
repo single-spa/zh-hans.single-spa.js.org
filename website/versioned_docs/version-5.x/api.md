@@ -4,8 +4,7 @@ title: Applications API
 sidebar_label: Applications API
 ---
 
-single-spa exports named functions and variables rather than a single default export.
-This means importing must happen in one of two ways:
+single-spa输出的是命名函数和变量而不是默认输出，这意味着引用必须用以下两种方式：
 
 ```js
 import { registerApplication, start } from 'single-spa';
@@ -19,23 +18,24 @@ import * as singleSpa from 'single-spa';
 singleSpa.registerApplication('appName', () => System.import('appName'), location => location.pathname.startsWith('appName'))
 ```
 
-`registerApplication` is the most important api your root config will use. Use this function to register any application within single-spa.
+`registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
 
-Note that if an application is registered from within another application, that no hierarchy will be maintained between the applications.
+请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
 
-> It is described in detail inside of the [Configuration docs](configuration#registering-applications)
+> 详细解析请见 [Configuration docs](configuration#registering-applications)
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>appName: string</dt>
-	<dd>App name that single-spa will register and reference this application with, and will be labelled with in dev tools.</dd>
+	<dd>应用的名字将会在single-spa中注册和引用, 并在开发工具中标记。</dd>
 	<dt>applicationOrLoadingFn: () => &lt;Function | Promise&gt;</dt>
-	<dd>Must be a loading function that either returns the resolved application or a promise.</dd>
+	<dd>必须是一个加载函数，返回一个应用或者一个Promise。</dd>
 	<dt>activityFn: (location) => boolean</dt>
-	<dd>Must be a pure function. The function is called with <code>window.location</code> as the first argument !-- TODO: any only? --> and should return a truthy value whenever the application should be active.</dd>
+	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
 	<dd>Will be passed to the application during each lifecycle method.</dd>
+	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
 
 <h3>returns</h3>
@@ -47,7 +47,7 @@ Note that if an application is registered from within another application, that 
 singleSpa.start();
 ```
 
-Must be called by your single spa config. Before `start` is called, applications will be loaded, but will never be bootstrapped, mounted or unmounted. The reason for `start` is to give you control over the performance of your single page application. For example, you may want to declare registered applications immediately (to start downloading the code for the active ones), but not actually mount the registered applications until an initial AJAX request (maybe to get information about the logged in user) has been completed. In that case, the best performance is achieved by calling `registerApplication` immediately, but calling `start` after the AJAX request is completed.
+必须在你single spa的配置中调用！在调用 `start` 之前, 应用会被加载, 但不会初始化，挂载或卸载。 `start` 的原因是让你更好的控制你单页应用的性能。举个栗子，你想立即声明已经注册过的应用（开始下载那些激活应用的代码），但是实际上直到初始化AJAX（或许去获取用户的登录信息）请求完成之前不会挂载它们 。 在这个例子里，立马调用 `registerApplication` 方法，完成AJAX后再去调用 `start`方法会获得最佳性能。
 
 <h3>arguments</h3>
 
@@ -63,8 +63,7 @@ none
 singleSpa.triggerAppChange();
 ```
 
-Returns a Promise that will resolve/reject when all apps have mounted/unmounted. This was built for testing single-spa and is likely not
-needed in a production application.
+返回一个Promise对象，当所有应用挂载/卸载时它执行 resolve/reject 方法，它一般被用来测试single-spa，在生产环境可能不需要。
 
 <h3>arguments</h3>
 
@@ -74,7 +73,7 @@ none
 
 <dl className="args-list">
 	<dt>Promise</dt>
-	<dd>Returns a Promise that will resolve/reject when all apps have mounted.</dd>
+	<dd>返回一个Promise对象，当所有应用挂载/卸载时它执行 resolve/reject 方法。</dd>
 </dl>
 
 ## navigateToUrl
@@ -91,18 +90,18 @@ document.querySelector('a').addEventListener(singleSpa.navigateToUrl);
 <a href="/new-url" onclick="singleSpaNavigate()">My link</a>
 ```
 
-Use this utility function to easily perform url navigation between registered applications without needing to deal with `event.preventDefault()`, `pushState`, `triggerAppChange()`, etc.
+使用这个通用方法来轻松的实现在不同注册应用之前的切换，而不必需要处理 `event.preventDefault()`, `pushState`, `triggerAppChange()` 等待。 
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>navigationObj: string | context | DOMEvent</dt>
 	<dd>
-		navigationObj must be one of the following types:
+		navigationObj 必须是一下类型中的一个:
 		<ul>
-			<li>a url string.</li>
-			<li>a context / thisArg that has an <code>href</code> property; useful for calling <code>singleSpaNavigate.call(anchorElement)</code> with a reference to the anchor element or other context.</li>
-			<li>a DOMEvent object for a click event on a DOMElement that has an <code>href</code> attribute; ideal for the <code>&lt;a onclick="singleSpaNavigate">&lt;/a></code> use case.</li>
+			<li>一个 url 字符串</li>
+			<li>一个 上下文 / 参数为 <code>href</code> 属性; 在调用 <code>singleSpaNavigate.call(anchorElement)</code> 时很有用，一个指向其他原色的锚点，或者其他内容。</li>
+			<li>一个 DOMEvent对象，具有 <code>href</code> attribute; 方便 <code>&lt;a onclick="singleSpaNavigate">&lt;/a></code> 方法调用。</li>
 		</ul>
 	</dd>
 </dl>
@@ -126,7 +125,7 @@ none
 
 <dl className="args-list">
 	<dt>appNames: string[]</dt>
-	<dd>Each string is the name of a registered application that is currently <code>MOUNTED</code>.</dd>
+	<dd>当前已经挂载应用的名字。 <code>MOUNTED</code></dd>
 </dl>
 
 ## getAppNames
@@ -144,7 +143,7 @@ none
 
 <dl className="args-list">
 	<dt>appNames: string[]</dt>
-	<dd>Each string is the name of a registered application regardless of app status.</dd>
+	<dd>当前应用的名字（任何状态的应用）。</dd>
 </dl>
 
 ## getAppStatus
@@ -158,7 +157,7 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 
 <dl className="args-list">
 	<dt>appName: string</dt>
-	<dd>Registered application name.</dd>
+	<dd>注册应用的名字。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -166,62 +165,62 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 <dl className="args-list">
 	<dt>appStatus: &lt;string | null&gt;</dt>
 	<dd>
-		Will be one of the following string constants, or <code>null</code> if the app does not exist.
+		将会是下列字符串常量中的一个 或者如果应用不存在是 <code>null</code>
 		<dl className="dl-inline">
 			<div>
 				<dt>NOT_LOADED</dt>
-				<dd>app has been registered with single-spa but has not yet been loaded.</dd>
+				<dd>single-spa应用注册了，还未加载。</dd>
 			</div>
 			<div>
 				<dt>LOADING_SOURCE_CODE</dt>
-				<dd>'s source code is being fetched.</dd>
+				<dd>应用代码正在被拉取。</dd>
 			</div>
 			<div>
 				<dt>NOT_BOOTSTRAPPED</dt>
-				<dd>app has been loaded but not bootstrapped.</dd>
+				<dd>应用已经加载，还未初始化。</dd>
 			</div>
 			<div>
 				<dt>BOOTSTRAPPING</dt>
-				<dd>the <code>bootstrap</code> lifecycle function has been called but has not finished.</dd>
+				<dd><code>bootstrap</code> 的生命周期函数已经执行，还未结束。</dd>
 			</div>
 			<div>
 				<dt>NOT_MOUNTED</dt>
-				<dd>app has been loaded and bootstrapped but not yet mounted.</dd>
+				<dd>应用已经加载和初始化，还未挂载。</dd>
 			</div>
 			<div>
 				<dt>MOUNTING</dt>
-				<dd>app is being mounted but not finished.</dd>
+				<dd>应用正在被挂载，还未结束。</dd>
 			</div>
 			<div>
 				<dt>MOUNTED</dt>
-				<dd>app is currently active and is mounted to the DOM.</dd>
+				<dd>应用目前处于激活状态，已经挂载到DOM元素上。</dd>
 			</div>
 			<div>
 				<dt>UNMOUNTING</dt>
-				<dd>app is currently being unmounted but has not finished.</dd>
+				<dd>应用正在被卸载，还未结束。</dd>
 			</div>
 			<div>
 				<dt>UNLOADING</dt>
-				<dd>app is currently being unloaded but has not finished.</dd>
+				<dd>应用正在被移除，还未结束。</dd>
 			</div>
 			<div>
 				<dt>SKIP_BECAUSE_BROKEN</dt>
-				<dd>app threw an error during load, bootstrap, mount, or unmount and has been siloed because it is misbehaving and has been skipped. Other apps will continue on normally.</dd>
+				<dd>应用在加载、初始化、挂载或卸载过程中抛出错误，由于行为不当而被跳过，因此被隔离。其他应用将正常运行。</dd>
 			</div>
 			<div>
 				<dt>LOAD_ERROR</dt>
 				<dd>
-					The app's loading function returned a promise that rejected. This is often due to a network error attempting to download the javascript bundle for the application. Single-spa will retry loading the application after the user navigates away from the current route and then comes back to it.
+					应用的加载功能返回了一个rejected的Promise。这通常是由于下载应用程序的javascript包时出现网络错误造成的。Single-spa将在用户从当前路由导航并返回后重试加载应用。
 				</dd>
 			</div>
 		</dl>
 	</dd>
 </dl>
 
-**Note about LOAD_ERROR status**
+**注意 LOAD_ERROR 的状态**
 
-Note that if you're using SystemJS to load your bundles, you need to add the following code to get SystemJS to re-attempt the network request
-when your loading function calls `System.import()` on an application in `LOAD_ERROR` status.
+请注意，如果使用SystemJS加载包，则需要添加以下代码，以使SystemJS在加载函数调用 `LOAD_ERROR` 状态下的应用程序上的 `System.import()` 时重新尝试网络请求。
+
 ```js
 singleSpa.addErrorHandler(err => {
 	if (singleSpa.getAppStatus(err.appOrParcelName) === singleSpa.LOAD_ERROR) {
@@ -240,30 +239,30 @@ singleSpa.unloadApplication('app1');
 singleSpa.unloadApplication('app1', {waitForUnmount: true});
 ```
 
-The purpose of unloading a registered application is to set it back to to a NOT_LOADED status, which means that it will be re-bootstrapped the next time it needs to mount. The main use-case for this was to allow for the hot-reloading of entire registered applications, but `unloadApplication` can be useful whenever you want to re-bootstrap your application.
+移除已注册的应用的目的是将其设置回 `NOT_LOADED` 状态，这意味着它将在下一次需要挂载时重新初始化。它的主要使用场景是允许热加载所有已注册的应用，但是 `unloadApplication` 可以在您希望初始化应用时非常有用。
 
-Single-spa performs the following steps when unloadApplication is called.
+当调用 `unloadApplication` 时，Single-spa执行以下步骤。
 
-1. Call the [unload lifecyle](api.md#unload) on the registered application that is being unloaded.
-2. Set the app status to NOT_LOADED
-3. Trigger a reroute, during which single-spa will potentially mount the application that was just unloaded.
+1. 在一个已经注册的应用上，调用 [unload lifecyle](api.md#unload) 方法。
+2. 将次应用的状态置为 NOT_LOADED
+3. 触发路由重定向，在此期间single-spa可能会挂载刚刚卸载的应用程序。
 
-Because a registered application might be mounted when `unloadApplication` is called, you can specify whether you want to immediately unload or if you want to wait until the application is no longer mounted. This is done with the `waitForUnmount` option. 
+因为在调用 `unloadApplication` 时可能会挂载已注册的应用，所以可以指定是要立即卸载还是要等到应用不再挂载。这是通过 `waitForUnmount` 参数完成的。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>appName: string</dt>
-	<dd>Registered application name.</dd>
+	<dd>注册应用的名字</dd>
 	<dt>options?: &#123;waitForUnmount: boolean = false}</dt>
-	<dd>The options must be an object that has a <code>waitForUnmount</code> property. When `waitForUnmount` is `false`, single-spa immediately unloads the specified registered application even if the app is currently mounted. If it is <code>true</code>, single-spa will unload the registered application as soon as it is safe to do so (when the app status is not <code>MOUNTED</code>).</dd>
+	<dd>参数必是一个包含 <code>waitForUnmount</code> 属性的对象。当 `waitForUnmount` 是 `false`, single-spa 立刻移除特定应用，尽管它已经被挂载。 当它是 <code>true</code>时, single-spa 会等待到它的状态不再是 <code>MOUNTED</code>时才移除应用</dd>
 </dl>
 
 <h3>returns</h3>
 
 <dl className="args-list">
 	<dt>Promise</dt>
-	<dd>This promise will be resolved when the registered application has been successfully removed.</dd>
+	<dd>当应用被成功移除时，Promise对象会被resolved。</dd>
 </dl>
 
 ## checkActivityFunctions
@@ -276,20 +275,20 @@ const appsForACertainRoute = singleSpa.checkActivityFunctions({pathname: '/app2'
 console.log(appsForACertainRoute); // ['app2']
 ```
 
-Will call every app's activity function with the `mockWindowLocation` and give you list of which applications should be mounted with that location.
+将会调用每个应用的 `mockWindowLocation` 并且返回一个根据当前路判断那些应用应该被挂载的列表。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>mockWindowLocation: string</dt>
-	<dd>A string representing a window.location that will be used when calling every application's activity function to test if they return true.</dd>
+	<dd>一个代表当前路径的字符串，当执行每个应用的激活函数时会用它来判断是否应该返回真。</dd>
 </dl>
 
 <h3>returns</h3>
 
 <dl className="args-list">
 	<dt>appNames: string[]</dt>
-	<dd>Each string is the name of a registered application that matches the provided <code>mockWindowLocation</code>.</dd>
+	<dd>每个满足当前路径 <code>mockWindowLocation</code>应该激活的应用名称。</dd>
 </dl>
 
 ## addErrorHandler
@@ -302,11 +301,11 @@ singleSpa.addErrorHandler(err => {
 });
 ```
 
-Adds a handler that will be called every time an application throws an error during a lifecycle function or activity function. When there are no error handlers, single-spa throws the error to the window.
+添加处理程序，该处理程序将在应用在生命周期函数或激活函数期间每次抛出错误时调用。当没有错误处理程序时，single-spa将错误抛出到窗口。
 
 <dl className="args-list">
 	<dt>errorHandler: Function(error: Error)</dt>
-	<dd>Must be a function. Will be called with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error object</a> that additionally has a <code>message</code> and <code>appOrParcelName</code> property.</dd>
+	<dd>必须是一个函数。将会以 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error object</a>  <code>message</code> 和 <code>appOrParcelName</code> 为参数调用.</dd>
 </dl>
 
 <h3>returns</h3>
@@ -324,20 +323,20 @@ function handleErr(err) {
 }
 ```
 
-Removes the given error handler function. 
+删除给定的错误处理程序函数。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>errorHandler: Function</dt>
-	<dd>Reference to the error handling function.</dd>
+	<dd>引用错误处理函数。</dd>
 </dl>
 
 <h3>returns</h3>
 
 <dl className="args-list">
 	<dt>boolean</dt>
-	<dd><code>true</code> if the error handler was removed, and <code>false</code> if it was not.</dd>
+	<dd>当错误处理函数呗移除则为<code>true</code> 否则 <code>false</code> </dd>
 </dl>
 
 ## mountRootParcel
@@ -353,9 +352,9 @@ parcel.mountPromise.then(() => {
 const parcel2 = singleSpa.mountRootParcel(() => import('./some-parcel.js'), {prop1: 'value1', domElement: document.getElementById('a-div')});
 ```
 
-Will create and mount a [single-spa parcel](parcels-overview.md).
+将会创建并挂载一个 [single-spa parcel](parcels-overview.md).
 
-> Note: parcels do not automatically unmount. Unmounting will need to be triggered manually.
+> 注意:Parcel不会自动卸载。卸载需要手动触发。
 
 <h3>arguments</h3>
 
@@ -370,7 +369,7 @@ Will create and mount a [single-spa parcel](parcels-overview.md).
 
 <dl className="args-list">
 	<dt>Parcel object</dt>
-	<dd>See <a href="/docs/parcels-api.html">Parcels API</a> for more detail.</dd>
+	<dd>详细信息请见 <a href="/docs/parcels-api.html">Parcels API</a> 。</dd>
 </dl>
 
 ## ensureJQuerySupport
@@ -379,13 +378,13 @@ Will create and mount a [single-spa parcel](parcels-overview.md).
 singleSpa.ensureJQuerySupport(jQuery);
 ```
 
-jQuery uses [event delegation](https://learn.jquery.com/events/event-delegation/) so single-spa must monkey-patch each version of jQuery on the page<!-- TODO: in order to properly support... (I'm guessing navigation/routing ) -->. single-spa will attempt to do this automatically by looking for `window.jQuery` or `window.$`. Use this explicit method if multiple versions are included on your page or if jQuery is bound to a different global variable.
+jQuery使用 [event delegation](https://learn.jquery.com/events/event-delegation/) 所以 single-spa 必须给每个jQuery版本一个patch。<!-- TODO: in order to properly support... (I'm guessing navigation/routing ) -->single-spa 会试着自动寻找 `window.jQuery` 或 `window.$`。 如果页面中有多个版本的jQuery存在或jQuery被绑定到多个全局变量，请调用这个的方法。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>jQuery?: JQueryFn = window.jQuery</dt>
-	<dd>A reference to the global variable that jQuery has been bound to.</dd>
+	<dd>对jQuery已绑定到的全局变量的引用。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -406,21 +405,21 @@ singleSpa.setBootstrapMaxTime(3000, true, 10000);
 
 ```
 
-Sets the global configuration for bootstrap timeouts.
+全局配置初始化超时时间。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>millis: number</dt>
-	<dd>Number of milliseconds to wait for bootstrap to complete before timing out.</dd>
+	<dd>一个判断等待初始化是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
-		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <code>millis</code> is reached.</p>
-		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
-		<p>Each registered application can override this behavior for itself.</p>
+		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
+		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
+		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
-	<dd>Number of milliseconds to wait between console warnings that occur before the final timeout.</dd>
+	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -440,21 +439,21 @@ singleSpa.setMountMaxTime(3000, true);
 singleSpa.setMountMaxTime(3000, true, 10000);
 ```
 
-Sets the global configuration for mount timeouts.
+全局配置挂载超时时间。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>millis: number</dt>
-	<dd>Number of milliseconds to wait for mount to complete before timing out.</dd>
+	<dd>一个判断等待挂载是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
-		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <code>millis</code> is reached.</p>
-		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
-		<p>Each registered application can override this behavior for itself.</p>
+		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
+		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
+		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
-	<dd>Number of milliseconds to wait between console warnings that occur before the final timeout.</dd>
+	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -474,21 +473,21 @@ singleSpa.setUnmountMaxTime(3000, true);
 singleSpa.setUnmountMaxTime(3000, true, 10000);
 ```
 
-Sets the global configuration for unmount timeouts.
+全局配置卸载超时时间。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
 	<dt>millis: number</dt>
-	<dd>Number of milliseconds to wait for unmount to complete before timing out.</dd>
+	<dd>一个判断等待卸载是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
-		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <code>millis</code> is reached.</p>
-		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
-		<p>Each registered application can override this behavior for itself.</p>
+		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
+		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
+		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
-	<dd>Number of milliseconds to wait between console warnings that occur before the final timeout.</dd>
+	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -510,21 +509,21 @@ singleSpa.setUnloadMaxTime(3000, true);
 singleSpa.setUnloadMaxTime(3000, true, 10000);
 ```
 
-Sets the global configuration for unload timeouts.
+全局配置移除超时时间。
 
 <h3>arguments</h3>
 
 <dl className="args-list">
-	<dt>millis: number</dt>
-	<dd>Number of milliseconds to wait for unload to complete before timing out.</dd>
+<dt>millis: number</dt>
+	<dd>一个判断等待移除是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
-		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <code>millis</code> is reached.</p>
-		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
-		<p>Each registered application can override this behavior for itself.</p>
+		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
+		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
+		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
-	<dd>Number of milliseconds to wait between console warnings that occur before the final timeout.</dd>
+	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
 </dl>
 
 <h3>returns</h3>
@@ -533,7 +532,7 @@ Sets the global configuration for unload timeouts.
 
 # Events
 
-All of the following are [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) fired by single-spa on the window. The event `detail` property contains the native DOM event that triggered the reroute, such as a [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) or [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent). These events can be handled by using [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), like so:
+浏览器的所有的下列事件 [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) 都会被single-spa 触发。`detail`事件包含触发路由重定向的原生DOM事件，例如 [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) 或 [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent)。通过 [`addEventListener`] 可以控制这些事件(https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), 就像:
 
 <!-- TODO: are these events augmented like the addErrorHandler Error is? -->
 
@@ -552,7 +551,7 @@ window.addEventListener('single-spa:before-routing-event', () => {
 });
 ```
 
-A `single-spa:before-routing-event` event is fired before every routing event occurs, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary.
+每次路由跳转前 `single-spa:before-routing-event` 事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时也会触发。
 
 ## routing event
 
@@ -562,7 +561,8 @@ window.addEventListener('single-spa:routing-event', () => {
 });
 ```
 
-A `single-spa:routing-event` event is fired every time that a routing event has occurred, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary; and after single-spa verified that all apps were correctly loaded, bootstrapped, mounted, and unmounted.
+每次路由跳转后`single-spa:routing-event`事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时
+; 在single-spa 校验所有app都正确加载，初始化，挂载，卸载之后此此事件触发。
 
 ## app-change event
 
@@ -572,7 +572,7 @@ window.addEventListener('single-spa:app-change', () => {
 });
 ```
 
-A `single-spa:app-change` event is fired every time that one or more apps were loaded, bootstrapped, mounted, unmounted, or unloaded. It is similar to `single-spa:routing-event` except that it will not fire unless one or more apps were actually loaded, bootstrapped, mounted, or unmounted. A hashchange, popstate, or triggerAppChange that does not result in one of those changes will not cause the event to be fired.
+每次加载，初始化，挂载，卸载或移除一个或多个应用程序时，都会触发 `single-spa:app-change` 事件。它与 `single-spa:routing-event` 路由事件类似，只是在一个或多个应用程序真正加载，初始化，挂载，卸载或移除之后，它才会启动。如果hashchange、popstate或triggerAppChange不会导致其中任何一个更改，则不会引发事件。
 
 ## no-app-change event
 
@@ -582,7 +582,7 @@ window.addEventListener('single-spa:no-app-change', () => {
 });
 ```
 
-When no applications were loaded, bootstrapped, mounted, unmounted, or unloaded, single-spa fires a `single-spa:no-app-change` event. This is the inverse of the `single-spa:app-change` event. Only one will be fired for each routing event.
+当没有加载，初始化，挂载，卸载或移除应用程序时，single-spa触发 `single-spa:no-app-change` 事件。这与 `single-spa:app-change` 事件正好相反。每个路由事件只会触发一个。
 
 ## before-first-mount	
 
@@ -592,9 +592,9 @@ window.addEventListener('single-spa:before-first-mount', () => {
 });
 ```
 
-Before the first of any single-spa applications is mounted, single-spa fires a `single-spa:before-first-mount` event; therefore it will only be fired once ever. More specifically, it fires after the application is already loaded but before mounting.
+在第一个single-spa应用被挂在之前，single-spa 会触发 `single-spa:before-first-mount` 事件；因此它只会触发一次。更具体点说，它只会在应用被加载但未挂载之前触发。
 
-> **Suggested use case:** remove a loader bar that the user is seeing right before the first app will be mounted.
+> **推荐用例：** 在用户将要看到第一个应用挂载之前，移除一个loading。
 
 ## first-mount
 
@@ -604,6 +604,6 @@ window.addEventListener('single-spa:first-mount', () => {
 });
 ```
 
-After the first of any single-spa applications is mounted, single-spa fires a `single-spa:first-mount` event; therefore it will only be fired once ever.
+在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
-> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
+> **推荐用例：** 输出用户看到应用之前花费了多长时间。
