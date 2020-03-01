@@ -41,6 +41,10 @@
   1. 修改 `docs` 下的markdown文件也会自动更新
   1. `siteConfig.js` 和 `sideBards.json` 不会自动更新
 
+### 词汇表（[Glossary](https://github.com/single-spa/zh-hans.single-spa.js.org/wiki/Single-spa-%E4%B8%AD%E8%8B%B1%E6%96%87%E5%AF%B9%E7%85%A7%E8%A1%A8)）
+
+文档翻译的过程中，经常出现的词会总结在词汇表中。如 mount，bootstrap，application等。
+
 ### 测试修改
 
 1. 如果可以, 测试所有最新版本的常用浏览器的任何视觉变化，包括桌面浏览器和移动浏览器。
