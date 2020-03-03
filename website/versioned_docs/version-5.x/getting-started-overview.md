@@ -10,7 +10,6 @@ sidebar_label: Overview of single-spa
 
 Single-spa 是一个将多个单页面应用聚合为一个整体应用的 javascript 微前端框架。 使用 single-spa 进行前端架构设计可以带来很多好处，例如:
 
-
 - 在同一页面上[使用多个前端框架](ecosystem.md#help-for-frameworks) [而不用刷新页面](building-applications.md)
   ([React](ecosystem-react.md), [AngularJS](ecosystem-angularjs.md), [Angular](ecosystem-angular.md), [Ember](ecosystem-ember.md), 你正在使用的框架)
 - 独立部署每一个单页面应用
@@ -27,7 +26,7 @@ Single-spa 从现代框架组件生命周期中获得灵感，将生命周期应
 
 Single-spa 包括以下内容:
 
-1. [Applications](building-applications.md)，每个应用程序本身就是一个完整的 SPA (某种程度上)。 每个应用程序都可以响应 url 路由事件，并且必须知道如何从 DOM 中启动、挂载和卸载自己。 传统 SPA 应用程序和 Single SPA 应用程序的主要区别在于，它们必须能够与其他应用程序共存，而且它们没有各自的 html 页面。
+1. [Applications](building-applications.md)，每个应用程序本身就是一个完整的 SPA (某种程度上)。 每个应用程序都可以响应 url 路由事件，并且必须知道如何从 DOM 中初始化、挂载和卸载自己。 传统 SPA 应用程序和 Single SPA 应用程序的主要区别在于，它们必须能够与其他应用程序共存，而且它们没有各自的 html 页面。
 
 	例如，React 或 Angular spa 就是应用程序。 当激活时，它们监听 url 路由事件并将内容放在 DOM上。 当它们处于非活动状态时，它们不侦听 url 路由事件，并且完全从 DOM 中删除。
 
@@ -54,7 +53,7 @@ Single-spa 适用于 ES5、 ES6 + 、 TypeScript、 Webpack、 SystemJS、 Gulp�
 
 single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
-## single-spa 名字来源就是多个单词的拼接？
+## single-spa 名字有些重复吗？
 
 是的.
 
