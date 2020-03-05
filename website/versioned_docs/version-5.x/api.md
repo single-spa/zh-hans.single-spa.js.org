@@ -32,8 +32,13 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 	<dt>applicationOrLoadingFn: () => &lt;Function | Promise&gt;</dt>
 	<dd>必须是一个加载函数，返回一个应用或者一个Promise。</dd>
 	<dt>activityFn: (location) => boolean</dt>
+<<<<<<< HEAD
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
+=======
+	<dd>Must be a pure function. The function is called with <code>window.location</code> as the first argument !-- TODO: any only? --> and should return a truthy value whenever the application should be active.</dd>
+	<dt>customProps?: Object = &#123;&#125;</dt>
+>>>>>>> de7e212846b26e50cbeaabb42c14c4db256bad29
 	<dd>Will be passed to the application during each lifecycle method.</dd>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
