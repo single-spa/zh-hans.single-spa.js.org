@@ -1,7 +1,7 @@
 ---
 id: getting-started-overview
-title: Getting Started with single-spa
-sidebar_label: Overview of single-spa
+title: 快速开始
+sidebar_label: 概览
 ---
 
 ## JavaScript 微前端
