@@ -11,7 +11,7 @@ sidebar_label: Resources
 - [React微前端](https://github.com/react-microfrontends) (最早从root-config仓库中检出)
 - [Vue微前端](https://github.com/vue-microfrontends) (最早从root-config仓库中检出)
 - [Polyglot微前端](https://github.com/polyglot-microfrontends) (最早从root-config仓库中检出)
-- [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs) 是一个用angularjs、基于es5预发的一个小型案例
+- [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs) 是一个用angularjs、基于es5语法的一个小型案例
 
 ### 过去的案例
 
