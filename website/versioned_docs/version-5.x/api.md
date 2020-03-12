@@ -32,8 +32,13 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 	<dt>applicationOrLoadingFn: () => &lt;Function | Promise&gt;</dt>
 	<dd>必须是一个加载函数，返回一个应用或者一个Promise。</dd>
 	<dt>activityFn: (location) => boolean</dt>
+<<<<<<< HEAD
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
+=======
+	<dd>Must be a pure function. The function is called with <codehtml>window.location</codehtml> as the first argument {/* TODO: any only? */} and should return a truthy value whenever the application should be active.</dd>
+	<dt>customProps?: Object = &#123;&#125;</dt>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 	<dd>Will be passed to the application during each lifecycle method.</dd>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
@@ -99,9 +104,15 @@ document.querySelector('a').addEventListener(singleSpa.navigateToUrl);
 	<dd>
 		navigationObj 必须是一下类型中的一个:
 		<ul>
+<<<<<<< HEAD
 			<li>一个 url 字符串</li>
 			<li>一个 上下文 / 参数为 <code>href</code> 属性; 在调用 <code>singleSpaNavigate.call(anchorElement)</code> 时很有用，一个指向其他原色的锚点，或者其他内容。</li>
 			<li>一个 DOMEvent对象，具有 <code>href</code> attribute; 方便 <code>&lt;a onclick="singleSpaNavigate">&lt;/a></code> 方法调用。</li>
+=======
+			<li>a url string.</li>
+			<li>a context / thisArg that has an <codehtml>href</codehtml> property; useful for calling <codehtml>singleSpaNavigate.call(anchorElement)</codehtml> with a reference to the anchor element or other context.</li>
+			<li>a DOMEvent object for a click event on a DOMElement that has an <codehtml>href</codehtml> attribute; ideal for the <codehtml>&lt;a onclick="singleSpaNavigate">&lt;/a></codehtml> use case.</li>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 		</ul>
 	</dd>
 </dl>
@@ -125,7 +136,11 @@ none
 
 <dl className="args-list">
 	<dt>appNames: string[]</dt>
+<<<<<<< HEAD
 	<dd>当前已经挂载应用的名字。 <code>MOUNTED</code></dd>
+=======
+	<dd>Each string is the name of a registered application that is currently <codehtml>MOUNTED</codehtml>.</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 </dl>
 
 ## getAppNames
@@ -165,7 +180,11 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 <dl className="args-list">
 	<dt>appStatus: &lt;string | null&gt;</dt>
 	<dd>
+<<<<<<< HEAD
 		将会是下列字符串常量中的一个 或者如果应用不存在是 <code>null</code>
+=======
+		Will be one of the following string constants, or <codehtml>null</codehtml> if the app does not exist.
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 		<dl className="dl-inline">
 			<div>
 				<dt>NOT_LOADED</dt>
@@ -181,7 +200,11 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 			</div>
 			<div>
 				<dt>BOOTSTRAPPING</dt>
+<<<<<<< HEAD
 				<dd><code>bootstrap</code> 的生命周期函数已经执行，还未结束。</dd>
+=======
+				<dd>the <codehtml>bootstrap</codehtml> lifecycle function has been called but has not finished.</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 			</div>
 			<div>
 				<dt>NOT_MOUNTED</dt>
@@ -255,7 +278,11 @@ singleSpa.unloadApplication('app1', {waitForUnmount: true});
 	<dt>appName: string</dt>
 	<dd>注册应用的名字</dd>
 	<dt>options?: &#123;waitForUnmount: boolean = false}</dt>
+<<<<<<< HEAD
 	<dd>参数必是一个包含 <code>waitForUnmount</code> 属性的对象。当 `waitForUnmount` 是 `false`, single-spa 立刻移除特定应用，尽管它已经被挂载。 当它是 <code>true</code>时, single-spa 会等待到它的状态不再是 <code>MOUNTED</code>时才移除应用</dd>
+=======
+	<dd>The options must be an object that has a <codehtml>waitForUnmount</codehtml> property. When <codehtml>waitForUnmount</codehtml> is <codehtml>false</codehtml>, single-spa immediately unloads the specified registered application even if the app is currently mounted. If it is <codehtml>true</codehtml>, single-spa will unload the registered application as soon as it is safe to do so (when the app status is not <codehtml>MOUNTED</codehtml>).</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 </dl>
 
 <h3>returns</h3>
@@ -288,7 +315,11 @@ console.log(appsForACertainRoute); // ['app2']
 
 <dl className="args-list">
 	<dt>appNames: string[]</dt>
+<<<<<<< HEAD
 	<dd>每个满足当前路径 <code>mockWindowLocation</code>应该激活的应用名称。</dd>
+=======
+	<dd>Each string is the name of a registered application that matches the provided <codehtml>mockWindowLocation</codehtml>.</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 </dl>
 
 ## addErrorHandler
@@ -305,7 +336,11 @@ singleSpa.addErrorHandler(err => {
 
 <dl className="args-list">
 	<dt>errorHandler: Function(error: Error)</dt>
+<<<<<<< HEAD
 	<dd>必须是一个函数。将会以 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error object</a>  <code>message</code> 和 <code>appOrParcelName</code> 为参数调用.</dd>
+=======
+	<dd>Must be a function. Will be called with an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">Error object</a> that additionally has a <codehtml>message</codehtml> and <codehtml>appOrParcelName</codehtml> property.</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 </dl>
 
 <h3>returns</h3>
@@ -336,7 +371,11 @@ function handleErr(err) {
 
 <dl className="args-list">
 	<dt>boolean</dt>
+<<<<<<< HEAD
 	<dd>当错误处理函数呗移除则为<code>true</code> 否则 <code>false</code> </dd>
+=======
+	<dd><codehtml>true</codehtml> if the error handler was removed, and <codehtml>false</codehtml> if it was not.</dd>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 </dl>
 
 ## mountRootParcel
@@ -414,9 +453,15 @@ singleSpa.setBootstrapMaxTime(3000, true, 10000);
 	<dd>一个判断等待初始化是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
+<<<<<<< HEAD
 		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
 		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
 		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
+=======
+		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <codehtml>millis</codehtml> is reached.</p>
+		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
+		<p>Each registered application can override this behavior for itself.</p>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
 	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
@@ -448,9 +493,15 @@ singleSpa.setMountMaxTime(3000, true, 10000);
 	<dd>一个判断等待挂载是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
+<<<<<<< HEAD
 		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
 		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
 		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
+=======
+		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <codehtml>millis</codehtml> is reached.</p>
+		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
+		<p>Each registered application can override this behavior for itself.</p>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
 	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
@@ -482,9 +533,15 @@ singleSpa.setUnmountMaxTime(3000, true, 10000);
 	<dd>一个判断等待卸载是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
+<<<<<<< HEAD
 		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
 		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
 		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
+=======
+		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <codehtml>millis</codehtml> is reached.</p>
+		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
+		<p>Each registered application can override this behavior for itself.</p>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
 	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
@@ -518,9 +575,15 @@ singleSpa.setUnloadMaxTime(3000, true, 10000);
 	<dd>一个判断等待移除是否超时的毫秒数。</dd>
 	<dt>dieOnTimeout: boolean = false</dt>
 	<dd>
+<<<<<<< HEAD
 		<p>如果设置为false，注册的应用运行变缓，在到达<code>millis</code>之前，只会在控制台中引起一些警告。</p>
 		<p>如果设置为true, 注册的应用程序运行变缓，它们将被塞进一个skip_break_status，因为它们不会再打断程序。</p>
 		<p>每个已注册的应用程序都可以覆盖自己的此行为。</p>
+=======
+		<p>If false, registered applications that are slowing things down will cause nothing more than some warnings in the console up until <codehtml>millis</codehtml> is reached.</p>
+		<p>If true, registered applications that are slowing things down will be siloed into a SKIP_BECAUSE_BROKEN status where they will never again be given the chance to break everything.</p>
+		<p>Each registered application can override this behavior for itself.</p>
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
 	</dd>
 	<dt>warningMillis: number = 1000</dt>
 	<dd>一个判断等待控制台warning是否发生的毫秒数。</dd>
@@ -606,4 +669,8 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
+<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
+=======
+> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
+>>>>>>> 716cdb14d01956791e18b1f1d69f2b56eaab81c6
