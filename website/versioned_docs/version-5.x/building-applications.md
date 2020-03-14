@@ -1,7 +1,7 @@
 ---
 id: building-applications
-title: 构建 single-spa 应用
-sidebar_label: single-spa applications
+title: 构建应用
+sidebar_label: 构建应用
 ---
 
 single-spa 应用与普通的单页面是一样的，只不过它没有HTML页面。在一个single-spa中，你的SPA包含许多被注册的应用，而各个应用可以使用不同的框架。被注册的这些应用维护自己的客户端路由，使用自己需要的框架或者类库。应用只要通过挂载，便可渲染自己的html页面，并自由实现功能。“挂载”(mounted)的概念指的是被注册的应用内容是否已展示在DOM上。我们可通过应用的[activity function](configuration#activity-function)来判断其是否已被挂载。应用在未挂载之前，会一直保持休眠状态。
