@@ -52,6 +52,6 @@
 ### 提交代码
 
 1. `git add . && git commit -m "My message"` (在 `My message` 出填入提交信息, 比如`修改页面顶部logo`) to 暂存和提交代码
-1. `git push my-fork-name the-name-of-my-branch`
+1. `git push my-fork-name the-name-of-my-branch`。
 1. 去自己 fork 仓库下查找新提交的 `my-fork-name` 分支，发起Pull Request。
 1. 如果方便，请把改动截图一并提交。
