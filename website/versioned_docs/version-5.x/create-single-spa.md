@@ -37,7 +37,7 @@ yarn create single-spa
 
 create-single-spa 将询问你将要创建 single-spa应用，公共模块，或者根配置。所有这三种模式都会假定你使用的是[推荐安装](/docs/recommended-setup)。
 
-如果你选择创建一个single-spa应用，则会提示您选择哪种框架。React使用 babel + webpack + jest的预制配置。Angular使用Angular CLI和[single-spa-angular]()。Vue使用Vue CLI和[vue-cli-plugin-single-spa](/ecosystem/ecosystem-vue#vue-cli)。
+如果你选择创建一个single-spa应用，则会提示您选择哪种框架。React使用 babel + webpack + jest的预置配置。Angular使用Angular CLI和[single-spa-angular]()。Vue使用Vue CLI和[vue-cli-plugin-single-spa](/ecosystem/ecosystem-vue#vue-cli)。
 
 # NPM packages
 
@@ -60,7 +60,7 @@ create-single-spa提供如下NPM包：
 
 [Github project](https://github.com/single-spa/create-single-spa/tree/master/packages/webpack-config-single-spa)
 
-可分享可定制化的webpack插件，应用于公共模块和React single-spa应用。
+可分享可定制化的webpack配置，应用于公共模块和React single-spa应用。
 
 ### 安装
 
@@ -96,7 +96,7 @@ module.exports = webpackConfigEnv => {
 
 [Github project](https://github.com/single-spa/create-single-spa/tree/master/packages/webpack-config-single-spa-react)
 
-可分享可定制化的webpack插件，可将react的特定配置添加到 `webpack-config-single-spa` 中。
+可分享可定制化的webpack配置，可将react的特定配置添加到 `webpack-config-single-spa` 中。
 
 ### 安装
 
