@@ -45,13 +45,20 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 ## start
 ```js
 singleSpa.start();
+
+// Optionally, you can provide configuration
+singleSpa.start({
+	urlRerouteOnly: true
+});
 ```
 
 必须在你single spa的配置中调用！在调用 `start` 之前, 应用会被加载, 但不会初始化，挂载或卸载。 `start` 的原因是让你更好的控制你单页应用的性能。举个栗子，你想立即声明已经注册过的应用（开始下载那些激活应用的代码），但是实际上直到初始化AJAX（或许去获取用户的登录信息）请求完成之前不会挂载它们 。 在这个例子里，立马调用 `registerApplication` 方法，完成AJAX后再去调用 `start`方法会获得最佳性能。
 
 <h3>arguments</h3>
 
-none
+The `start(opts)` api optionally accepts a single `opts` object, with the following properties. If the opts object is omitted, all defaults will be applied.
+
+- `urlRerouteOnly`: A boolean that defaults to false. If set to true, calls to `history.pushState()` and `history.replaceState()` will not trigger a single-spa reroute unless the client side route was changed. Setting this to true can be better for performance in some situations. For more information, read [original issue](https://github.com/single-spa/single-spa/issues/484).
 
 <h3>returns</h3>
 
