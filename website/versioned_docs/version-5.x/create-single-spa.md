@@ -4,7 +4,7 @@ title: create-single-spa
 sidebar_label: create-single-spa
 ---
 
-对于那些喜欢自动生成和管理webpack，babel，jest等配置的用户，Single-spa提供了一个CLI。您不必使用此CLI亦可使用single-spa。
+对于那些喜欢自动生成和管理webpack，babel，jest等配置的用户，Single-spa提供了一个CLI。您不一定非得用CLI来生成single-spa的配置。
 
 此CLI为 `create-single-spa` ([Github link](https://github.com/single-spa/create-single-spa/))。它旨在用于创建新项目和更新由 `create-single-spa` 创建的项目，但不适用于将已经存在的代码库迁移至singa-spa。
 
