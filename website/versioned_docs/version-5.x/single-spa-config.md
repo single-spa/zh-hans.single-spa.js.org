@@ -6,7 +6,7 @@ id:配置
 
 single-spa基础配置包含以下内容：
 1、一个html文件，会被所有single-spa应用共享
-2、一段javascript代码，调用[`singleSpa.registerApplication()`](/docs/api.html\registerApplication)方法来注册各个应用
+2、一段javascript代码，调用[`singleSpa.registerApplication()`](/docs/api.html#registerApplication)方法来注册各个应用
 
 这两个根目录下的配置用于启动single-spa应用。
 
