@@ -1,7 +1,7 @@
 ---
-id:配置
-标题：使用single-spa配置
-侧边栏标签：single-spa 配置
+id: configuration
+title: 使用single-spa配置
+sidebar_label: single-spa config
 ---
 
 single-spa基础配置包含以下内容：
