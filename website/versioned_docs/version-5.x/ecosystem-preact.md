@@ -4,15 +4,14 @@ title: single-spa-preact
 sidebar_label: Preact
 ---
 
-single-spa-preact is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for for use with [Preact](https://preactjs.com/). Check out the [single-spa-preact github](https://github.com/single-spa/single-spa-preact).
-
-## Installation
+single-spa-preact是个帮助类库，通过实现[生命周期函数](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount)，可以帮助开发者在single-spa中快速[注册](building-applications.md#registered-application-lifecycle)Preact应用。仓库地址见 [single-spa-preact github](https://github.com/single-spa/single-spa-preact) 。
+## 安装
 ```sh
 npm install --save preact
 ```
 
-## Quickstart
-In your project's entry file, add the following:
+## 快速开始
+在项目的入口文件添加如下代码：
 
 ```js
 import preact from 'preact';
@@ -30,10 +29,9 @@ export const mount = preactLifecycles.mount;
 export const unmount = preactLifecycles.unmount;
 ```
 
-## Options
+## 选项
 
-All options are passed to single-spa-preact via the `opts` parameter when calling `singleSpaPreact(opts)`. The following options are available:
-
-- `preact`: (required) The main Preact object, which is generally either exposed onto the window or is available via `require('preact')` or `import preact from 'preact'`.
-- `rootComponent`: (required) The top level preact component which will be rendered
-- `domElementGetter`: (required) A function that takes in no arguments and returns a DOMElement. This dom element is where the Preact application will be bootstrapped, mounted, and unmounted.
+在调用`singleSpaPreact(opts)`方法时，```opts```参数会将所有选项传递给single-spa-preact。选项如下：
+- `preact`: (必须) Preact对象，一般挂载在window上，也可以通过`require('preact')`  或  `import preact from 'preact'` 引入
+- `rootComponent`: (必须) 将要渲染的Preact应用根组件
+- `domElementGetter`: (必须) 这个参数是个函数，没有入参，返回一个DOM元素。这个DOM元素会作为该Preact应用初始化、挂载和卸载的对象
