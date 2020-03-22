@@ -5,24 +5,22 @@ id:配置
 ---
 
 single-spa基础配置包含以下内容：
-1、所有single-spa应用共享的根HTML文件。
-2、调用[`singleSpa.registerApplication()`](/docs/api.html\registerApplication)的javascript。
+1、一个html文件，会被所有single-spa应用共享
+2、一段javascript代码，调用[`singleSpa.registerApplication()`](/docs/api.html\registerApplication)方法来注册各个应用
 
-基础配置只用于启动single-spa应用。
+这两个根目录下的配置用于启动single-spa应用。
 
 ## Index.html文件
 
-有关根html文件的配置，请参见[此示例基础配置](http://single-spa-playground.org/playground/html-file)。
-请注意，它没有任何div或按钮，只是调用了`registerApplication()`。
+内容可参考[该示例](http://single-spa-playground.org/playground/html-file)。注意该文件不包含html元素(div, buttons等)，只是为了调用`registerApplication()`方法。
 
-**在使用single-spa时，不必使用SystemJS**，因为
-它允许您[独立地部署](/docs/separating-applications.html)您的应用，所以许多示例和教程都会鼓励这样做，。
+**在使用single-spa时，不必使用SystemJS**，不过为了能够[独立部署](/docs/separating-applications.html)各应用，很多示例和教程会推荐使用SystemJS。
 
 ## 注册应用
 
-必须向single spa注册[应用](building-applications.md)，以便它知道如何以及何时启动、加载、装载和卸载。注册通常发生在single-spa配置中，但不是必须的。请注意，如果一个应用是从另一个应用中注册的，则应用之间不会保持层次结构。应用会是同级的，并且会根据它们自己的活动函数进行装载和卸载。
+你需要先注册[应用](building-applications.md)，这样single-spa才知道在什么时机，如何去初始化、下载、挂载和卸载各应用。我们一般情况下在single-spa的配置文件中进行注册，当然也可以有其他方式(不推荐)。如果在某个应用中注册其他应用，这两个应用不会存在嵌套关系，他们还是同级关系，应用的挂载和下载也还是会依赖各自的触发条件(activity functions)。
 
-要注册应用，请调用`register application(name，howToLoad，activityFunction)`api。例如：
+我们通过调用`register application(name，howToLoad，activityFunction)`方法来注册应用。例如：
 
 ```js
 // single-spa-config.js
@@ -40,16 +38,14 @@ function activityFunction(location) {
 }
 ```
 
-### 应用名称
-`registerApplication`的第一个参数必须是字符串名。
+### name
+`registerApplication`的第一个参数表示应用名称，`name`必须是string类型
 
-### 加载函数或应用
-`registerApplication`的第二个参数必须是返回promise 
-[loading function](configuration#loading-function) 的函数或解析的应用。
+### loadingFunction
+`registerApplication`可以是一个Promise类型的 [加载函数](configuration#loading-function)，也可以是一个已经被解析的应用。
 
-#### 作为第二个参数的应用
-第二个参数，可以选择使用解析的由具有生命周期方法的对象组成的应用，
-这样就可以从另一个文件导入应用，或在single-spa配置中内联定义应用
+#### 应用作为第二个参数
+你可以选择将一个已经被解析过的应用作为`registerApplication`的第二个参数，这个应用其实是一个包含各个生命周期函数的对象。我们既可以从另外一个文件中引入该对象，也可以在single-spa的配置文件中定义这个对象。
 
 ```js
 const application = {
@@ -62,25 +58,21 @@ registerApplication('applicatonName', application, activityFunction)
 ```
 
 #### 加载函数
-`registerApplication`的第二个参数必须是返回promise的函数(或["async function"](https://ponyfoo.com/articles/understanding-javascript-async-await))
-第一次加载应用时，会不带参数调用该函数。
-返回的promise必须和参数一起解决。加载函数最常见的实现是导入调用：
-`() => import('/path/to/application.js')`
+`registerApplication`的第二个参数必须是返回promise的函数(或["async function"](https://ponyfoo.com/articles/understanding-javascript-async-await)方法)。这个函数没有入参，会在应用第一次被下载时调用。返回的Promise resolve之后的结果必须是一个可以被解析的应用。常见的实现方法是使用import加载：`() => import('/path/to/application.js')`
 
-### 活动函数
-`registerApplication`的第三个参数必须是纯函数，函数以`window.location`作为第一个参数，并在应用应处于活动状态时返回truthy值。最常见的情况是，activity函数通过查看`window.location`/第一个参数来确定应用是否处于活动状态
+### Activity function
+`registerApplication`的第三个参数需要是一个纯函数，`window.location`会作为第一个参数被调用，当函数返回的值为真(truthy)值时，应用会被激活。通常情况下，Activity function会根据`window.location`/后面的path来决定该应用是否需要被激活。
 
-另一种观点是，single-spa是一个顶级路由器，它有很多应用都有自己的子路由器。
+另外一种场景是single-spa根据顶级路由查找应用，而每个应用会处理自身的子路由。 在以下场景，single-spa会调用应用的activity function
 
 在以下情况下，single-spa将调用每个应用的活动函数：
--`hashchange`或`popstate`事件
--调用`pushState`或`replaceState`
--在single-spa上调用[`triggerAppChange`] api
--每当调用`checkActivityFunctions`方法时
+- `hashchange` or `popstate`事件触发时
+- `pushState` or `replaceState`被调用时
+- 在single-spa上手动调用[`triggerAppChange`] 方法
+- `checkActivityFunctions`方法被调用时
 
 ## 调用 singleSpa.start()
-[`start()` api](api.md#start)）**必须**由single-spa配置调用，才能实际装入应用。在调用`start`之前，会加载应用，但不会加载/装载/卸载应用。
-`start`可以控制性能。例如，您可能希望立即注册应用（开始下载活动应用的代码），但在完成初始AJAX请求（可能是为了获取有关已登录用户的信息）之前，不会实际装载应用。在这种情况下，想要达到最好的性能就是通过立即调用`registerApplication`，但在AJAX请求完成后调用`start`。
+[`start()方法`](api.md#start) **必须**被single-spa配置文件的js调用，这时应用才会被真正挂载。在`start`被调用之前，应用先被下载，但不会初始化/挂载/卸载。`start`方法可以协助我们更好提升应用的性能。举个例子，我们可能会马上注册一个应用(为了立刻下载代码)，但不能马上就在DOM节点上挂载该应用，而是需要等一个AJAX请求(可能会获取用户的登录信息)完成后，再根据结果进行挂载。这种情况下，最佳实践是先调用`registerApplication`，等AJAX请求完成后再调用`start`。
 
 ```js
 //single-spa-config.js
@@ -92,6 +84,5 @@ start();
 // 注册应用。。。。
 ```
 
-## 两个同时注册的申请
-
-一种方案是为每个应用创建一个`<div id="app name"></div>`，这样它们永远不会同时修改同一个DOM。
+## 同时注册两个路由??
+emm...也是可以的。 一种实现方式是为每个app创建一个`<div id="app name"></div>`，这样这两个应用就不会同时修改相同的DOM节点了。[考虑一个path变动，同时有两个应用被激活的场景，译者注]
