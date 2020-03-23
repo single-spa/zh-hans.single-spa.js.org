@@ -246,7 +246,11 @@ singleSpa.unloadApplication('app1');
 singleSpa.unloadApplication('app1', {waitForUnmount: true});
 ```
 
+<<<<<<< HEAD
 移除已注册的应用的目的是将其设置回 `NOT_LOADED` 状态，这意味着它将在下一次需要挂载时重新初始化。它的主要使用场景是允许热加载所有已注册的应用，但是 `unloadApplication` 可以在您希望初始化应用时非常有用。
+=======
+The purpose of unloading a registered application is to set it back to a NOT_LOADED status, which means that it will be re-bootstrapped the next time it needs to mount. The main use-case for this was to allow for the hot-reloading of entire registered applications, but `unloadApplication` can be useful whenever you want to re-bootstrap your application.
+>>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc
 
 当调用 `unloadApplication` 时，Single-spa执行以下步骤。
 
@@ -613,4 +617,8 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
+<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
+=======
+> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
+>>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc
