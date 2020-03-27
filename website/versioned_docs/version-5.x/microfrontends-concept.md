@@ -36,7 +36,7 @@ sidebar_label: 微前端概念
 2. [single-spa parcels](/docs/parcels-overview): 不受路由控制，渲染组件的微前端。
 3. [utility modules](/docs/recommended-setup#utility-modules-styleguide-api-etc): 非渲染组件，用于暴露共享javascript逻辑的微前端。
 
-一个web应用可能包含一种或多种类型的微前端。[微前端类型选择](/docs/recommended-setup#applications-versus-parcels-versus-utility-modules)。
+一个web应用可能包含一种或多种类型的微前端。差异可见[深入对比](/docs/module-types)，我们推荐[微前端类型选择](/docs/recommended-setup#applications-versus-parcels-versus-utility-modules)。
 ## 微前端通信
 
 ```import {thing} from 'other-microfrontend'```是微前端间通信的首选方式。[详细文档](/docs/recommended-setup#inter-app-communication)
