@@ -15,7 +15,8 @@
 
 ### 如何安装
 
-1. `cd single-spa.js.org` to go into the project root
+1. `git clone git@github.com:single-spa/single-spa.js.org.git`
+1. `cd single-spa.js.org/website` to go into the website root
 1. `yarn` to install the website's npm dependencies
 
 ### 本地执行
