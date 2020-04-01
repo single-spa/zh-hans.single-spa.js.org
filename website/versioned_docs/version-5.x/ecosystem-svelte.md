@@ -3,7 +3,8 @@ id: ecosystem-svelte
 title: single-spa-svelte
 sidebar_label: Svelte
 ---
-single-spa-svelte是个帮助类库，通过实现[生命周期函数](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount)，可以帮助开发者在single-spa中快速[注册](building-applications.md#registered-application-lifecycle)svelte应用。仓库地址见 [single-spa-svelte github](https://github.com/single-spa/single-spa-svelte)。
+
+single-spa-svelte是个帮助类库，通过实现[生命周期函数](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount)，可以帮助开发者在single-spa中快速[注册](configuration#registering-applications) [svelte](https://svelte.dev/)应用。仓库地址见 [single-spa-preact github](https://github.com/single-spa/single-spa-svelte) 。
 
 ## 快速开始
 
@@ -27,7 +28,7 @@ export const unmount = svelteLifecycles.unmount;
 ## 选项
 在调用`singleSpaPreact(opts)`方法时，```opts```参数会将所有选项传递给single-spa-svelte。选项如下：
 
-- `component`: (必须) 将要被渲染的根组件。这个组件需要被svelte编译过，且**不**能是一个立即调用函数表达式(IIFE)
+- `component`: (必填) 将要被渲染的根组件。这个组件需要被svelte编译过，且**不**能是一个立即调用函数表达式(IIFE)
 - `domElementGetter`: (可选) 该参数是一个函数，返回值是一个DOM元素。根组件会挂载在这个DOM元素上，如果没有提供的话，会生成一个默认的DOM元素。
 
 Svelte相关选项
