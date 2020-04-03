@@ -76,6 +76,10 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
 有关完整的示例，请查看 [简单的Webpack示例](https://github.com/joeldenning/simple-single-spa-webpack-example) 或 [从头开始的教程](starting-from-scratch.md)。
 
+<<<<<<< HEAD
+=======
+For a full example, check out [this simple webpack example](https://github.com/joeldenning/simple-single-spa-webpack-example) or [these examples](./examples.md).
+>>>>>>> 7364e65ed4dcfe05bbc4f0e1d9403d9514d6fef6
 
 要创建single-spa应用程序，您需要做三件事：
 
