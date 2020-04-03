@@ -6,18 +6,20 @@ sidebar_label: Dojo
 
 [![Build Status](https://travis-ci.com/single-spa/single-spa-dojo.svg?branch=master)](https://travis-ci.com/single-spa/single-spa-dojo)
 
-single-spa-dojo is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [Dojo](https://dojo.io/). Check out the [single-spa-dojo github](https://github.com/single-spa/single-spa-dojo).
+single-spa-dojo 是一个工具库，可以帮助实现使用 [Dojo](https://dojo.io/) 框架的前端应用在转为 [single-spa 注册应用](configuration#registering-applications)时所需要的[生命周期函数](building-applications.md#registered-application-lifecycle)（bootstrap, mount and unmount）。查看 [single-spa-dojo 的 github 仓库](https://github.com/single-spa/single-spa-dojo)。
 
-## Installation
+
+## 安装
 ```sh
 npm install --save single-spa-dojo
 
-# Or
+# 或
 yarn add single-spa-dojo
 ```
 
-## Quickstart
-Your bundler's "entry file" should look like this, which allows your application to be downloaded as an in-browser ES module.
+## 快速开始
+
+打包好的程序“入口文件”应如下所示，这样就能将你的应用程序作为浏览器原生支持的 ES 模块加载。
 
 ```js
 import { renderer } from '@dojo/framework/core/vdom';
@@ -26,27 +28,27 @@ import singleSpaDojo from 'single-spa-dojo';
 import App from './app';
 
 const dojoLifecycles = singleSpaDojo({
-  // required
+  // 必需
   renderer,
 
-  // required
+  // 必需
   v,
 
-  // required
+  // 必需
   w,
 
-  // required
+  // 必需
   appComponent: App,
 
-  // optional - see https://dojo.io/learn/creating-widgets/rendering-widgets#mountoptions-properties
+  // 可选 - 参见 https://dojo.io/learn/creating-widgets/rendering-widgets#mountoptions-properties
   mountOptions: {
-    // optional
+    // 可选
     registry: myRegistry,
 
-    // optional - one will be provided by single-spa automatically
+    // 可选 - single-spa 会自动提供
     domNode: document.getElementById('myContainer'),
 
-    // optional
+    // 可选
     sync: true
   }
 });
@@ -56,12 +58,12 @@ export const mount = dojoLifecycles.mount;
 export const unmount = dojoLifecycles.unmount;
 ```
 
-## Options
+## 选项配置
 
-All options are passed to single-spa-dojo via the `opts` parameter when calling `singleSpaDojo(opts)`. The following options are available:
+所有选项配置都包括在调用`singleSpaDojo(opts)`时，所传入的`opts`参数中，提供以下选项：
 
-- `renderer` (required): The `renderer` function imported from Dojo. See https://dojo.io/learn/creating-widgets/rendering-widgets#rendering-to-the-dom.
-- `v` (required): The function used to render dom elements in Dojo. Often JSX hides this function from you, but it can be found at `import { v } from '@dojo/framework/widget-core/d'`.
-- `w` (required): The function used to render dom elements in Dojo. Often JSX hides this function from you, but it can be found at `import { w } from '@dojo/framework/widget-core/d'`.
-- `appComponent` (required): The class or function for your root Dojo component.
-- `mountOptions` (optional): An object of [Dojo MountOptions](https://dojo.io/learn/creating-widgets/rendering-widgets#mountoptions-properties). Note that a `domNode` will be provided by single-spa-dojo, if one is not provided.
+- `renderer` (必需): 从 Dojo 框架导入的 `renderer` 函数。参见 https://dojo.io/learn/creating-widgets/rendering-widgets#rendering-to-the-dom。
+- `v` (必需): 在 Dojo 框架中渲染 dom 元素的函数。JSX 通常会隐藏此功能，但可以在 `import { v } from '@dojo/framework/widget-core/d'` 中找到它。
+- `w` (必需):  在 Dojo 框架中渲染 dom 元素的函数。JSX 通常会隐藏此功能，但可以在 `import { v } from '@dojo/framework/widget-core/d'` 中找到它。
+- `appComponent` (必需): Dojo 根组件的类或函数。
+- `mountOptions` (可选): [Dojo MountOptions](https://dojo.io/learn/creating-widgets/rendering-widgets#mountoptions-properties) 对象。请注意，如果未提供 `domNode`，它将由 single-spa-dojo 提供。
