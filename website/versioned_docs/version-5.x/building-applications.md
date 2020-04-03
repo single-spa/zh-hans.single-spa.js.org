@@ -66,7 +66,7 @@ singleSpa.registerApplication(
 
 ```js
 export function mount(props) {
-  console.log(props.customProps.authToken); // 可以在 app1 中获取到authToken参数
+  console.log(props.authToken); // 可以在 app1 中获取到authToken参数
   return reactLifecycles.mount(props);
 }
 ```
