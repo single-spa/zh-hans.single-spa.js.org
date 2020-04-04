@@ -4,7 +4,12 @@ title: Applications API
 sidebar_label: Applications API
 ---
 
+<<<<<<< HEAD
 single-spa输出的是命名函数和变量而不是默认输出，这意味着引用必须用以下两种方式：
+=======
+Single-spa exports named functions and variables rather than a single default export.
+This means importing must happen in one of two ways:
+>>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 ```js
 import { registerApplication, start } from 'single-spa';
@@ -13,17 +18,28 @@ import * as singleSpa from 'single-spa';
 ```
 
 ## registerApplication
+`registerApplication` is the most important API your root config will use. Use this function to register any application within single-spa.
+Note that if an application is registered from within another application, that no hierarchy will be maintained between the applications.
 
+There are two ways of registering your application:
+### Simple arguments
 ```js
-singleSpa.registerApplication('appName', () => System.import('appName'), location => location.pathname.startsWith('appName'))
+singleSpa.registerApplication(
+	'appName',
+	() => System.import('appName'),
+	location => location.pathname.startsWith('appName')
+)
 ```
 
+<<<<<<< HEAD
 `registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
 
 请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
 
 > 详细解析请见 [Configuration docs](configuration#registering-applications)
 
+=======
+>>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 <h3>arguments</h3>
 
 <dl className="args-list">
@@ -41,6 +57,63 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 <h3>returns</h3>
 
 `undefined`
+
+### Configuration object
+```js
+singleSpa.registerApplication({
+	name: 'appName',
+	app: () => System.import('appName'),
+	activeWhen: '/appName'
+	customProps: {}
+})
+```
+
+<h3>arguments</h3>
+
+<dl className="args-list">
+	<dt>name: string</dt>
+	<dd>App name that single-spa will register and reference this application with, and will be labelled with in dev tools.</dd>
+	<dt>app: Application | () => Application | Promise&lt;Application&gt; </dt>
+	<dd>Application object or a function that returns the resolved application (Promise or not)</dd>
+	<dt>activeWhen: string | (location) => boolean | (string | (location) => boolean)[]</dt>
+	<dd>Can be a path prefix which will match every URL starting with this path,
+	an activity function (as described in the simple arguments) or an array
+	containing both of them. If any of the criteria is true, it will keep the
+	application active. The path prefix also accepts dynamic values (they must
+	start with ':'), as some paths would receive url params and should still
+	trigger your application.
+	Examples:
+		<dl>
+			<dt>'/app1'</dt>
+			<dd>✅ https://app.com/app1</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+      <dd>🚫 https://app.com/app2</dd>
+			<dt>'/users/:userId/profile'</dt>
+			<dd>✅ https://app.com/users/123/profile</dd>
+			<dd>✅ https://app.com/users/123/profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users//profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users/profile/sub-profile/</dd>
+			<dt>'/pathname/#/hash'</dt>
+			<dd>✅ https://app.com/pathname/#/hash</dd>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/another-hash</dd>
+      <dt>['/pathname/#/hash', '/app1']</dt>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+			<dd>🚫 https://app.com/pathname/app1</dd>
+			<dd>🚫 https://app.com/app2</dd>
+		</dl>
+	</dd>
+	<dt>customProps?: Object = &#123;&#125;</dt>
+	<dd>Will be passed to the application during each lifecycle method.</dd>
+</dl>
+
+<h3>returns</h3>
+
+`undefined`
+
+> It is described in detail inside of the [Configuration docs](configuration#registering-applications)
 
 ## start
 ```js
@@ -258,7 +331,11 @@ The purpose of unloading a registered application is to set it back to a NOT_LOA
 2. 将次应用的状态置为 NOT_LOADED
 3. 触发路由重定向，在此期间single-spa可能会挂载刚刚卸载的应用程序。
 
+<<<<<<< HEAD
 因为在调用 `unloadApplication` 时可能会挂载已注册的应用，所以可以指定是要立即卸载还是要等到应用不再挂载。这是通过 `waitForUnmount` 参数完成的。
+=======
+Because a registered application might be mounted when `unloadApplication` is called, you can specify whether you want to immediately unload or if you want to wait until the application is no longer mounted. This is done with the `waitForUnmount` option.
+>>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 <h3>arguments</h3>
 
@@ -334,7 +411,11 @@ function handleErr(err) {
 }
 ```
 
+<<<<<<< HEAD
 删除给定的错误处理程序函数。
+=======
+Removes the given error handler function.
+>>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 <h3>arguments</h3>
 
@@ -595,7 +676,7 @@ window.addEventListener('single-spa:no-app-change', () => {
 
 当没有加载，初始化，挂载，卸载或移除应用程序时，single-spa触发 `single-spa:no-app-change` 事件。这与 `single-spa:app-change` 事件正好相反。每个路由事件只会触发一个。
 
-## before-first-mount	
+## before-first-mount
 
 ```js
 window.addEventListener('single-spa:before-first-mount', () => {
