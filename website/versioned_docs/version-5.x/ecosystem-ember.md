@@ -4,28 +4,30 @@ title: single-spa-ember
 sidebar_label: Ember
 ---
 
-single-spa-ember is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for for use with [Ember.js](https://www.emberjs.com/). Check out the [single-spa-ember github](https://github.com/single-spa/single-spa-ember).
+single-spa-ember 是一个它可以帮助Ember应用程序实现[single-spa 应用](configuration#registering-applications)需要的[生命周期函数](building-applications.md#registered-application-lifecycle) （bootstrap、mount和unmount）的辅助库，以便与[ember.js]一起使用（https://www.emberjs.com/）。请查看[single spa ember github](https://github.com/single-spa/single-spa-ember)
 
-It is available on npm as `single-spa-ember`, and also available on bower as `single-spa-ember` in case you want to use it with ember cli and need to use bower.
+为了方便bower和ember cli一起使用的场景。它在npm和bower上都以`single-spa-ember`的形式提供。
 
-## Overview
-When you are building an ember application that you want to work as a [single-spa application](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#registered-applications), there are five things you need to implement:
+## 概述
 
-- A [loading function](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#loading-function)
-- An [activity function](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#activity-function)
-- A [bootstrap function](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#bootstrap)
-- A [mount function](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#mount)
-- An [unmount function](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#unmount)
+构建ember应用程序作为[single-spa应用程序](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#registered-applications)工作时，需要实现五件事：
 
-Single-spa-ember will help you implement all of those except for the activity function.
+- [加载函数](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#loading-function)
+- [活动函数](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#activity-function)
+- [引导函数](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#bootstrap)
+- [装载函数](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#mount)
+- [卸载函数](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#unmount)
 
-Note that the loading and activity functions are part of the [single-spa root application](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md), whereas the bootstrap, mount, and unmount functions are part of a [single-spa application](https://github.com/single-spa/single-spa/blob/master/docs/applications.md)
+除活动函数以外，Single-spa-ember会帮助您实现所有功能。
+
+注意，加载和活动函数是[single spa root application](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md)的一部分，而引导、装载和卸载函数是[single spa application](https://github.com/single-spa/single-spa/blob/master/docs/applications.md)的一部分。
 
 ## API
 
-### loadEmberApp
-`loadEmberApp(appName, appUrl, vendorUrl)` is a function that helps you implement the [loading function](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#loading-function) for your ember application.
-`appName` and `appUrl` are both strings and both required, whereas `vendorUrl` is an optional string.
+### 加载Ember应用程序
+
+`loadEmberApp（appName，appUrl，vendorUrl）`是一个为ember应用程序实现[加载函数](https://github.com/single-spa/single-spa/blob/master/docs/root-application.md#loading-function)的方法。`appName` and `appUrl`都是必填的字符串，而`vendorUrl`是可选的字符串。
+
 
 ```js
 // In the single-spa root application
@@ -43,8 +45,10 @@ registerApplication(appName, loadingFunction, activityFunction);
 ### singleSpaEmber
 Single-spa-ember will implement the [single-spa lifecyle functions](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#application-lifecycle) for you. To use it, you call the default export as a function with a configuration object, which returns an object that has `bootstrap`, `mount`, and `unmount` lifecycle functions on it. The provided configuration object has the following options:
 
-  - `App` (required): The [ember Application](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application).
-  - `createOpts` (optional): The options to provide when calling [App.create(options)](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application). See the [ember docs](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application) for more details.
+要使用Single-spa-ember的[single-spa生命周期函数](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#application-lifecycle)，要调用一个带有配置对象的导出函数，该对象是具有`bootstrap`、`mount`和`unmount`生命周期函数。具有以下选项：
+
+- `App`(必填)：[ember 应用程序](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application)
+- `createOpts` (选填)：调用[App.create(options)](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application)时要用的属性。有关更多详细信息，请参阅[ember文档](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application)。
 
 ```js
 // In the ember application
@@ -62,15 +66,16 @@ export const mount = emberLifecycles.mount;
 export const unmount = emberLifecycles.unmount;
 ```
 
-## Usage with ember cli
-For the most part, you can get applications that use [ember cli](https://ember-cli.com/) to work pretty seamlessly with single-spa. Maybe the biggest thing you'll have to worry about is that ember-cli assumes that it controls the entire html page, whereas a single-spa application does not. However, usually we can achieve equivalent behavior by just loading the vendor and app bundles into the html page dynamically, instead of baking them right into the html page. Below is a description of the known things you should do when setting up an ember-cli application with single-spa:
+## 使用ember cli
 
-First, since the ember cli only supports dependencies from bower, you'll need to do:
+在大多数情况下，使用[ember cli](https://ember-cli.com/)的应用程序都可以与single-spa很好的工作。有一个不同的是，ember cli会控制整个html页面，但一个single-spa应用程序不是这样。所以，通常我们可以通过动态地将供应商和应用程序捆绑包加载到html页面中，而不是直接将它们烘焙到html页面中来实现相同的行为。以下是在使用single-spa设置ember cli应用程序时应执行的已知操作：
+
+因为ember cli只支持来自bower的依赖项，所以需要执行以下操作：
 
 - `bower init`
 - `bower install single-spa-ember --save`
 
-Add the following options to your ember-cli-build.js file:
+将以下选项添加到ember-cli-build.js文件中：
 ```js
 /* eslint-env node */
 'use strict';
@@ -98,7 +103,8 @@ module.exports = function(defaults) {
 };
 ```
 
-In your single-spa root application (which is separate from anything generated by ember cli):
+在single-spa根应用程序中（独立于由ember cli生成的任何内容）：
+
 
 ```js
 // root-application.js
@@ -121,7 +127,7 @@ function loadingFunction() {
 }
 ```
 
-In your app.js file (that is generated by ember cli)
+在app.js文件中（ember cli生成）
 
 ```js
 // app.js (the ember application)
