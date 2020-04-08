@@ -1,5 +1,5 @@
 ---
-id: ecosystem-react 
+id: ecosystem-react
 title: single-spa-react
 sidebar_label: React
 ---
@@ -49,11 +49,11 @@ All options are passed to single-spa-react via the `opts` parameter when calling
 - `loadRootComponent`: (optional) A loading function that takes [custom single-spa props](https://single-spa.js.org/docs/building-applications/#custom-props) and returns a promise that resolves with the parcel. This takes the place of the `rootComponent` opt, when provided. It is intended to help people
    who want to lazy load the source code for their root component. The source code will be lazy loaded during the bootstrap lifecycle.
 - `suppressComponentDidCatchWarning`: (optional) A boolean that indicates if single-spa-react should warn when the rootComponent does not implement componentDidCatch. Defaults to false.
-- `domElementGetter`: (optional) A function that takes in no arguments and returns a DOMElement. This dom element is where the
+- `domElementGetter`: (optional) A function that is given the single-spa props and returns a DOMElement. This dom element is where the
   React application will be bootstrapped, mounted, and unmounted. Note that this opt can be omitted. When omitted, the `domElementGetter` or `domElement`
   [custom single-spa props](https://single-spa.js.org/docs/building-applications/#custom-props) are used.
-  To use those, do `singleSpa.registerApplication(name, app, activityFn, {domElementGetter: function() {...}})` or
-  `singleSpa.registerApplication(name, app, activityFn, {domElement: document.getElementById(...)})`. If no dom element can be found through any
+  To use those, do `singleSpa.registerApplication({ name, app, activeWhen, customProps: {domElementGetter: function() {...}} })` or
+  `singleSpa.registerApplication({ name, app, activeWhen, {domElement: document.getElementById(...)} })`. If no dom element can be found through any
   of those methods, then a container div will be created and appended to document.body, by default.
 - `parcelCanUpdate`: (optional) A boolean that controls whether an update lifecycle will be created for the returned parcel. Note that option does not impact single-spa applications, but only parcels.
   It is true by default.
@@ -77,6 +77,7 @@ You can use the Parcel component either by npm installing the library and import
 #### Parcel props
 - `config` (required): Either a single-spa parcel config object, or a "loading function" that returns a Promise that resolves with the parcel config.
 - `wrapWith` (optional): A string [tagName](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName).`<Parcel>` will create a dom node of that type for the parcel to be mounted into. Defaults to `div`
+- `wrapStyle`(optional): Styles that will apply to `wrapWith`.
 - `appendTo` (optional): A dom element to append the parcel to. By default, this is not needed because the parcel will be mounted in the DOM that the `<Parcel>` component was rendered into. Useful for appending parcels to document.body or other separate parts of the dom.
 - `mountParcel` (sometimes required, sometimes not): The `mountParcel` function provided by single-spa. In general, it is preferred to use an application's mountParcel function instead of the
    single-spa's root mountParcel function, so that single-spa can keep track of the parent-child relationship and automatically unmount the application's parcels when the application unmounts.
@@ -127,6 +128,13 @@ import * as parcelConfig from './my-parcel.js'
   mountParcel={singleSpa.mountParcel}
   config={parcelConfig}
   wrapWith="div"
+/>
+
+// Add styles to wrapWith element.
+<Parcel
+  config={parcelConfig}
+  wrapWith="div"
+  wrapStyle={{ background: 'black' }}
 />
 ```
 

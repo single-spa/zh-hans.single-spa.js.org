@@ -31,11 +31,19 @@ single-spa 应用与普通的单页面是一样的，只不过它没有HTML页�
 ```js
 function bootstrap(props) {
   const {
+<<<<<<< HEAD
     name,        // 应用名称
     singleSpa,   // singleSpa实例
     mountParcel, // 手动挂载的函数
     customProps  // 自定义属性
   } = props;     // Props 会传给每个生命周期函数
+=======
+    name,        // The name of the application
+    singleSpa,   // The singleSpa instance
+    mountParcel, // Function for manually mounting
+    customProps  // Additional custom information
+  } = props;     // Props are given to every lifecycle
+>>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
   return Promise.resolve();
 }
 ```
@@ -54,12 +62,12 @@ function bootstrap(props) {
 <p className="filename">root.application.js</p>
 
 ```js
-singleSpa.registerApplication(
-  'app1', 
-  () => {}, 
-  () => {}, 
-  { authToken: "d83jD63UdZ6RS6f70D0" }
-);
+singleSpa.registerApplication({
+  name: 'app1',
+  activeWhen,
+  app,
+  customProps: { authToken: "d83jD63UdZ6RS6f70D0" }
+});
 ```
 
 <p className="filename">app1.js</p>

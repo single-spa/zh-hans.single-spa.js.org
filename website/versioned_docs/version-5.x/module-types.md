@@ -19,6 +19,7 @@ Single-spa有[不同分类](./microfrontends-concept#types-of-microfrontends.md)
 每个single-spa微前端都是一个浏览器内的javascript模块([详细说明]((./recommended-setup#in-browser-versus-build-time-modules.md))))。
 
 
+
 ## 应用程序
 
 ### 应用程序声明
@@ -33,6 +34,7 @@ single-spa管理注册的应用程序，并负责它们的所有生命周期。�
 
 ### 必要的沙箱
 沙箱以许多方式作为常规声明流的出口。它们的存在主要是为了允许您在多个框架中编写应用程序时跨应用程序重用UI。
+
 
 
 ### 管理你沙箱的生命周期
