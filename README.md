@@ -27,6 +27,7 @@
 ## 贡献翻译
 
 如果你想帮助翻译`single-spa.js.org`? 请参考下列步骤。
+[加入 Slack 一起讨论](https://single-spa.slack.com/archives/C011K55BAB0/p1586591177000200)(可能有点慢~)
 
 ### 新建分支
 
