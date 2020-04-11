@@ -19,6 +19,12 @@ npm install --global create-single-spa
 yarn global add create-single-spa
 ```
 
+执行以下命令:
+
+```sh
+create-single-spa
+```
+
 你也可以选择本地安装 create-single-spa
 
 ```sh
@@ -31,7 +37,50 @@ npx create-single-spa
 yarn create single-spa
 ```
 
-这将触发CLI提示，询问你将创建或更新哪种项目。create-single-spa **会安装在当前目录**，因此如果从头开始，请确保创建一个空目录。
+这将触发CLI提示，询问你将创建或更新哪种项目。
+
+## CLI arguments
+
+你可以如下这种方式传参数给`create-single-spa` :
+
+```sh
+# Different ways of doing the same thing
+create-single-spa --framework react
+npm init single-spa --framework react
+npx create-single-spa --framework react
+yarn create single-spa --framework react
+```
+
+以下为有效参数：
+
+### --dir
+
+你可以用以下方式指定 `create-single-spa` 执行的路径
+```sh
+# Two ways of doing the same thing
+create-single-spa my-dir
+create-single-spa --dir my-dir
+```
+
+### --moduleType
+
+你可以用 `--moduleType` 指定创建哪一种应用 :
+
+```sh
+create-single-spa --moduleType root-config
+create-single-spa --moduleType app-parcel
+create-single-spa --moduleType util-module
+```
+
+### --framework
+
+你可以用 `--framework` 参数指定使用哪种框架，如果不传 `--moduleType` ，默认是 `app-parcel`。
+
+```sh
+create-single-spa --framework react
+create-single-spa --framework vue
+create-single-spa --framework angular
+```
 
 ## Project types
 
@@ -82,6 +131,10 @@ module.exports = webpackConfigEnv => {
     orgName: 'name-of-company',
     // The name of the current project. This usually matches the git repo's name
     projectName: 'name-of-project',
+    // If your project uses typescript, set typecheck. Otherwise, omit it.
+    typecheck: 'typescript',
+    // Set to true if your project uses react
+    react: true,
     // See https://webpack.js.org/guides/environment-variables/#root for explanation of webpackConfigEnv
     webpackConfigEnv,
   })
@@ -118,6 +171,8 @@ module.exports = webpackConfigEnv => {
     orgName: 'name-of-company',
     // The name of the current project. This usually matches the git repo's name
     projectName: 'name-of-project',
+    // If your project uses typescript, set typecheck. Otherwise, omit it.
+    typecheck: 'typescript',
     // See https://webpack.js.org/guides/environment-variables/#root for explanation of webpackConfigEnv
     webpackConfigEnv,
   })

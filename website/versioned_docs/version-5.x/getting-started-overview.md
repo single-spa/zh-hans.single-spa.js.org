@@ -42,9 +42,9 @@ single-spa 核心团队已经汇总了文档，工具和视频，展示了当前
 
 ## 使用 single-spa 很难么？
 
-Single-spa 适用于 ES5、 ES6 + 、 TypeScript、 Webpack、 SystemJS、 Gulp、 Grunt、 Bower、 ember-cli 或 任何可用的构建系统。 您可以 npm 安装它，jspm 安装它，如果您愿意，甚至可以使用 `<script>` 标签。
-
 我们的目标是尽可能简化single-spa的使用过程。但是我们还应该指出，这是一种高级架构，它不同于前端应用程序通常的实现方式。
+
+Single-spa 适用于 ES5、 ES6 + 、 TypeScript、 Webpack、 SystemJS、 Gulp、 Grunt、 Bower、 ember-cli 或 任何可用的构建系统。 您可以 npm 安装它，jspm 安装它，如果您愿意，甚至可以使用 `<script>` 标签。
 
 如果您不是从头开始开发应用程序，则必须将传统 SPA [迁移至单single-spa](migrating-existing-spas.md) 应用程序
 
