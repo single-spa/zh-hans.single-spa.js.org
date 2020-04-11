@@ -19,17 +19,13 @@ npm install --global create-single-spa
 yarn global add create-single-spa
 ```
 
-<<<<<<< HEAD
-你也可以选择本地安装 create-single-spa
-=======
-Then run the following:
+执行以下命令:
 
 ```sh
 create-single-spa
 ```
 
-Alternatively, you may use create-single-spa without global installation:
->>>>>>> 46c0a56146c3dbb005f0859a2bc35bf44b0f3745
+你也可以选择本地安装 create-single-spa
 
 ```sh
 npm init single-spa
@@ -41,14 +37,11 @@ npx create-single-spa
 yarn create single-spa
 ```
 
-<<<<<<< HEAD
-这将触发CLI提示，询问你将创建或更新哪种项目。create-single-spa **会安装在当前目录**，因此如果从头开始，请确保创建一个空目录。
-=======
-This will open up a CLI prompt asking you what kind of project you want to create or update.
+这将触发CLI提示，询问你将创建或更新哪种项目。
 
 ## CLI arguments
 
-You may pass arguments to create-single-spa like so:
+你可以如下这种方式传参数给`create-single-spa` :
 
 ```sh
 # Different ways of doing the same thing
@@ -58,12 +51,11 @@ npx create-single-spa --framework react
 yarn create single-spa --framework react
 ```
 
-Here are the available CLI options:
+以下为有效参数：
 
 ### --dir
 
-You may specify which directory create-single-spa runs in the following ways:
-
+你可以用以下方式指定 `create-single-spa` 执行的路径
 ```sh
 # Two ways of doing the same thing
 create-single-spa my-dir
@@ -72,7 +64,7 @@ create-single-spa --dir my-dir
 
 ### --moduleType
 
-You can specify which kind of microfrontend you are creating with the `--moduleType` CLI argument:
+你可以用 `--moduleType` 指定创建哪一种应用 :
 
 ```sh
 create-single-spa --moduleType root-config
@@ -82,14 +74,13 @@ create-single-spa --moduleType util-module
 
 ### --framework
 
-You can specify which framework you're using with the `--framework` CLI argument. Note that if you specify a framework that you may omit the `--moduleType`, as it is inferred to be `app-parcel`.
+你可以用 `--framework` 参数指定使用哪种框架，如果不传 `--moduleType` ，默认是 `app-parcel`。
 
 ```sh
 create-single-spa --framework react
 create-single-spa --framework vue
 create-single-spa --framework angular
 ```
->>>>>>> 46c0a56146c3dbb005f0859a2bc35bf44b0f3745
 
 ## Project types
 
