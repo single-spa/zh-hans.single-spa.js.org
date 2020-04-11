@@ -84,11 +84,6 @@ single-spa works in Chrome, Firefox, Safari, IE11, and Edge.
 
 有关完整的示例，请查看 [简单的Webpack示例](https://github.com/joeldenning/simple-single-spa-webpack-example) 或 [从头开始的教程](starting-from-scratch.md)。
 
-<<<<<<< HEAD
-=======
-For a full example, check out [this simple webpack example](https://github.com/joeldenning/simple-single-spa-webpack-example) or [these examples](./examples.md).
->>>>>>> 7364e65ed4dcfe05bbc4f0e1d9403d9514d6fef6
-
 要创建single-spa应用程序，您需要做三件事：
 
 1. 创建一个 html 文件:
@@ -110,15 +105,9 @@ import * as singleSpa from 'single-spa';
 
 const name = 'app1';
 
-<<<<<<< HEAD
 /* loading 是一个返回 promise 的函数，用于 加载/解析 应用代码。
  * 它的目的是为延迟加载提供便利 —— single-spa 只有在需要时才会下载应用程序的代码。
  * 在这个示例中，在 webpack 中支持 import ()并返回 Promise，但是 single-spa 可以使用任何返回 Promise 的加载函数。
-=======
-/* The app can be a resolved application or a function that returns a promise that resolves with the javascript application module.
- * The purpose of it is to facilitate lazy loading -- single-spa will not download the code for a application until it needs to.
- * In this example, import() is supported in webpack and returns a Promise, but single-spa works with any loading function that returns a Promise.
->>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
  */
 const app = () => import('./app1/app1.js');
 
