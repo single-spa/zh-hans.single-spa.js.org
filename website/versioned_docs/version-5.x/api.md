@@ -4,12 +4,7 @@ title: Applications API
 sidebar_label: Applications API
 ---
 
-<<<<<<< HEAD
 single-spa输出的是命名函数和变量而不是默认输出，这意味着引用必须用以下两种方式：
-=======
-Single-spa exports named functions and variables rather than a single default export.
-This means importing must happen in one of two ways:
->>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 ```js
 import { registerApplication, start } from 'single-spa';
@@ -18,11 +13,13 @@ import * as singleSpa from 'single-spa';
 ```
 
 ## registerApplication
-`registerApplication` is the most important API your root config will use. Use this function to register any application within single-spa.
-Note that if an application is registered from within another application, that no hierarchy will be maintained between the applications.
+`registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
 
-There are two ways of registering your application:
-### Simple arguments
+请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
+
+有两种方法注册应用：
+
+### 简单参数
 ```js
 singleSpa.registerApplication(
 	'appName',
@@ -31,16 +28,7 @@ singleSpa.registerApplication(
 )
 ```
 
-<<<<<<< HEAD
-`registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
-
-请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
-
-> 详细解析请见 [Configuration docs](configuration#registering-applications)
-
-=======
->>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
-<h3>arguments</h3>
+<h3>参数</h3>
 
 <dl className="args-list">
 	<dt>appName: string</dt>
@@ -50,7 +38,6 @@ singleSpa.registerApplication(
 	<dt>activityFn: (location) => boolean</dt>
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
-	<dd>Will be passed to the application during each lifecycle method.</dd>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
 
@@ -58,7 +45,7 @@ singleSpa.registerApplication(
 
 `undefined`
 
-### Configuration object
+### 对象参数
 ```js
 singleSpa.registerApplication({
 	name: 'appName',
@@ -68,20 +55,15 @@ singleSpa.registerApplication({
 })
 ```
 
-<h3>arguments</h3>
+<h3>参数</h3>
 
 <dl className="args-list">
 	<dt>name: string</dt>
-	<dd>App name that single-spa will register and reference this application with, and will be labelled with in dev tools.</dd>
+	<dd>应用的名字将会在single-spa中注册和引用, 并在开发工具中标记。</dd>
 	<dt>app: Application | () => Application | Promise&lt;Application&gt; </dt>
-	<dd>Application object or a function that returns the resolved application (Promise or not)</dd>
+	<dd>必须是一个应用对象，返回一个家在函数。</dd>
 	<dt>activeWhen: string | (location) => boolean | (string | (location) => boolean)[]</dt>
-	<dd>Can be a path prefix which will match every URL starting with this path,
-	an activity function (as described in the simple arguments) or an array
-	containing both of them. If any of the criteria is true, it will keep the
-	application active. The path prefix also accepts dynamic values (they must
-	start with ':'), as some paths would receive url params and should still
-	trigger your application.
+	<dd>可以是一个路径前缀，它将匹配每个以该路径开头的URL，也可以是激活函数(如简单参数中所述)或一个数组两者都包含在内。如果任何条件为真，则保留应用活动。路径前缀也接受动态值(以':'开头)，因为有些路径会接收url参数，但仍然应该激活您的应用。
 	Examples:
 		<dl>
 			<dt>'/app1'</dt>
@@ -106,14 +88,14 @@ singleSpa.registerApplication({
 		</dl>
 	</dd>
 	<dt>customProps?: Object = &#123;&#125;</dt>
-	<dd>Will be passed to the application during each lifecycle method.</dd>
+	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
 
 <h3>returns</h3>
 
 `undefined`
 
-> It is described in detail inside of the [Configuration docs](configuration#registering-applications)
+> 详细解析请见 [Configuration docs](configuration#registering-applications)
 
 ## start
 ```js
@@ -319,11 +301,7 @@ singleSpa.unloadApplication('app1');
 singleSpa.unloadApplication('app1', {waitForUnmount: true});
 ```
 
-<<<<<<< HEAD
 移除已注册的应用的目的是将其设置回 `NOT_LOADED` 状态，这意味着它将在下一次需要挂载时重新初始化。它的主要使用场景是允许热加载所有已注册的应用，但是 `unloadApplication` 可以在您希望初始化应用时非常有用。
-=======
-The purpose of unloading a registered application is to set it back to a NOT_LOADED status, which means that it will be re-bootstrapped the next time it needs to mount. The main use-case for this was to allow for the hot-reloading of entire registered applications, but `unloadApplication` can be useful whenever you want to re-bootstrap your application.
->>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc
 
 当调用 `unloadApplication` 时，Single-spa执行以下步骤。
 
@@ -331,11 +309,7 @@ The purpose of unloading a registered application is to set it back to a NOT_LOA
 2. 将次应用的状态置为 NOT_LOADED
 3. 触发路由重定向，在此期间single-spa可能会挂载刚刚卸载的应用程序。
 
-<<<<<<< HEAD
 因为在调用 `unloadApplication` 时可能会挂载已注册的应用，所以可以指定是要立即卸载还是要等到应用不再挂载。这是通过 `waitForUnmount` 参数完成的。
-=======
-Because a registered application might be mounted when `unloadApplication` is called, you can specify whether you want to immediately unload or if you want to wait until the application is no longer mounted. This is done with the `waitForUnmount` option.
->>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 <h3>arguments</h3>
 
@@ -411,11 +385,7 @@ function handleErr(err) {
 }
 ```
 
-<<<<<<< HEAD
 删除给定的错误处理程序函数。
-=======
-Removes the given error handler function.
->>>>>>> 069aa3595c6feb44c90bfdbfff5cdb623f9bbbe5
 
 <h3>arguments</h3>
 
@@ -698,8 +668,4 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
-<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
-=======
-> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
->>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc
