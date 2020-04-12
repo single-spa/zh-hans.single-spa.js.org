@@ -43,8 +43,6 @@ registerApplication(appName, loadingFunction, activityFunction);
 ```
 
 ### singleSpaEmber
-Single-spa-ember will implement the [single-spa lifecyle functions](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#application-lifecycle) for you. To use it, you call the default export as a function with a configuration object, which returns an object that has `bootstrap`, `mount`, and `unmount` lifecycle functions on it. The provided configuration object has the following options:
-
 要使用Single-spa-ember的[single-spa生命周期函数](https://github.com/single-spa/single-spa/blob/master/docs/applications.md#application-lifecycle)，要调用一个带有配置对象的导出函数，该对象是具有`bootstrap`、`mount`和`unmount`生命周期函数。具有以下选项：
 
 - `App`(必填)：[ember 应用程序](https://www.emberjs.com/api/ember/2.14.1/classes/Ember.Application)
