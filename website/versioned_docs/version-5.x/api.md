@@ -619,7 +619,11 @@ window.addEventListener('single-spa:before-routing-event', () => {
 
 ```js
 window.addEventListener('single-spa:routing-event', () => {
-	console.log('single-spa finished mounting/unmounting applications!');
+  console.log('single-spa finished mounting/unmounting applications!');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
+  console.log(evt.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
+  console.log(evt.totalAppChanges) // 2
 });
 ```
 
@@ -629,8 +633,12 @@ window.addEventListener('single-spa:routing-event', () => {
 ## app-change event
 
 ```js
-window.addEventListener('single-spa:app-change', () => {
-	console.log('A routing event occurred where at least one application was mounted/unmounted');
+window.addEventListener('single-spa:app-change', (evt) => {
+  console.log('A routing event occurred where at least one application was mounted/unmounted');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
+  console.log(evt.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
+  console.log(evt.totalAppChanges) // 2
 });
 ```
 
@@ -640,7 +648,11 @@ window.addEventListener('single-spa:app-change', () => {
 
 ```js
 window.addEventListener('single-spa:no-app-change', () => {
-	console.log('A routing event occurred where zero applications were mounted/unmounted');
+  console.log('A routing event occurred where zero applications were mounted/unmounted');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { }
+  console.log(evt.appsByNewStatus) // { MOUNTED: [], NOT_MOUNTED: [] }
+  console.log(evt.totalAppChanges) // 0
 });
 ```
 

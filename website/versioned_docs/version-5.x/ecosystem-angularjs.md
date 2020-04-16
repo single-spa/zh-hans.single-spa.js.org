@@ -93,5 +93,16 @@ singleSpa.registerApplication({
 - `strictDi`: (可选 - 初始化程序的一部分 [config object](https://docs.angularjs.org/api/ng/function/angular.bootstrap#usage)) 默认为false的布尔值，修改以启用StrictDi模式。
 - `template`: （可选）在应用程序mounted时将插入DOM的html字符串。 该模板位于domElementGetter返回的元素内。 如果未提供，则不会插入模板。 使用angular-ui-router时，由于ui-router会为您将模板放到dom上，因此您通常不需要使用它。
 
+<<<<<<< HEAD
 ## ES5 示例
 查看 [示例](https://github.com/joeldenning/single-spa-es5-angularjs)
+=======
+## Custom Props
+
+[single-spa custom props](./building-applications.md#lifecycle-props) are made available as `$rootScope.singleSpaProps`.
+
+## Examples
+
+- [polyglot microfrontends account settings](https://github.com/polyglot-microfrontends/account-settings): Gulp + angularjs@1.7 project integrated with Vue microfrontends.
+- [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs): No build process - just global variables.
+>>>>>>> f82762b71cedc633132ad4b93d35ed962a728494
