@@ -4,7 +4,11 @@ title: single-spa-angularjs
 sidebar_label: AngularJS
 ---
 
+<<<<<<< HEAD
 single-spa-angularjs 是一个类库，可以帮助实现与 [AngularJS](https://angularjs.org/) 一起使用 [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount)。 查看 [single-spa-angularjs github](https://github.com/single-spa/single-spa-angularjs).
+=======
+single-spa-angularjs is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [AngularJS](https://angularjs.org/). Check out the [single-spa-angularjs github](https://github.com/single-spa/single-spa-angularjs).
+>>>>>>> 6ea23d560fdf852a6e5e4a4b7e261bf061f9b1f4
 
 ## 安装
 ```sh
