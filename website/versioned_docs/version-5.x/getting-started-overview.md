@@ -61,6 +61,7 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
 该文档分为几个部分：
 
+<<<<<<< HEAD
 * [快速入门](getting-started-overview.md)
 * [single-spa 应用](building-applications.md)
 * [single-spa 包](parcels-overview.md)
@@ -69,6 +70,16 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 * [贡献指南](contributing-overview.md)
 * [博客](https://single-spa.js.org/blog/)
 * [帮助与支持](https://single-spa.js.org/en/help.html)
+=======
+* [Getting Started](getting-started-overview.md)
+* [single-spa Applications](building-applications.md)
+* [single-spa Parcels](parcels-overview.md)
+* [Examples](examples.md)
+* [Ecosystem](ecosystem.md)
+* [Contributing Guide](contributing-overview.md)
+* [Blog](https://single-spa.js.org/blog/)
+* [Where to Get Support](https://single-spa.js.org/help/)
+>>>>>>> 4148f70a5909bfd4647d85e306a9f0857f025453
 
 通过发起 pull requests 到 [`single-spa.js.org` 代码仓库](https://github.com/single-spa/single-spa.js.org)，可以帮助改善Single-Spa网站。
 
