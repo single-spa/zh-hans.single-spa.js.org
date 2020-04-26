@@ -33,6 +33,12 @@ const reactLifecycles = singleSpaReact({
   React,
   ReactDOM,
   rootComponent,
+  errorBoundary(err, info, props) {
+    // https://reactjs.org/docs/error-boundaries.html
+    return (
+      <div>This renders when a catastrophic error occurs</div>
+    );
+  },
 });
 
 export const bootstrap = reactLifecycles.bootstrap;
@@ -118,6 +124,13 @@ import * as parcelConfig from './my-parcel.js'
   mountParcel={singleSpa.mountParcel}
   config={parcelConfig}
   wrapWith="div"
+/>
+
+// Add styles to wrapWith element.
+<Parcel
+  config={parcelConfig}
+  wrapWith="div"
+  wrapStyle={{ background: 'black' }}
 />
 ```
 

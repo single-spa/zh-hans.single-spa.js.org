@@ -13,18 +13,22 @@ import * as singleSpa from 'single-spa';
 ```
 
 ## registerApplication
-
-```js
-singleSpa.registerApplication('appName', () => System.import('appName'), location => location.pathname.startsWith('appName'))
-```
-
 `registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
 
 请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
 
-> 详细解析请见 [Configuration docs](configuration#registering-applications)
+有两种方法注册应用：
 
-<h3>arguments</h3>
+### 简单参数
+```js
+singleSpa.registerApplication(
+	'appName',
+	() => System.import('appName'),
+	location => location.pathname.startsWith('appName')
+)
+```
+
+<h3>参数</h3>
 
 <dl className="args-list">
 	<dt>appName: string</dt>
@@ -34,13 +38,64 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 	<dt>activityFn: (location) => boolean</dt>
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
-	<dd>Will be passed to the application during each lifecycle method.</dd>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
 
 <h3>returns</h3>
 
 `undefined`
+
+### 对象参数
+```js
+singleSpa.registerApplication({
+	name: 'appName',
+	app: () => System.import('appName'),
+	activeWhen: '/appName'
+	customProps: {}
+})
+```
+
+<h3>参数</h3>
+
+<dl className="args-list">
+	<dt>name: string</dt>
+	<dd>应用的名字将会在single-spa中注册和引用, 并在开发工具中标记。</dd>
+	<dt>app: Application | () => Application | Promise&lt;Application&gt; </dt>
+	<dd>必须是一个应用对象，返回一个家在函数。</dd>
+	<dt>activeWhen: string | (location) => boolean | (string | (location) => boolean)[]</dt>
+	<dd>可以是一个路径前缀，它将匹配每个以该路径开头的URL，也可以是激活函数(如简单参数中所述)或一个数组两者都包含在内。如果任何条件为真，则保留应用活动。路径前缀也接受动态值(以':'开头)，因为有些路径会接收url参数，但仍然应该激活您的应用。
+	Examples:
+		<dl>
+			<dt>'/app1'</dt>
+			<dd>✅ https://app.com/app1</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+      <dd>🚫 https://app.com/app2</dd>
+			<dt>'/users/:userId/profile'</dt>
+			<dd>✅ https://app.com/users/123/profile</dd>
+			<dd>✅ https://app.com/users/123/profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users//profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users/profile/sub-profile/</dd>
+			<dt>'/pathname/#/hash'</dt>
+			<dd>✅ https://app.com/pathname/#/hash</dd>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/another-hash</dd>
+      <dt>['/pathname/#/hash', '/app1']</dt>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+			<dd>🚫 https://app.com/pathname/app1</dd>
+			<dd>🚫 https://app.com/app2</dd>
+		</dl>
+	</dd>
+	<dt>customProps?: Object = &#123;&#125;</dt>
+	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
+</dl>
+
+<h3>returns</h3>
+
+`undefined`
+
+> 详细解析请见 [Configuration docs](configuration#registering-applications)
 
 ## start
 ```js
@@ -246,11 +301,7 @@ singleSpa.unloadApplication('app1');
 singleSpa.unloadApplication('app1', {waitForUnmount: true});
 ```
 
-<<<<<<< HEAD
 移除已注册的应用的目的是将其设置回 `NOT_LOADED` 状态，这意味着它将在下一次需要挂载时重新初始化。它的主要使用场景是允许热加载所有已注册的应用，但是 `unloadApplication` 可以在您希望初始化应用时非常有用。
-=======
-The purpose of unloading a registered application is to set it back to a NOT_LOADED status, which means that it will be re-bootstrapped the next time it needs to mount. The main use-case for this was to allow for the hot-reloading of entire registered applications, but `unloadApplication` can be useful whenever you want to re-bootstrap your application.
->>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc
 
 当调用 `unloadApplication` 时，Single-spa执行以下步骤。
 
@@ -568,7 +619,11 @@ window.addEventListener('single-spa:before-routing-event', () => {
 
 ```js
 window.addEventListener('single-spa:routing-event', () => {
-	console.log('single-spa finished mounting/unmounting applications!');
+  console.log('single-spa finished mounting/unmounting applications!');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
+  console.log(evt.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
+  console.log(evt.totalAppChanges) // 2
 });
 ```
 
@@ -578,8 +633,12 @@ window.addEventListener('single-spa:routing-event', () => {
 ## app-change event
 
 ```js
-window.addEventListener('single-spa:app-change', () => {
-	console.log('A routing event occurred where at least one application was mounted/unmounted');
+window.addEventListener('single-spa:app-change', (evt) => {
+  console.log('A routing event occurred where at least one application was mounted/unmounted');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
+  console.log(evt.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
+  console.log(evt.totalAppChanges) // 2
 });
 ```
 
@@ -589,13 +648,17 @@ window.addEventListener('single-spa:app-change', () => {
 
 ```js
 window.addEventListener('single-spa:no-app-change', () => {
-	console.log('A routing event occurred where zero applications were mounted/unmounted');
+  console.log('A routing event occurred where zero applications were mounted/unmounted');
+  console.log(evt.originalEvent) // PopStateEvent
+  console.log(evt.newAppStatuses) // { }
+  console.log(evt.appsByNewStatus) // { MOUNTED: [], NOT_MOUNTED: [] }
+  console.log(evt.totalAppChanges) // 0
 });
 ```
 
 当没有加载，初始化，挂载，卸载或移除应用程序时，single-spa触发 `single-spa:no-app-change` 事件。这与 `single-spa:app-change` 事件正好相反。每个路由事件只会触发一个。
 
-## before-first-mount	
+## before-first-mount
 
 ```js
 window.addEventListener('single-spa:before-first-mount', () => {
@@ -617,8 +680,4 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
-<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
-=======
-> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
->>>>>>> 4f13c9cf57e1cfb0c346dccedd11bbc34d9a49bc

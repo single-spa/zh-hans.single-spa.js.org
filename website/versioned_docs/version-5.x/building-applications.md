@@ -54,12 +54,12 @@ function bootstrap(props) {
 <p className="filename">root.application.js</p>
 
 ```js
-singleSpa.registerApplication(
-  'app1', 
-  () => {}, 
-  () => {}, 
-  { authToken: "d83jD63UdZ6RS6f70D0" }
-);
+singleSpa.registerApplication({
+  name: 'app1',
+  activeWhen,
+  app,
+  customProps: { authToken: "d83jD63UdZ6RS6f70D0" }
+});
 ```
 
 <p className="filename">app1.js</p>
