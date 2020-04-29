@@ -6,11 +6,7 @@ sidebar_label: create-single-spa
 
 对于那些喜欢自动生成和管理webpack，babel，jest等配置的用户，Single-spa提供了一个CLI。您不一定非得用CLI来生成single-spa的配置。
 
-<<<<<<< HEAD
-此CLI为 `create-single-spa` ([Github link](https://github.com/single-spa/create-single-spa/))。它旨在用于创建新项目和更新由 `create-single-spa` 创建的项目，但不适用于将已经存在的代码库迁移至singa-spa。
-=======
-The CLI is called `create-single-spa` ([Github link](https://github.com/single-spa/create-single-spa/)). It is primarily intended for the creation of new projects, but may also be useful for migrating existing projects (especially migrating CRA or frameworkless projects).
->>>>>>> f82762b71cedc633132ad4b93d35ed962a728494
+此CLI为 `create-single-spa` ([Github link](https://github.com/single-spa/create-single-spa/))。它主要用于创建新项目，但也可用于迁移现有项目（特别是迁移CRA或无框架项目）。
 
 ## Installation and Usage
 
