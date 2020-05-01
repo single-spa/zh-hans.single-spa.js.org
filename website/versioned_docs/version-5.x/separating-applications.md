@@ -53,6 +53,7 @@ sidebar_label: 拆分应用
 
 #### 对比
 
+<<<<<<< HEAD
 <style dangerouslySetInnerHTML={{__html: `
   .comparisonTable td {
     width: 25%;
@@ -147,3 +148,10 @@ sidebar_label: 拆分应用
     </tr>
   </tbody>
 </table>
+=======
+|   | Separate code repositories possible | Independent CI builds | Separate deployments | Examples |
+| - | ----------------------------------- | --------------- | -------------------- | -------- |
+| Monorepo | :x: | :x: | :x: | &mdash; |
+| NPM Packages | :white_check_mark: | :white_check_mark: | :x: | [1](https://github.com/jualoppaz/single-spa-login-example-with-npm-packages) |
+| Module loading | :white_check_mark: | :white_check_mark: | :white_check_mark: | [1](https://github.com/react-microfrontends/) [2](https://github.com/vue-microfrontends/) [3](https://github.com/polyglot-microfrontends/) |
+>>>>>>> 23392092f75ac15539a5ecaeb00353737ef8ecaa
