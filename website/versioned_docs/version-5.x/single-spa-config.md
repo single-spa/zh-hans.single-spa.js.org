@@ -28,16 +28,20 @@ import { registerApplication, start } from 'single-spa';
 
 // Simple usage
 registerApplication(
-    'app2',
-    () => import('src/app2/main.js'),
-    (location) => location.pathname.startsWith('/app2')
+  'app2',
+  () => import('src/app2/main.js'),
+  (location) => location.pathname.startsWith('/app2'),
+  {some: 'value'}
 );
 
 // Config with more expressive API
 registerApplication({
-    name: 'app1',
-    app: () => import('src/app1/main.js'),
-    activeWhen: '/app1'
+  name: 'app1',
+  app: () => import('src/app1/main.js'),
+  activeWhen: '/app1',
+  customProps: {
+    some: 'value',
+  }
 );
 
 start();
@@ -77,14 +81,34 @@ registerApplication('applicatonName', application, activityFunction)
 - 在single-spa上手动调用[`triggerAppChange`] 方法
 - `checkActivityFunctions`方法被调用时
 
+<<<<<<< HEAD
 ### 使用对象参数
+=======
+#### Custom props
+
+The optional fourth argument to `registerApplication` is [custom props](./building-applications#custom-props) that are passed to the application's single-spa lifecycle functions. The custom props may be either an object or a function that returns an object. Custom prop functions are called with the application name and current `window.location` as arguments.
+
+### Using configuration object
+>>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
 
 ```js
-const config = {
-    name: 'myApp',
-    app: () => import('src/myApp/main.js'),
-    activeWhen: ['/myApp', (location) => location.pathname.startsWith('/some/other/path')],
-}
+singleSpa.registerApplication({
+  name: 'myApp',
+  app: () => import('src/myApp/main.js'),
+  activeWhen: ['/myApp', (location) => location.pathname.startsWith('/some/other/path')],
+  customProps: {
+    some: 'value',
+  },
+});
+
+singleSpa.registerApplication({
+  name: 'myApp',
+  app: () => import('src/myApp/main.js'),
+  activeWhen: ['/myApp', (location) => location.pathname.startsWith('/some/other/path')],
+  customProps: (name, location) => ({
+    some: 'value',
+  }),
+});
 ```
 
 #### config.name
@@ -119,6 +143,10 @@ const config = {
     <dd>🚫 https://app.com/pathname/app1</dd>
     <dd>🚫 https://app.com/app2</dd>
   </dl>
+
+#### config.customProps
+
+The optional `customProps` property provides [custom props](./building-applications#custom-props) that are passed to the application's single-spa lifecycle functions. The custom props may be either an object or a function that returns an object. Custom prop functions are called with the application name and current `window.location` as arguments.
 
 ## Calling singleSpa.start()
 [`start()方法`](api.md#start) **必须**被single-spa配置文件的js调用，这时应用才会被真正挂载。在`start`被调用之前，应用先被下载，但不会初始化/挂载/卸载。`start`方法可以协助我们更好提升应用的性能。举个例子，我们可能会马上注册一个应用(为了立刻下载代码)，但不能马上就在DOM节点上挂载该应用，而是需要等一个AJAX请求(可能会获取用户的登录信息)完成后，再根据结果进行挂载。这种情况下，最佳实践是先调用`registerApplication`，等AJAX请求完成后再调用`start`。

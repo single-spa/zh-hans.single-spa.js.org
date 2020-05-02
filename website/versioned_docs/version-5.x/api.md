@@ -434,6 +434,45 @@ const parcel2 = singleSpa.mountRootParcel(() => import('./some-parcel.js'), {pro
 	<dd>详细信息请见 <a href="/docs/parcels-api.html">Parcels API</a> 。</dd>
 </dl>
 
+## pathToActiveWhen
+
+The `pathToActiveWhen` function converts a string URL path into an [activity function](./configuration#activity-function). The string path may contain route parameters that single-spa will match any characters to. It assumes that the string provided is a **prefix**.
+
+This function is used by single-spa when a string is passed into `registerApplication` as the `activeWhen` argument.
+
+***Arguments***
+
+1. `path` (string): The URL prefix that.
+
+***Return Value***
+
+`(location: Location) => boolean`
+
+A function that accepts a URL as an argument and returns a boolean indicating whether the path matches that URL.
+
+***Examples:***
+
+```js
+let activeWhen = singleSpa.pathToActiveWhen('/settings');
+activewhen(new URL('http://localhost/settings')); // true
+activewhen(new URL('http://localhost/settings/password')); // true
+activeWhen(new URL('http://localhost/')); // false
+
+activeWhen = singleSpa.pathToActiveWhen('/user/:id/settings');
+activewhen(new URL('http://localhost/users/6f7dsdf8g9df8g9dfg/settings')); // true
+activewhen(new URL('http://localhost/users/1324/settings')); // true
+activewhen(new URL('http://localhost/users/1324/settings/password')); // true
+activewhen(new URL('http://localhost/users/1/settings')); // true
+activewhen(new URL('http://localhost/users/1')); // false
+activewhen(new URL('http://localhost/settings')); // false
+activeWhen(new URL('http://localhost/')); // false
+
+activeWhen = singleSpa.pathToActiveWhen('/page#/hash');
+activeWhen(new URL('http://localhost/page#/hash')); // true
+activeWhen(new URL('http://localhost/#/hash')); // false
+activeWhen(new URL('http://localhost/page')); // false
+```
+
 ## ensureJQuerySupport
 
 ```js
@@ -592,9 +631,31 @@ singleSpa.setUnloadMaxTime(3000, true, 10000);
 
 `undefined`
 
-# Events
+## Events
 
+Single-spa fires two kinds of events to the `window`:
+
+1. PopStateEvent
+2. CustomEvent
+
+<<<<<<< HEAD
 浏览器的所有的下列事件 [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) 都会被single-spa 触发。`detail`事件包含触发路由重定向的原生DOM事件，例如 [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) 或 [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent)。通过 [`addEventListener`] 可以控制这些事件(https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), 就像:
+=======
+The PopStateEvents fired by single-spa are the way single-spa tells all active applications to re-render. This occurs when one application calls [history.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState), [history.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState), or [triggerAppChange](#triggerAppChange).
+
+```js
+window.addEventListener('popstate', evt => {
+  if (evt.singleSpa) {
+    console.log('This event was fired by single-spa to forcibly trigger a re-render')
+    console.log(evt.singleSpaTrigger); // pushState | replaceState
+  } else {
+    console.log('This event was fired by native browser behavior')
+  }
+});
+```
+
+The [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) are fired by single-spa on the window. The event `detail` property contains the native DOM event that triggered the reroute, such as a [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) or [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent). These events can be handled by using [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), like so:
+>>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
 
 <!-- TODO: are these events augmented like the addErrorHandler Error is? -->
 
@@ -614,6 +675,18 @@ window.addEventListener('single-spa:before-routing-event', () => {
 ```
 
 每次路由跳转前 `single-spa:before-routing-event` 事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时也会触发。
+
+## before mount routing event
+
+```js
+window.addEventListener('single-spa:before-mount-routing-event', (evt) => {
+	console.log('single-spa is about to mount/unmount applications!');
+	console.log(evt.detail)
+});
+```
+
+A `single-spa:before-mount-routing-event` event is fired after `before-routing-event` and before `routing-event`. It is guaranteed to fire after all single-spa applications have been unmounted, but before any new applications have been mounted.
+
 
 ## routing event
 

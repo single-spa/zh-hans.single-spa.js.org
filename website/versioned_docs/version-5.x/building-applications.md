@@ -48,8 +48,12 @@ function bootstrap(props) {
 - `singleSpa`: 对singleSpa 实例的引用, 方便各应用和类库调用singleSpa提供的API时不再导入它。 可以解决有多个webpack配置文件构建时无法保证只引用一个singleSpa实例的问题。
 - `mountParcel`: [mountParcel 函数](/docs/parcels-api.html#mountparcel).
 
+<<<<<<< HEAD
 #### 自定义参数
 除single-spa提供的内置参数外，还可以指定自定义参数，在调用各个生命周期函数时传入。指定方法是在调用`registerApplication`时，传入第4个参数。
+=======
+In addition to the built-in props that are provided by single-spa, you may optionally specify custom props to be passed to an application. These *customProps* will be passed into each lifecycle method. The custom props are an object, and you can provide either the object or a function that returns the object. Custom prop functions are called with the application name and current window.location as arguments.
+>>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
 
 <p className="filename">root.application.js</p>
 
@@ -59,6 +63,15 @@ singleSpa.registerApplication({
   activeWhen,
   app,
   customProps: { authToken: "d83jD63UdZ6RS6f70D0" }
+});
+
+singleSpa.registerApplication({
+  name: 'app1',
+  activeWhen,
+  app,
+  customProps: (name, location) => {
+    return { authToken: "d83jD63UdZ6RS6f70D0" };
+  }
 });
 ```
 
