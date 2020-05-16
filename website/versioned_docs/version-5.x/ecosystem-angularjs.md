@@ -66,7 +66,8 @@ System.register([], function(_export) {
 
 ### 作为全局变量
 ```js
-window.myAngularApp = singleSpaAngularJS({
+// note that "js" is not capitalized in the name of the global variable.
+window.myAngularApp = singleSpaAngularjs({
   angular: angular,
   mainAngularModule: 'app',
   uiRouter: true,
