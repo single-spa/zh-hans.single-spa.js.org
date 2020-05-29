@@ -23,7 +23,13 @@ sidebar_label: Resources
 
 ## 社区的案例
 
+<<<<<<< HEAD
 - [single-spa-login-example-with-npm-packages](https://github.com/jualoppaz/single-spa-login-example-with-npm-packages) 是一个基于npm依赖、登录身份认证相关的single-spa案例.
 - [demo-single-spa-with-spax](https://github.com/crossjs/spax/tree/master/packages/demo-single-spa) 是一个基于react-scripts和craco的小型案例 [spax](https://spax.js.org).
+=======
+- [single-spa-login-example-with-npm-packages](https://github.com/jualoppaz/single-spa-login-example-with-npm-packages) is a single-spa application example which imports registered applications from NPM packages and manages authentication features as login.
+- [demo-single-spa-with-spax](https://github.com/crossjs/spax/tree/master/packages/demo-single-spa) is a tiny [spax](https://spax.js.org) example with react-scripts and craco.
+- [single-spa-html with js example](https://github.com/filoxo/single-spa-html-with-js-example): an example repo of using single-spa-html that is enhanced with plain JavaScript.
+>>>>>>> 58c65d3fe984a0c3e474cf6d3b0e7e3f3734f6b1
 
 你也有这样一个精彩的项目吗? [点击提交一个PR](https://github.com/single-spa/single-spa.js.org/edit/master/docs/examples.md) 来将你的案例也添加到这里.
