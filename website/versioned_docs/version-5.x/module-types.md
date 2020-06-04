@@ -1,51 +1,52 @@
 ---
 id: module-types
-title: single-spa microfrontend types
-sidebar_label: Microfrontend Types
+title: 微前端分类
+sidebar_label: 微前端分类
 ---
 
-# Concept: single-spa microfrontend types
+# 微前端分类
+Single-spa有[不同分类](./microfrontends-concept#types-of-microfrontends.md)的微前端。这取决于您在何处以及如何使用它们。但是，single-spa核心团队有一些[建议](./recommended-setup/#applications-versus-parcels-versus-utility-modules.md)。
+以下是每个单spa微前端在概念上是如何工作的。这些信息可以帮助您理解我们的[建议](./recommended-setup/#applications-versus-parcels-versus-utility-modules.md)。
 
-Single-spa has [different categories](./microfrontends-concept#types-of-microfrontends.md) of microfrontends. It is up to you where and how you use each of them. However, the single-spa core team has [recommendations](./recommended-setup/#applications-versus-parcels-versus-utility-modules.md).
-
-Here is how each single-spa microfrontend works conceptually. This information should help you understand our [recommendations](./recommended-setup/#applications-versus-parcels-versus-utility-modules.md).
-
-| Topic                | application                       | parcel                               | utility                              |
+| 话题                | 应用                       | 沙箱                              | 公共模块                              |
 | -------------------- | --------------------------------- | ------------------------------------ | ------------------------------------ |
-| routing              | has multiple routes               | no routes                            | no routes                            |
-| API                  | declarative API                   | imperative API                       | no single-spa api                    |
-| renders UI           | renders UI                        | renders UI                           | doesn't directly render UI           |
-| lifecycles           | single-spa managed lifecycles     | custom managed lifecycles            | no lifecycles                        |
-| When to use          | Core building block               | only needed with multiple frameworks | useful to share common logic         |
+| 路由              | 有多个路由               | 无路由                            | 无路由                            |
+| API                  | 声明 API                   | 必要的 API                       | 无single-spa路由                   |
+| 渲染UI           | 渲染 UI                        | 渲染 UI                           | 无直接渲染UI           |
+| 生命周期           | single-spa 管理生命周期    | 用户管理生命周期            | 无生命周期                        |
+| 什么情况下使用          | 核心构建模块              | 用多个框架时需要 | 共享逻辑时使用         |
 
-Each single-spa microfrontend is an in-browser javascript module ([explanation](./recommended-setup#in-browser-versus-build-time-modules.md)).
+每个single-spa微前端都是一个浏览器内的javascript模块([详细说明]((./recommended-setup#in-browser-versus-build-time-modules.md))))。
 
-## Applications
 
-### Applications are declarative
-Applications use a declarative api called `registerApplication`. Your single-spa config (also sometimes called root config) defines applications ahead of time, defines the condition at which they are active, but doesn't mount the application directly.
 
-### Applications have managed lifecycles
-single-spa manages registered applications and is in charge of all of their lifecycles. This prevents you from writing a bunch of logic about when applications should mount and unmount; single-spa takes care of that for you.
-All single spa needs to make this work automatically is for an activity function that describes when your application should be active.
+## 应用程序
 
-## Parcels
+### 应用程序声明
 
-### Parcels are imperative
-Parcels exist in many ways as an escape hatch from the normal declarative flow. They exist primarily to allow you to reuse UI across applications when those applications are written in multiple frameworks.
+应用程序使用一个称为“registerApplication”的声明性api。single-spa配置(有时也称为根配置)预先定义了应用程序，定义了它们处于激活状态的条件，但不直接挂载应用程序。
 
-### You manage the lifecycles of Parcels
-When you call `mountParcel` or `mountRootParcel` [(see api)](./parcels-api.md) the parcel is mounted immediately and returns the parcel object. You need to call the `unmount` method on the parcel manually when the component that calls `mountParcel` unmounts.
+### 应用程序管理生命周期
 
-### Parcels are best suited for sharing UI between frameworks
-Creating a parcel is as easy as using the [single-spa helpers](./ecosystem#help-for-frameworks.md) for that framework on a specific component/UI. This returns an object (`parcelConfig`) that single-spa can use to create and mount a parcel.
-Because single-spa can mount a parcel anywhere, this gives you a way to share UI/components across frameworks. It should not be used if the shared UI is being used in another application of the same framework.
-For example: `applicationOne` is written in Vue and contains all the UI/Logic to create a user. `application2` is written in React and needs to create a user. Using a single-spa parcel allows you to wrap your `app1` Vue component
-in a way that will make it work inside `application2` despite the different frameworks. Even better if `application2` is unmounted by single-spa (per the activity function returning false)
-Think of parcels as a single-spa specific implementation of webcomponents.
+single-spa管理注册的应用程序，并负责它们的所有生命周期。这可以避免您编写一堆关于应用程序何时应该挂载和卸载的逻辑;single-spa会帮你解决这个问题。所有的single-spa需要定义激活函数来自动完成这个事情，激活函数描述了什么时候你的应用程序应该是激活的。
 
-## Utility modules share common logic
-Utility modules are a great place to share common logic. Instead of each application creating their own implementation of common logic, you can use a plain javascript object (single-spa utility) to share that logic.
-For example: Authorization. How does each application know which user is logged in? You could have each application ask the server or read a JWT but that creates duplicate work in each application.
-Using Utility modules you can implement logic around who is logged in one module (with all the necessary methods exported on the module) and each single-spa application can use the logic by importing the methods from the utilty module.
-This approach also works well for data [fetching](./recommended-setup#api-data.md).
+## 沙箱
+
+### 必要的沙箱
+沙箱以许多方式作为常规声明流的出口。它们的存在主要是为了允许您在多个框架中编写应用程序时跨应用程序重用UI。
+
+
+
+### 管理你沙箱的生命周期
+
+当您调用“mountParcel”或“mountRootParcel”[(参见 api)](./parcels-api.md)时，沙箱将立即被挂载并返回parcel对象。当调用“mountParcel”的组件卸载时，您需要手动调用沙箱上的“卸载”方法。
+
+### 沙箱最适用于框架之间共享UI
+
+创建一个沙箱与在特定组件/UI上为该框架使用[single-spa 助手](./ecosystem#help-for-frameworks.md)一样简单。这将返回一个对象(parcelConfig)， single-spa可以使用该对象创建和挂载一个沙箱。由于single-spa可以在任何地方挂载沙箱，这为您提供了一种跨框架共享UI/组件的方法。如果共享UI在同一框架的另一个应用程序中使用，则不应使用它。例如:“applicationOne”是用Vue编写的，它包含创建用户的所有UI/逻辑。
+“application2”写在React中，需要创建一个用户。使用single-spa沙箱允许您以一种方式包装您的“app1”Vue组件，使其在“application2”中工作，尽管是不同的框架。如果“application2”由single-spa卸载(根据激活函数返回false)，那就更好了，可以将沙箱看作是webcomponent的single-spa特定实现。
+
+
+## 公共模块共享公共逻辑
+
+公共模块是共享公共逻辑的好地方。您可以使用一个普通的javascript对象(single-spa公共模块)来共享逻辑，而不是每个应用程序都创建自己的通用逻辑实现。例如:授权。每个应用程序如何知道哪个用户已登录?您可以让每个应用程序询问服务器或读取JWT，但这会在每个应用程序中创建重复的工作。通过使用公共模块，您可以围绕登录到一个模块中的人实现逻辑(在模块上导出所有必要的方法)，每个single-spa应用程序可以通过从utilty模块导入方法来使用逻辑。这种方法也适用于数据[获取](./recommended-setup#api-data.md)。
