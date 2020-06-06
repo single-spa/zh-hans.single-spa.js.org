@@ -12,7 +12,7 @@ single-spa-react 是一个辅助库，它可以帮助React应用程序实现sing
 ```sh
 npm install --save single-spa-react
 
-# Or
+# or
 yarn add single-spa-react
 ```
 另外，您也可以通过添加 `<script src="https://unpkg.com/single-spa-react"></script>` 并访问全局变量 `singleSpaReact` 来使用 single-spa-react。
