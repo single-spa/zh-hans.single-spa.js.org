@@ -4,7 +4,11 @@ title: 构建应用
 sidebar_label: 构建应用
 ---
 
+<<<<<<< HEAD
 single-spa 应用与普通的单页面是一样的，只不过它没有HTML页面。在一个single-spa中，你的SPA包含许多被注册的应用，而各个应用可以使用不同的框架。被注册的这些应用维护自己的客户端路由，使用自己需要的框架或者类库。应用只要通过挂载，便可渲染自己的html页面，并自由实现功能。“挂载”(mounted)的概念指的是被注册的应用内容是否已展示在DOM上。我们可通过应用的[activity function](configuration#activity-function)来判断其是否已被挂载。应用在未挂载之前，会一直保持休眠状态。
+=======
+A single-spa registered application is everything that a normal SPA is, except that it doesn't have an HTML page. In a single-spa world, your SPA contains many registered applications, where each has its own framework. Registered applications have their own client-side routing and their own frameworks/libraries. They render their own HTML and have full freedom to do whatever they want, whenever they are *mounted*. The concept of being *mounted* refers to whether a registered application is putting content on the DOM or not. What determines if a registered application is mounted is its [activity function](configuration#activity-function). Whenever a registered application is *not mounted*, it should remain completely dormant until mounted.
+>>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 ## 创建并注册一个应用程序
 要添加一个应用，首先需要[注册该应用](configuration#registering-applications)。一旦应用被注册后，必须在其入口文件(entry point)实现下面提到的各个生命周期函数。

@@ -4,7 +4,12 @@ title: single-spa-html
 sidebar_label: HTML / Web Components
 ---
 
+<<<<<<< HEAD
 [single-spa-html](https://github.com/single-spa/single-spa-html) 是一个工具库，用于将原始 html 和 web components 包装为 single-spa 应用程序。
+=======
+[single-spa-html](https://github.com/single-spa/single-spa-html) is a helper library for mounting raw HTML and web components as
+single-spa applications or parcels.
+>>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 ## 安装
 ```sh

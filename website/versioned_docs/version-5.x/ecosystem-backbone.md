@@ -153,6 +153,7 @@ function domElementSetter() {
 
 * `BasePath` (必填) : backbone应用的基础路径。大多数情况下会设置应用在服务器的公共路径，其他路径会以它为基准。该参数为字符串类型。
 
+<<<<<<< HEAD
 * `AppWithRequire` (必填) : 该参数为一个对象，并且有如下属性 :
 	* `IsDataMain` (选填) : 该参数为一个布尔值，用来判断js是否需要 `data-main` 属性来加载应用。
 	* `AppPath` (必填) : 该参数为字符串，用来指明应用入口JavaScript文件的路径，他会需要RequireJs来启动，路径相对于BasePath。 
@@ -167,6 +168,21 @@ function domElementSetter() {
 
 * `App` (选填) : 该参数为一个对象，并且有如下属性 :
 	* `AppPath` (必填) : 该参数为字符串，用来指明应用入口JavaScript文件的路径，他会需要RequireJs来启动，路径相对于BasePath。 
+=======
+* `AppWithRequire` (required) : This parameter takes an object and expects below properties:
+	* `IsDataMain` (optional) : This parameter takes a boolean value and is used to specify whether require js will use `data-main` to load the app.
+	* `AppPath` (required) : This parameter takes a string value and specifies the path of the JavaScript file, which is entry point of your application and will be booted up using RequireJs. The path is relative to BasePath.
+	* `RequireJsPath` (required) : This parameter takes a string value and takes the path of the RequireJs file and is relative to BasePath.
+	* `DependenciesJsPaths` (optional) : This is an optional parameter takes an array of strings. It can be used to optionally provide a list of JavaScript paths which you want to load in the browser.
+
+* `AppWithBackboneJs` (optional) : This parameter takes an object and expects below properties:
+	* `AppPath` (required) : This parameter takes a string value and specifies the path of the JavaScript file, which is entry point of your application and will be booted up using Backbone Js. The path is relative to BasePath.
+	* `BackboneJsPath` (required) : This parameter takes a string value and takes the path of the Backbone Js file and is relative to BasePath.
+	* `DependenciesJsPaths` (optional) : This is an optional parameter takes an array of strings. It can be used to optionally provide a list of JavaScript paths which you want to load in the browser.
+
+* `App` (optional) : This parameter takes an object and expects below properties:
+	* `AppPath` (required) : This parameter takes a string value and specifies the path of the JavaScript file, which is the production build of your backbone application. The path is relative to BasePath.
+>>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 ### 注意 : 在AppWithRequire、AppWithBackboneJs和App中，只有一个是必需的。
 

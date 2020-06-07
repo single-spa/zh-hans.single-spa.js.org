@@ -272,7 +272,11 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 			<div>
 				<dt>LOAD_ERROR</dt>
 				<dd>
+<<<<<<< HEAD
 					应用的加载功能返回了一个rejected的Promise。这通常是由于下载应用程序的javascript包时出现网络错误造成的。Single-spa将在用户从当前路由导航并返回后重试加载应用。
+=======
+					The app's loading function returned a promise that rejected. This is often due to a network error attempting to download the JavaScript bundle for the application. Single-spa will retry loading the application after the user navigates away from the current route and then comes back to it.
+>>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 				</dd>
 			</div>
 		</dl>

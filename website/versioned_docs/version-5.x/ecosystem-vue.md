@@ -38,7 +38,12 @@ npm install --save single-spa-vue
 ```
 你可以通过选择引入`<script src="https://unpkg.com/single-spa-vue"></script>`到你的html文件中，就可以得到`singleSpaVue`全局变量
 
+<<<<<<< HEAD
 ## 用法
+=======
+Alternatively, you can use single-spa-vue by adding `<script src="https://unpkg.com/single-spa-vue"></script>` to your HTML file and
+accessing the `singleSpaVue` global variable.
+>>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 如果没有安装过的话，请安装`systemjs-webpack-interop`。
 
