@@ -42,6 +42,10 @@ sidebar_label: Resources
 >>>>>>> 58c65d3fe984a0c3e474cf6d3b0e7e3f3734f6b1
 =======
 - [single-spa-html with js example](https://github.com/filoxo/single-spa-html-with-js-example) is an example repo of using single-spa-html that is enhanced with plain JavaScript.
+<<<<<<< HEAD
 >>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
+=======
+- [coexisting-angular-microfrontends/login](https://github.com/Vallerious/coexisting-angular-microfrontends/tree/feature/login) is a branch that implements a login functionality between Angular apps. It uses localStorage as shared memory space to store and retrieve a token.
+>>>>>>> 4f59185ed36a866b0d2fbde35b8d7fda4a291529
 
 你也有这样一个精彩的项目吗? [点击提交一个PR](https://github.com/single-spa/single-spa.js.org/edit/master/docs/examples.md) 来将你的案例也添加到这里.
