@@ -46,6 +46,10 @@ sidebar_label: Resources
 >>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 =======
 - [coexisting-angular-microfrontends/login](https://github.com/Vallerious/coexisting-angular-microfrontends/tree/feature/login) is a branch that implements a login functionality between Angular apps. It uses localStorage as shared memory space to store and retrieve a token.
+<<<<<<< HEAD
 >>>>>>> 4f59185ed36a866b0d2fbde35b8d7fda4a291529
+=======
+- [single-spa-angular-cli](https://github.com/matt-gold/single-spa-angular-cli) is an all-Angular example repo that uses SystemJS to load single-spa-angular applications into a containing Angular CLI application at different routes.
+>>>>>>> c19ee6f7b7118acc0b54f344e789680782cda614
 
 你也有这样一个精彩的项目吗? [点击提交一个PR](https://github.com/single-spa/single-spa.js.org/edit/master/docs/examples.md) 来将你的案例也添加到这里.
