@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[30],{160:function(e){e.exports=JSON.parse('{"docsSidebars":{},"permalinkToSidebar":{},"version":"next"}')}}]);
