@@ -272,11 +272,7 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 			<div>
 				<dt>LOAD_ERROR</dt>
 				<dd>
-<<<<<<< HEAD
 					应用的加载功能返回了一个rejected的Promise。这通常是由于下载应用程序的javascript包时出现网络错误造成的。Single-spa将在用户从当前路由导航并返回后重试加载应用。
-=======
-					The app's loading function returned a promise that rejected. This is often due to a network error attempting to download the JavaScript bundle for the application. Single-spa will retry loading the application after the user navigates away from the current route and then comes back to it.
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 				</dd>
 			</div>
 		</dl>
@@ -641,14 +637,7 @@ single-spa fires Events to the `window` as a way for your code to hook into URL 
 
 ### PopStateEvent
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-浏览器的所有的下列事件 [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) 都会被single-spa 触发。`detail`事件包含触发路由重定向的原生DOM事件，例如 [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) 或 [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent)。通过 [`addEventListener`] 可以控制这些事件(https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), 就像:
-=======
-The PopStateEvents fired by single-spa are the way single-spa tells all active applications to re-render. This occurs when one application calls [history.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState), [history.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState), or [triggerAppChange](#triggerAppChange).
-=======
 single-spa fires [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) events when it wants to instruct all active applications to re-render. This occurs when one application calls [history.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState), [history.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState), or [triggerAppChange](#triggerAppChange). Single-spa deviates from the browser's default behavior in some cases, as described in [this Github issue](https://github.com/single-spa/single-spa/issues/484#issuecomment-601279869).
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 ```js
 window.addEventListener('popstate', evt => {
@@ -661,12 +650,7 @@ window.addEventListener('popstate', evt => {
 });
 ```
 
-<<<<<<< HEAD
-The [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) are fired by single-spa on the window. The event `detail` property contains the native DOM event that triggered the reroute, such as a [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) or [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent). These events can be handled by using [`addEventListener`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), like so:
->>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
-=======
 ### Custom Events
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 single-spa fires a series of [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) whenever it reroutes. A reroute occurs whenever the browser URL changes in any way or a `triggerAppChange` is called. The custom events are fired to the `window`. Each custom event has a [`detail` property](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) with the following properties:
 
@@ -682,9 +666,6 @@ window.addEventListener('single-spa:before-routing-event', evt => {
 
 The following table shows the order in which the custom events are fired during a reroute:
 
-<<<<<<< HEAD
-每次路由跳转前 `single-spa:before-routing-event` 事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时也会触发。
-=======
 | Event order | Event Name | Condition for firing |
 | ----------- | ---------- | -------------------- |
 | 1 | `single-spa:before-app-change` or `single-spa:before-no-app-change` | Will any applications change status? |
@@ -694,7 +675,6 @@ The following table shows the order in which the custom events are fired during 
 | 5 | `single-spa:first-mount` | Is this the first time any application was mounted? |
 | 6 | `single-spa:app-change` or `single-spa:no-app-change` | Did any applications change status? |
 | 7 | `single-spa:routing-event` | &mdash; |
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 ### before-app-change event
 
@@ -722,12 +702,8 @@ window.addEventListener('single-spa:before-no-app-change', (evt) => {
 });
 ```
 
-<<<<<<< HEAD
 每次路由跳转后`single-spa:routing-event`事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时
 ; 在single-spa 校验所有app都正确加载，初始化，挂载，卸载之后此此事件触发。
-=======
-A `single-spa:before-no-app-change` event is fired before reroutes that will result in zero applications changing status.
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 ### before-routing-event
 
@@ -741,11 +717,7 @@ window.addEventListener('single-spa:before-routing-event', (evt) => {
 });
 ```
 
-<<<<<<< HEAD
 每次加载，初始化，挂载，卸载或移除一个或多个应用程序时，都会触发 `single-spa:app-change` 事件。它与 `single-spa:routing-event` 路由事件类似，只是在一个或多个应用程序真正加载，初始化，挂载，卸载或移除之后，它才会启动。如果hashchange、popstate或triggerAppChange不会导致其中任何一个更改，则不会引发事件。
-=======
-A `single-spa:before-routing-event` event is fired before every routing event occurs, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary.
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 ### before-mount-routing-event
 
@@ -760,11 +732,7 @@ window.addEventListener('single-spa:before-mount-routing-event', (evt) => {
 });
 ```
 
-<<<<<<< HEAD
 当没有加载，初始化，挂载，卸载或移除应用程序时，single-spa触发 `single-spa:no-app-change` 事件。这与 `single-spa:app-change` 事件正好相反。每个路由事件只会触发一个。
-=======
-A `single-spa:before-mount-routing-event` event is fired after `before-routing-event` and before `routing-event`. It is guaranteed to fire after all single-spa applications have been unmounted, but before any new applications have been mounted.
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 ### before-first-mount
 
@@ -788,50 +756,4 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
-<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
-=======
-> **Suggested use case:** log the time it took before the user sees any of the apps mounted.
-
-### app-change event
-
-```js
-window.addEventListener('single-spa:app-change', (evt) => {
-	console.log('A routing event occurred where at least one application was mounted/unmounted');
-	console.log(evt.detail.originalEvent) // PopStateEvent
-	console.log(evt.detail.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
-	console.log(evt.detail.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
-	console.log(evt.detail.totalAppChanges) // 2
-});
-```
-
-A `single-spa:app-change` event is fired every time that one or more apps were loaded, bootstrapped, mounted, unmounted, or unloaded. It is similar to `single-spa:routing-event` except that it will not fire unless one or more apps were actually loaded, bootstrapped, mounted, or unmounted. A hashchange, popstate, or triggerAppChange that does not result in one of those changes will not cause the event to be fired.
-
-### no-app-change event
-
-```js
-window.addEventListener('single-spa:no-app-change', (evt) => {
-	console.log('A routing event occurred where zero applications were mounted/unmounted');
-	console.log(evt.detail.originalEvent) // PopStateEvent
-	console.log(evt.detail.newAppStatuses) // { }
-	console.log(evt.detail.appsByNewStatus) // { MOUNTED: [], NOT_MOUNTED: [] }
-	console.log(evt.detail.totalAppChanges) // 0
-});
-```
-
-When no applications were loaded, bootstrapped, mounted, unmounted, or unloaded, single-spa fires a `single-spa:no-app-change` event. This is the inverse of the `single-spa:app-change` event. Only one will be fired for each routing event.
-
-### routing-event
-
-```js
-window.addEventListener('single-spa:routing-event', (evt) => {
-	console.log('single-spa finished mounting/unmounting applications!');
-	console.log(evt.detail.originalEvent) // PopStateEvent
-	console.log(evt.detail.newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
-	console.log(evt.detail.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
-	console.log(evt.detail.totalAppChanges) // 2
-});
-```
-
-A `single-spa:routing-event` event is fired every time that a routing event has occurred, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary; and after single-spa verified that all apps were correctly loaded, bootstrapped, mounted, and unmounted.
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52

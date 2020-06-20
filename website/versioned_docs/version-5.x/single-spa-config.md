@@ -8,12 +8,7 @@ single-spa基础配置包含以下内容：
 1、一个html文件，会被所有single-spa应用共享
 2、一段javascript代码，调用[`singleSpa.registerApplication()`](/docs/api.html#registerApplication)方法来注册各个应用
 
-<<<<<<< HEAD
 这两个根目录下的配置用于启动single-spa应用。
-=======
-1. The root HTML file that is shared by all single-spa applications.
-2. The JavaScript that calls [`singleSpa.registerApplication()`](/docs/api.html#registerapplication).
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 ## Index.html文件
 
@@ -86,15 +81,11 @@ registerApplication('applicatonName', application, activityFunction)
 - 在single-spa上手动调用[`triggerAppChange`] 方法
 - `checkActivityFunctions`方法被调用时
 
-<<<<<<< HEAD
-### 使用对象参数
-=======
 #### Custom props
 
 The optional fourth argument to `registerApplication` is [custom props](./building-applications#custom-props) that are passed to the application's single-spa lifecycle functions. The custom props may be either an object or a function that returns an object. Custom prop functions are called with the application name and current `window.location` as arguments.
 
-### Using configuration object
->>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
+### 使用对象参数
 
 ```js
 singleSpa.registerApplication({

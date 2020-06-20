@@ -4,21 +4,13 @@ title: 构建应用
 sidebar_label: 构建应用
 ---
 
-<<<<<<< HEAD
 single-spa 应用与普通的单页面是一样的，只不过它没有HTML页面。在一个single-spa中，你的SPA包含许多被注册的应用，而各个应用可以使用不同的框架。被注册的这些应用维护自己的客户端路由，使用自己需要的框架或者类库。应用只要通过挂载，便可渲染自己的html页面，并自由实现功能。“挂载”(mounted)的概念指的是被注册的应用内容是否已展示在DOM上。我们可通过应用的[activity function](configuration#activity-function)来判断其是否已被挂载。应用在未挂载之前，会一直保持休眠状态。
-=======
-A single-spa registered application is everything that a normal SPA is, except that it doesn't have an HTML page. In a single-spa world, your SPA contains many registered applications, where each has its own framework. Registered applications have their own client-side routing and their own frameworks/libraries. They render their own HTML and have full freedom to do whatever they want, whenever they are *mounted*. The concept of being *mounted* refers to whether a registered application is putting content on the DOM or not. What determines if a registered application is mounted is its [activity function](configuration#activity-function). Whenever a registered application is *not mounted*, it should remain completely dormant until mounted.
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 ## 创建并注册一个应用程序
 要添加一个应用，首先需要[注册该应用](configuration#registering-applications)。一旦应用被注册后，必须在其入口文件(entry point)实现下面提到的各个生命周期函数。
 
-<<<<<<< HEAD
 ## 注册应用的生命周期
 在一个 single-spa 页面，注册的应用会经过下载(loaded)、初始化(initialized)、被挂载(mounted)、卸载(unmounted)和unloaded（被移除）等过程。single-spa会通过“生命周期”为这些过程提供钩子函数。
-=======
-To create a registered application, first [register the application with single-spa](./configuration/#registering-applications). Once registered, the registered application must correctly implement **all** of the following lifecycle functions inside of its main entry point.
->>>>>>> 64b31a721ec568936d58535f4ab5468a59126f52
 
 生命周期函数是 single-spa 在注册的应用上调用的一系列函数，single-spa 会在各应用的主文件中，查找对应的函数名并进行调用。
 
@@ -56,12 +48,8 @@ function bootstrap(props) {
 - `singleSpa`: 对singleSpa 实例的引用, 方便各应用和类库调用singleSpa提供的API时不再导入它。 可以解决有多个webpack配置文件构建时无法保证只引用一个singleSpa实例的问题。
 - `mountParcel`: [mountParcel 函数](/docs/parcels-api.html#mountparcel).
 
-<<<<<<< HEAD
 #### 自定义参数
 除single-spa提供的内置参数外，还可以指定自定义参数，在调用各个生命周期函数时传入。指定方法是在调用`registerApplication`时，传入第4个参数。
-=======
-In addition to the built-in props that are provided by single-spa, you may optionally specify custom props to be passed to an application. These *customProps* will be passed into each lifecycle method. The custom props are an object, and you can provide either the object or a function that returns the object. Custom prop functions are called with the application name and current window.location as arguments.
->>>>>>> ddb3d613a9f193b605266334e22c3c435e60f813
 
 <p className="filename">root.application.js</p>
 

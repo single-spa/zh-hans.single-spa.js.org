@@ -56,12 +56,7 @@ yarn create single-spa --framework react
 
 ### --dir
 
-<<<<<<< HEAD
 你可以用以下方式指定 `create-single-spa` 执行的路径
-=======
-You may specify which directory create-single-spa runs in through either of the following ways:
-
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 ```sh
 # Two ways of doing the same thing
 create-single-spa my-dir
@@ -115,11 +110,7 @@ create-single-spa提供如下NPM包：
 
 [Github project](https://github.com/single-spa/create-single-spa/tree/master/packages/webpack-config-single-spa)
 
-<<<<<<< HEAD
 可分享可定制化的webpack配置，应用于公共模块和React single-spa应用。
-=======
-A shareable, customizable webpack config that is used for utility modules and single-spa applications.
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 ### 安装
 

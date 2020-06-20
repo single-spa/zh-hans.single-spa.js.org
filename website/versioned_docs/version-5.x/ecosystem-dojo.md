@@ -13,11 +13,7 @@ single-spa-dojo 是一个工具库，可以帮助实现使用 [Dojo](https://doj
 ```sh
 npm install --save single-spa-dojo
 
-<<<<<<< HEAD
 # 或
-=======
-# or
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 yarn add single-spa-dojo
 ```
 
