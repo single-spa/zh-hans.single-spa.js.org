@@ -64,12 +64,7 @@ export const mount = emberLifecycles.mount;
 export const unmount = emberLifecycles.unmount;
 ```
 
-<<<<<<< HEAD
 ## 使用ember cli
-=======
-## Usage with ember cli
-For the most part, you can get applications that use [ember cli](https://ember-cli.com/) to work pretty seamlessly with single-spa. Maybe the biggest thing you'll have to worry about is that ember-cli assumes that it controls the entire HTML page, whereas a single-spa application does not. However, usually we can achieve equivalent behavior by just loading the vendor and app bundles into the HTML page dynamically, instead of baking them right into the HTML page. Below is a description of the known things you should do when setting up an ember-cli application with single-spa:
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
 在大多数情况下，使用[ember cli](https://ember-cli.com/)的应用程序都可以与single-spa很好的工作。有一个不同的是，ember cli会控制整个html页面，但一个single-spa应用程序不是这样。所以，通常我们可以通过动态地将供应商和应用程序捆绑包加载到html页面中，而不是直接将它们烘焙到html页面中来实现相同的行为。以下是在使用single-spa设置ember cli应用程序时应执行的已知操作：
 

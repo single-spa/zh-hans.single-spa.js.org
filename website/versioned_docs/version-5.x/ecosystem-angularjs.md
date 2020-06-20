@@ -4,11 +4,7 @@ title: single-spa-angularjs
 sidebar_label: AngularJS
 ---
 
-<<<<<<< HEAD
 single-spa-angularjs 是一个类库，可以帮助实现与 [AngularJS](https://angularjs.org/) 一起使用 [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount)。 查看 [single-spa-angularjs github](https://github.com/single-spa/single-spa-angularjs).
-=======
-single-spa-angularjs is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [AngularJS](https://angularjs.org/). Check out the [single-spa-angularjs github](https://github.com/single-spa/single-spa-angularjs).
->>>>>>> 6ea23d560fdf852a6e5e4a4b7e261bf061f9b1f4
 
 ## 安装
 ```sh
@@ -87,7 +83,6 @@ singleSpa.registerApplication({
 
 ## Options
 
-<<<<<<< HEAD
 当调用`singleSpaAngularJS（opts）`时，所有选项都通过`opts`参数传递给single-spa-angularjs。提供以下选项：
 
 - `angular`: (必须) angular主对象, 通常暴露在window上，也可以通过'require（'angular'）'或'import from'angular'`获得。
@@ -99,24 +94,8 @@ singleSpa.registerApplication({
 - `strictDi`: (可选 - 初始化程序的一部分 [config object](https://docs.angularjs.org/api/ng/function/angular.bootstrap#usage)) 默认为false的布尔值，修改以启用StrictDi模式。
 - `template`: （可选）在应用程序mounted时将插入DOM的html字符串。 该模板位于domElementGetter返回的元素内。 如果未提供，则不会插入模板。 使用angular-ui-router时，由于ui-router会为您将模板放到dom上，因此您通常不需要使用它。
 
-<<<<<<< HEAD
 ## ES5 示例
 查看 [示例](https://github.com/joeldenning/single-spa-es5-angularjs)
-=======
-=======
-All options are passed to single-spa-angularjs via the `opts` parameter when calling `singleSpaAngularJS(opts)`. The following options are available:
-
-- `angular`: (required) The main angular object, which is generally either exposed onto the window or is available via `require('angular')` or `import angular from 'angular'`.
-- `domElementGetter`: (optional) A function that takes in the `props` parameter and returns a DOMElement. This dom element is where the angular
-  application will be bootstrapped, mounted, and unmounted. If not provided, the default is to create a div and append it to `document.body`.
-- `mainAngularModule`: (required) A string that is the name of the angular module that will be bootstrapped by angular. See [angular docs](https://docs.angularjs.org/api/ng/function/angular.bootstrap) for `angular.bootstrap()`.
-- `uiRouter`: (optional) If you are using angular-ui-router, set this option to either `true` or to a string value. The string value will be the value of the ui-view HTML attribute. For example, `uiRouter: 'core'` will be `<div ui-view="core" />` whereas `uiRouter: true` turns into `<div ui-view />`.
-- `preserveGlobal`: (optional) A boolean that defaults to false. Set if you want to keep angular on the global even after an app unmounts.
-- `elementId`: (optional) A string which will be used to identify the element appended to the DOM and bootstrapped by Angular.
-- `strictDi`: (optional - part of the bootstrap [config object](https://docs.angularjs.org/api/ng/function/angular.bootstrap#usage)) A boolean that defaults to false. Set if you want to enable StrictDi mode
-- `template`: (optional) An HTML string that will be inserted into the DOM when the app is mounted. The template goes inside of the element returned by domElementGetter. If not provided, no template will be inserted. When using angular-ui-router, you often do not need to use this since ui-router will be putting a template onto the dom for you.
-
->>>>>>> a286e80ce4edaefdc40df4612cc25e986baeeb41
 ## Custom Props
 
 [single-spa custom props](./building-applications.md#lifecycle-props) are made available as `$rootScope.singleSpaProps`.

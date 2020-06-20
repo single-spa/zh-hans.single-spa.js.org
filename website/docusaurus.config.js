@@ -6,13 +6,8 @@ const versions = require('./versions.json');
 
 module.exports = {
   title: 'single-spa',
-<<<<<<< HEAD
   tagline: 'a javascript framework for front-end microservices',
   url: 'https://single-spa.github.io/zh-hans.single-spa.js.org',
-=======
-  tagline: 'A javascript router for front-end microservices',
-  url: 'https://single-spa.github.io/single-spa.js.org',
->>>>>>> a286e80ce4edaefdc40df4612cc25e986baeeb41
   baseUrl: '/',
   projectName: 'single-spa',
   favicon: 'img/logo-blue-favicon.ico',

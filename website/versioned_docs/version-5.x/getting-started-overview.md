@@ -4,21 +4,12 @@ title: 快速开始
 sidebar_label: 概览
 ---
 
-<<<<<<< HEAD
 ## JavaScript 微前端
-=======
-## JavaScript Microfrontends
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 [加入 Slack 一起聊聊](https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ)
 
-<<<<<<< HEAD
 Single-spa 是一个将多个单页面应用聚合为一个整体应用的 javascript 微前端框架。 使用 single-spa 进行前端架构设计可以带来很多好处，例如:
-=======
-single-spa is a framework for bringing together multiple JavaScript microfrontends in a frontend application. Architecting your frontend using single-spa enables many benefits, such as:
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
 
-<<<<<<< HEAD
 - 在同一页面上[使用多个前端框架](ecosystem.md#help-for-frameworks) [而不用刷新页面](building-applications.md)
   ([React](ecosystem-react.md), [AngularJS](ecosystem-angularjs.md), [Angular](ecosystem-angular.md), [Ember](ecosystem-ember.md), 你正在使用的框架)
 - 独立部署每一个单页面应用
@@ -26,45 +17,20 @@ single-spa is a framework for bringing together multiple JavaScript microfronten
 - 改善初始加载时间，迟加载代码
 
 ## 演示和示例
-=======
-- [Use multiple frameworks](ecosystem.md#help-for-frameworks) on the same page [without page refreshing](building-applications.md)
-  ([React](ecosystem-react.md), [AngularJS](ecosystem-angularjs.md), [Angular](ecosystem-angular.md), [Ember](ecosystem-ember.md), or whatever you're using)
-- Deploy your microfrontends independently
-- Write code using a new framework, without rewriting your existing app
-- Lazy load code for improved initial load time
-
-## Demos and Examples
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 前往 [示例页面](/docs/examples).
 
 ## 架构概览
 
-<<<<<<< HEAD
 Single-spa 从现代框架组件生命周期中获得灵感，将生命周期应用于整个应用程序。 它脱胎于 Canopy 使用 React + React-router 替换 AngularJS + ui-router 的思考，避免应用程序被束缚。现在 single-spa 几乎支持任何框架。 由于 JavaScript 因其许多框架的寿命短而臭名昭著，我们决定让它在任何您想要的框架都易于使用。
-=======
-single-spa takes inspiration from modern framework component lifecycles by applying lifecycles to entire applications.
-It was born out of Canopy's desire to use React + react-router instead of being forever stuck with our AngularJS + ui-router application, and now single-spa supports almost any framework. Since JavaScript is notorious for the short life of its many frameworks, we decided to make it easy to use whichever frameworks you want.
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 Single-spa 包括以下内容:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 1. [Applications](building-applications.md)，每个应用程序本身就是一个完整的 SPA (某种程度上)。 每个应用程序都可以响应 url 路由事件，并且必须知道如何从 DOM 中初始化、挂载和卸载自己。 传统 SPA 应用程序和 Single SPA 应用程序的主要区别在于，它们必须能够与其他应用程序共存，而且它们没有各自的 html 页面。
-=======
-1. [Applications](building-applications.md), each of which is an entire SPA itself (sort of). Each application can respond to url routing events and must know how to bootstrap, mount, and unmount itself from the DOM. The main difference between a traditional SPA and single-spa applications is that they must be able to coexist with other applications, and they do not each have their own html page.
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 	例如，React 或 Angular spa 就是应用程序。 当激活时，它们监听 url 路由事件并将内容放在 DOM上。 当它们处于非活动状态时，它们不侦听 url 路由事件，并且完全从 DOM 中删除。
 
 2. 一个 [single-spa-config](configuration)配置, 这是html页面和向Single SPA注册应用程序的JavaScript。每个应用程序都注册了三件东西
-=======
-1. [Applications](building-applications.md), each of which is an entire SPA itself (sort of). Each application can respond to url routing events and must know how to bootstrap, mount, and unmount itself from the DOM. The main difference between a traditional SPA and single-spa applications is that they must be able to coexist with other applications, and they do not each have their own HTML page.
-
-    For example, your React or Angular SPAs are applications. When active, they listen to url routing events and put content on the DOM. When inactive, they do not listen to url routing events and are totally removed from the DOM.
-2. A [single-spa-config](configuration), which is the HTML page _and_ the JavaScript that registers applications with single-spa. Each application is registered with three things:
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
     - A name
     - A function (加载应用程序的代码)
     - A function (确定应用程序何时处于活动状态/非活动状态)
@@ -112,11 +78,7 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
 要创建single-spa应用程序，您需要做三件事：
 
-<<<<<<< HEAD
 1. 创建一个 html 文件:
-=======
-1. Create an html file.
->>>>>>> a91c4630a6197f8b83eaf5bbb648e7762f3cad39
 
 ```html
 <html>
@@ -135,15 +97,9 @@ import * as singleSpa from 'single-spa';
 
 const name = 'app1';
 
-<<<<<<< HEAD
 /* loading 是一个返回 promise 的函数，用于 加载/解析 应用代码。
  * 它的目的是为延迟加载提供便利 —— single-spa 只有在需要时才会下载应用程序的代码。
  * 在这个示例中，在 webpack 中支持 import ()并返回 Promise，但是 single-spa 可以使用任何返回 Promise 的加载函数。
-=======
-/* The app can be a resolved application or a function that returns a promise that resolves with the JavaScript application module.
- * The purpose of it is to facilitate lazy loading -- single-spa will not download the code for a application until it needs to.
- * In this example, import() is supported in webpack and returns a Promise, but single-spa works with any loading function that returns a Promise.
->>>>>>> 79041b5e8f006e5432f1b47e7c6f8156a394f286
  */
 const app = () => import('./app1/app1.js');
 
