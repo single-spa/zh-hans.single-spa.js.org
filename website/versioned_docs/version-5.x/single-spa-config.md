@@ -21,12 +21,17 @@ The single-spa root config consists of the following:
 ## Index.html文件
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 内容可参考[该示例](http://single-spa-playground.org/playground/html-file)。注意该文件不包含html元素(div, buttons等)，只是为了调用`registerApplication()`方法。
 =======
 ## index.html file
 See [this example root config](http://single-spa-playground.org/playground/html-file) for what a root HTML file looks like.
 Notice how it does not have any divs or buttons, but just calls `registerApplication()`.
 >>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
+=======
+## Index.html file
+See [this example root config](https://github.com/polyglot-microfrontends/root-config/blob/master/src/index.ejs) for what a root HTML file looks like.
+>>>>>>> 2328765e5877dad712dc474ab7bb3c0e24f91a74
 
 **在使用single-spa时，不必使用SystemJS**，不过为了能够[独立部署](/docs/separating-applications.html)各应用，很多示例和教程会推荐使用SystemJS。
 
