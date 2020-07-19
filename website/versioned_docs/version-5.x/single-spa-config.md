@@ -1,51 +1,25 @@
 ---
 id: configuration
-<<<<<<< HEAD
-title: 使用single-spa配置
-sidebar_label: single-spa config
----
-
-single-spa基础配置包含以下内容：
-1、一个html文件，会被所有single-spa应用共享
-2、一段javascript代码，调用[`singleSpa.registerApplication()`](/docs/api.html#registerApplication)方法来注册各个应用
-=======
 title: Configuring single-spa
 sidebar_label: Configuring single-spa
 ---
 
 The single-spa root config consists of the following:
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
 
 这两个根目录下的配置用于启动single-spa应用。
 
 ## Index.html文件
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 内容可参考[该示例](http://single-spa-playground.org/playground/html-file)。注意该文件不包含html元素(div, buttons等)，只是为了调用`registerApplication()`方法。
-=======
-## index.html file
-See [this example root config](http://single-spa-playground.org/playground/html-file) for what a root HTML file looks like.
-Notice how it does not have any divs or buttons, but just calls `registerApplication()`.
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
-=======
-## Index.html file
+
 See [this example root config](https://github.com/polyglot-microfrontends/root-config/blob/master/src/index.ejs) for what a root HTML file looks like.
->>>>>>> 2328765e5877dad712dc474ab7bb3c0e24f91a74
 
 **在使用single-spa时，不必使用SystemJS**，不过为了能够[独立部署](/docs/separating-applications.html)各应用，很多示例和教程会推荐使用SystemJS。
 
 ## 注册应用
 
-<<<<<<< HEAD
 你需要先注册[应用](building-applications.md)，这样single-spa才知道在什么时机，如何去初始化、下载、挂载和卸载各应用。我们一般情况下在single-spa的配置文件中进行注册，当然也可以有其他方式(不推荐)。如果在某个应用中注册其他应用，这两个应用不会存在嵌套关系，他们还是同级关系，应用的挂载和下载也还是会依赖各自的触发条件(activity functions)。
-=======
-You must register [applications](building-applications.md) with single-spa so it knows how and when to
-initiate, load, mount, and unmount each application. Registration most commonly occurs inside of the single-spa config but
-does not have to. Note that if an application is registered from within another application, no hierarchy will be
-maintained between the applications. Instead, the applications will be siblings and will be mounted
-and unmounted according to their own activity functions.
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
+
 
 我们通过调用`registerApplication`方法来注册应用。例如：
 
