@@ -32,20 +32,12 @@ sidebar_label: 微前端概念
 
 在single-spa中，有以下三种微前端类型：
 
-<<<<<<< HEAD
 1. [single-spa applications](/docs/building-applications):为一组特定路由渲染组件的微前端。
 2. [single-spa parcels](/docs/parcels-overview): 不受路由控制，渲染组件的微前端。
 3. [utility modules](/docs/recommended-setup#utility-modules-styleguide-api-etc): 非渲染组件，用于暴露共享javascript逻辑的微前端。
 
 一个web应用可能包含一种或多种类型的微前端。差异可见[深入对比](/docs/module-types)，我们推荐[微前端类型选择](/docs/recommended-setup#applications-versus-parcels-versus-utility-modules)。
 ## 微前端通信
-=======
-1. [single-spa applications](/docs/building-applications): Microfrontends that render components for a set of specific routes.
-2. [single-spa parcels](/docs/parcels-overview): Microfrontends that render components without controlling routes.
-3. [utility modules](/docs/recommended-setup#utility-modules-styleguide-api-etc): Microfrontends that export shared JavaScript logic without rendering components.
-
-A web app may include one or more types of microfrontends. See [an in-depth comparison](/docs/module-types) and our recommendations for [choosing between microfrontend types](/docs/recommended-setup#applications-versus-parcels-versus-utility-modules).
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
 
 ```import {thing} from 'other-microfrontend'```是微前端间通信的首选方式。[详细文档](/docs/recommended-setup#inter-app-communication)
 
@@ -53,15 +45,8 @@ A web app may include one or more types of microfrontends. See [an in-depth comp
 
 single-spa是一个小于5kb（gzip）npm包，用于协调微前端的挂载和卸载。它知道何时基于[活动](/docs/api/#registerapplication)挂载应用程序，并且可以在[小型适配器库](/docs/ecosystem)的帮助下以与框架无关的方式挂载应用程序。
 
-<<<<<<< HEAD
 ## 性能
 相比于原生应用，微前端性能更佳。这是由于[懒加载](/docs/api/#registerapplication) 和其他相关的优化。微前端为我们提供一种迁移方式，从而解决我们原生项目中隐藏的问题。出于性能考虑，强烈建议框架（如：React, Vue, or Angular等）级别的实例仅引用一次，[具体做法参考](/docs/recommended-setup#shared-dependencies)。
-=======
-single-spa is a small, 5kb (gzipped) npm package that orchestrates the mounting and unmounting of your microfrontends. It knows when to mount the applications based on [activity functions](/docs/api/#registerapplication) and can do so in a framework agnostic way with the help of small [adapter libraries](/docs/ecosystem).
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9
 
 
-<<<<<<< HEAD
-=======
 Microfrontends are often more performant than the monoliths from which they originate. This is due to built-in lazy loading (via [loading functions](/docs/api/#registerapplication)) and other performance-related best practices. Your monolith likely has "skeletons in its closet" - microfrontends gives you a migration path that will expose and resolve the problems caused by those skeletons. One important performance consideration is to share a single instance of large libraries (such as React, Vue, or Angular), which is highly encouraged. To do so, see our [recommended setup](/docs/recommended-setup#shared-dependencies).
->>>>>>> 7a20f61df4670c10bc3b5a1d872d966fe72ee2f9

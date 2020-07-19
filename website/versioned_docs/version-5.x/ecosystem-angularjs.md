@@ -11,12 +11,7 @@ single-spa-angularjs 是一个类库，可以帮助实现与 [AngularJS](https:/
 npm install --save single-spa-angularjs
 ```
 
-<<<<<<< HEAD
 请注意，你也可以使用 `<script src="https://unpkg.com/single-spa-angularjs"></script>` 的方式，通过全局变量 `singleSpaAngularjs` 引入库，如果那样对你来说更方便。
-=======
-Note that you can alternatively `<script src="https://cdn.jsdelivr.net/npm/single-spa-angularjs@<VERSION>/lib/single-spa-angularjs.js` and access the library
-via the `window.singleSpaAngularjs.default()` global function if that is easier for you.
->>>>>>> d04f04d5cf24219db436968fe2761bc3c303e440
 
 ## 使用打包工具
 
@@ -42,15 +37,8 @@ export const unmount = ngLifecycles.unmount;
 ## 不使用打包工具
 如果不使用打包工具，则需要将你的 angularjs 应用设置为 SystemJS module 或全局变量。 使用 SystemJS module更佳，你可以在 [recommended single-spa setup](/docs/faq.html#is-there-a-recommended-setup) 在中查看更多内容。
 
-<<<<<<< HEAD
 ### 作为 SystemJS module
 添加如下代码到你的 AngularJS 应用。如果你使用 gulp/grunt 打包文件，需要创建一个 `single-spa-application.js` 文件，并确保它在最终的构建文件中。
-=======
-
-### As a SystemJS module
-Add the following to your AngularJS application. If you're using gulp/grunt to concatenate files together, just create a new file called
-`single-spa-application.js` and make sure it's included in your final build file.
->>>>>>> d04f04d5cf24219db436968fe2761bc3c303e440
 
 ```js
 System.register([], function(_export) {

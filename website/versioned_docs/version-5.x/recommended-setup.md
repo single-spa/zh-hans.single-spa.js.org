@@ -1,48 +1,45 @@
 ---
 id: recommended-setup
-title: The Recommended Setup
-sidebar_label: Overview
+title: 推荐设置
+sidebar_label: 概述
 ---
 
-The single-spa npm package is not opinionated about your build tools, CI process, or local development workflow. However, to implement single-spa you will have to figure all of those things out (and more). To help you decide how to approach these problems, the single-spa core team has put together a "recommended setup" that gives an opinionated approach to solving the practical problems of microfrontends.
+Single-spa NPM包并不是针对构建工具，CI流水线，或者开发环境工作工作流的某一个过程。而为了实现single-spa你需要设置这些配置（可能更多）。为了帮助您搞明白如何解决这些问题，single-spa核心团队推出了“推荐配置”，希望它能解决直接解决您实现微前端过程中的某些问题。
 
-## Overview
-We recommend a setup that uses in-browser ES modules + import maps (or SystemJS to polyfill these if you need better browser support). This setup has several advantages:
+## 概述
+我们建议使用浏览器内ES模块 + import maps (或者SystemJS填充这些，如果你需要更好的浏览器支持)的设置。这种设置有几个优点:
 
-1. Common libraries are easy to manage, and are only downloaded once. If you're using SystemJS, you can also preload them for a speed boost as well.
-2. Sharing code / functions / variables is as easy as import/export, just like in a monolithic setup
-3. Lazy loading applications is easy, which enables you to speed up initial load times
-4. Each application (AKA microservice, AKA ES module) can be independently developed and deployed. Teams are enabled to work at their own speed, experiment (within reason as defined by the organization), QA, and deploy on thier own schedules. This usually also means that release cycles can be decreased to days instead of weeks or months
-5. A great developer experience (DX): go to your dev environment and add an import map that points the application's url to your localhost. See sections below for details
+1. 公共模块易于管理，并且只下载一次。如果使用SystemJS，也可以预加载它们来提高速度。
+2. 共享代码/函数/变量就像导入/导出一样简单，就像在一个整体中设置一样。
+3. 延迟加载应用程序很容易，这使您能够加速初始加载时间。
+4. 每个应用程序(又名微服务，又名ES模块)都可以独立开发和部署。团队可以按照自己的进度工作、实验(在组织定义的合理范围内)、QA和部署。这通常也意味着发布周期可以缩短到几天，而不是几周或几个月。
+5. 很棒的开发人员体验(DX):转到dev环境并添加一个导入映射，该映射将应用程序的url指向您的本地主机。请参阅下面的章节了解详细信息。
 
-## Alternatives
+## 其他选择
 
-* [qiankun](https://github.com/umijs/qiankun) is a popular alternative to this recommended setup.
-* [Isomorphic Layout Composer](https://github.com/namecheap/ilc) - complete solution for Micro Frontends composition into SPA with SSR support
+* [qiankun](https://github.com/umijs/qiankun) 是一个很不错的替代品。
+* [Isomorphic Layout Composer](https://github.com/namecheap/ilc) - 一个将微前端组成部分支持SSR完整的解决方案。
 
-## In-browser versus build-time modules
+## 运行时模块 vs. 构建时模块
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=Jxqiu6pdMSU&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=2) / [Bilibili](https://www.bilibili.com/video/av83498486/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=Jxqiu6pdMSU&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=2) / [Bilibili](https://www.bilibili.com/video/av83498486/)
 
-An in-browser JavaScript module is when imports and exports are not compiled away by your build tool, but instead are
-resolved within the browser. This is different from build-time modules, which are supplied by your node_modules and
-compiled away before they touch the browser.
+运行时模块，当被引用和导出时不会被构建工具编译，它直接被浏览器解析。它是与构建时模块的不同之处，他们在被浏览器解析前需要由node_modules提供并编译。
 
-The way to tell webpack and rollup to leave some dependencies untouched during the build, so that they come from the browser,
-is via [webpack externals](https://webpack.js.org/configuration/externals/#root) and [rollup externals](https://rollupjs.org/guide/en/#external).
+告诉webpack和rollup在构建期间保留一些依赖项，以便它们来自浏览器的方法是通过[webpack externals](https://webpack.js.org/configuration/externals/#root)和[rollup externals](https://rollupjs.org/guide/en/#external)。
 
-Here are our recommendations:
+以下是我们的推荐:
 
-1. Each single-spa application should be an in-browser Javascript module.
-2. Large shared dependencies (ie, the react, vue, or angular libraries) should each be in-browser modules.
-3. Everything else should be a build-time module.
+1. 每个single-spa应用程序都应该是一个浏览器内的Javascript模块
+2. 大型共享依赖(比如react、vue或angular库)应该都是浏览器内的模块。
+3. 其他的都应该是构建时模块。
 
 ## Import Maps
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=Lfm2Ge_RUxs&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=3) / [Bilibili](https://www.bilibili.com/video/av83617496/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=Lfm2Ge_RUxs&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=3) / [Bilibili](https://www.bilibili.com/video/av83617496/)
 
-[Import Maps](https://github.com/WICG/import-maps) are a browser specification for aliasing "import specifiers" to a URL.
-An import specifier is the string indicating which module to load. Examples:
+[Import Maps](https://github.com/WICG/import-maps)是一个浏览器规范，用于将某个URL起一个“Import specifier”的别名。
+import specifier是指示要加载哪个模块的字符串。例子:
 
 ```js
 // ./thing.js is the import specifier
@@ -52,53 +49,53 @@ import thing from './thing.js';
 import React from 'react';
 ```
 
-Specifiers that are not a URL are called "bare specifiers," such as `import 'react'`. Being able to alias bare specifiers to a URL
-is crucial to being able to use in-browser modules, which is why import maps exist.
+不是URL的说明符称为“纯说明符”，如“import”react”。对于能够使用浏览器内模块来说，能够将裸说明符别名为URL是至关重要的，这就是存在导入映射的原因。
 
-As of Feb 2020, import maps are only implemented in Chrome, and behind a developer feature toggle. As such, you will need a polyfill
-to make import maps work.
+截止到2020年2月，import maps仅在Chrome中实现，并在开发者特性切换后实现。因此，您将需要一个polyfill使import maps正常工作。
 
 ## Module Federation
 
-[Module Federation](https://dev.to/marais/webpack-5-and-module-federation-4j1i) is a webpack-specific technique for sharing [build-time modules](#in-browser-versus-build-time-modules). It involves each microfrontend bundling all of its dependencies, even the shared ones. This means that there are multiple copies of each shared dependency - one per microfrontend. In the browser, the first copy of the shared dependency will be downloaded, but subsequent microfrontends will reuse that shared dependency without downloading their copy of it.
+[模块联合](https://dev.to/marais/webpack-5-和module-feder-4j1i)是一种webpack-specific技术，用于共享[构建时模块](#in-browser- vs -build-time-modules)。它涉及到每个microfrontend捆绑它所有的依赖，甚至共享的依赖。这意味着每个共享依赖项都有多个副本——每个microfrontend一个。在浏览器中，共享依赖项的第一个副本将被下载，但随后的microfrontend将重用该共享依赖项，而不需要下载它们的副本。
 
-Note that Module Federation is a new feature (at the time of this writing) and requires that you use webpack@>=5 (currently in beta). It is still an evolving technology.
+注意，模块联合是一个新特性(在撰写本文时)，它要求您使用webpack@>=5(目前在beta版)。它仍然是一项不断发展的技术。
 
-single-spa is a way of structuring your routes for microfrontends. Module Federation is a performance technique for microfrontends. They complement each other well and can be used together. Here is a [YouTube video](https://www.youtube.com/watch?v=wxnwPLLIJCY) by a community member that talks about using single-spa and module federation together.
+single-spa 是一种组织微前端路由的方案。模块联合是microfrontend的一种性能技术。它们相互补充很好，可以一起使用。 下面是一个社区成员发布的[YouTube视频](https://www.youtube.com/watch?v=wxnwPLLIJCY)，讨论了如何同时使用single-spa和模块联合。
 
-With module federation, you must choose how you wish to load the microfrontends themselves. The single-spa core team recommends using SystemJS + import maps as a module loader for the microfrontends. Alternatively, you may use global variables and `<script>` elements. An example of using SystemJS to load microfrontends with module federation can be found at https://github.com/ScriptedAlchemy/mfe-webpack-demo/pull/2.
+使用模块联合，您必须选择如何加载microfrontend本身。single-spa核心团队建议使用SystemJS + import map作为微前端的模块加载器。 作为替代, 你可以使用全局变量和 `<script>` 标签。 一个使用SystemJS和模块联合加载微前端的例子在 https://github.com/ScriptedAlchemy/mfe-webpack-demo/pull/2.
 
 The single-spa core team recommends choosing either import maps or module federation for your shared, third-party dependencies. We do not recommend sharing some third-party dependencies via import map and others via module federation. When choosing between the two approaches, we have a preference towards import maps, but no objection to module federation. See the [shared dependencies section](#shared-dependencies) for a comparison.
 
+single-spa核心团队建议为共享的第三方依赖项选择import maps或模块联合。我们不建议通过import map共享一些第三方依赖项，另一些通过模块联合共享其他依赖项。在选择这两种方法时，我们倾向于import maps，但不反对模块联合。请参阅[共享依赖项部分](#shared-dependencies)进行比较。
+
 ## SystemJS
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=AmdKF2UhFzw&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=7) / [Bilibili](https://www.bilibili.com/video/av83620028/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=AmdKF2UhFzw&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=7) / [Bilibili](https://www.bilibili.com/video/av83620028/)
 
-SystemJS provides polyfill-like behavior for import maps and in-browser modules. It is not a true polyfill of import maps, due to limitations of the JavaScript language in polyfilling the resolution of bare import specifiers to URLs.
+SystemJS为import maps和运行时模块提供了像polyfill一样行为。它不是导入映射的真正polyfill，这是由于JavaScript语言在polyfill导入说明符到url的解析方面的限制。
 
-Since SystemJS is only polyfill-like, you'll need to compile your applications into [System.register format](https://github.com/systemjs/systemjs/blob/master/docs/system-register.md) instead of to ESM format. This allows for in-browser modules to be fully emulated in environments that don't support modules or import maps.
+因为SystemJS只是像polyfill，你需要按照[System.register format](https://github.com/systemjs/systemjs/blob/master/docs/system-register.md)编译你的应用，而不是ESM format。这允许在不支持模块或importmaps的环境中完全模拟浏览器内的模块。
 
-To compile your code to System.register format, set webpack's [`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget) to `"system"`, or set rollup's [`format`](https://rollupjs.org/guide/en/#outputformat) to `"system"`.
+为了把你的代码编译成System.register format，需要设置webpack的[`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget) 为 `"system"`，或设置rollup的 [`format`](https://rollupjs.org/guide/en/#outputformat) 为`"system"`。
 
-Shared dependencies like React, Vue, and Angular, do not publish System.register versions of their libraries. However, you can find System.register versions of the libraries in [the esm-bundle project](https://github.com/esm-bundle) ([blog post](https://medium.com/@joeldenning/an-esm-bundle-for-any-npm-package-5f850db0e04d)). Alternatively, SystemJS is capable of loading them via [global loading](https://github.com/systemjs/systemjs#2-systemjs-loader) or [the AMD and named-exports extras](https://github.com/systemjs/systemjs#extras).
+像React, Vue, and Angular这样的共享依赖，它们没有发布System.register versions的包，然而我们可以找到[the esm-bundle project](https://github.com/esm-bundle) ([blog post](https://medium.com/@joeldenning/an-esm-bundle-for-any-npm-package-5f850db0e04d))。或者，SystemJS能够通过[global loading](https://github.com/systemjs/systemjs -loader)或[AMD和namedexports extras](https://github.com/systemjs/systemjs#extras)加载它们。
 
-An alternative to SystemJS that provides polyfill behavior for import maps is [es-module-shims](https://github.com/guybedford/es-module-shims). This has the advantage of using truly native ES modules. However, it is not the single-spa core team's recommended approach for production applications, since it requires less-performant in browser parsing and modification of all your bundles.
+SystemJS为导入映射提供polyfill行为的另一种选择是[es-module-shims](https://github.com/guybedford/es-module-shims)。这具有使用真正本机ES模块的优势。然而，这并不是single-spa核心团队推荐的用于生产应用程序的方法，因为它在浏览器解析和修改所有包时要求的性能较低。
 
-## Lazy loading
+## 懒加载
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=-LkvBMpCK-A&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=8) / [Bilibili](https://www.bilibili.com/video/av83620658/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=-LkvBMpCK-A&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=8) / [Bilibili](https://www.bilibili.com/video/av83620658/)
 
-Lazy loading is when you only download JavaScript code that the user needs for the current page, instead of all JavaScript up front. It is a technique for improving the performance of your application by decreasing the time-to-meaningful-render when you initially load the page. If you use [single-spa loading functions](/docs/configuration#loading-function-or-application), you already have built-in lazy loading for your applications and parcels. Since an application is an "in-browser module," this means that you are only downloading the in-browser modules in your import map when you need them.
+延迟加载是只下载用户当前页面所需的JavaScript代码，而不是预先下载所有JavaScript。它是一种通过减少最初加载页面时产生有意义呈现的时间来提高应用程序性能的技术。如果你使用[single-spa加载函数](/docs/configuration#loading-function-or-application)，你已经为你的应用程序和包裹内置了延迟加载。由于应用程序是一个“浏览器内模块”，这意味着你只在需要时下载导入映射中的浏览器内模块。
 
-Often, the route-based lazy loading provided by single-spa loading functions is all that you need to ensure great performance. However, it is also possible to do lazy loading via "code splits" with your bundler (webpack or rollup). For documentation on webpack code splits, see [these docs](https://webpack.js.org/guides/code-splitting/#dynamic-imports). It is recommended to use dynamic import (`import()`) instead of multiple entry points for code splits in a single-spa application. For code splits to work properly, you'll need to [dynamically set your public path](https://webpack.js.org/guides/public-path/#on-the-fly). A tool exists to help you set your public path correctly for use with systemjs - https://github.com/joeldenning/systemjs-webpack-interop.
+通常，single-spa加载函数提供的基于路由的延迟加载是确保良好性能所需要的全部。但是，也可以通过“代码拆分”来使用bundler (webpack或rollup)进行延迟加载。有关webpack代码拆分的文档，请参见[这些文档](https://webpack.js.org/guides/code-splitting/#dynamic-imports)。对于single-spa应用程序中的代码分割，建议使用动态导入(' import() ')而不是多个入口点。要使代码分割正常工作，您需要[动态设置您的公共路径](https://webpack.js.org/guides/public-path/#on-the-fly)。有一个工具可以帮助您正确地设置与systemjs一起使用的公共路径 - https://github.com/joeldenning/systemjs-webpack-interop。
 
-## Local development
+## 本地开发
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=vjjcuIxqIzY&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=4) / [Bilibili](https://www.bilibili.com/video/av83617789/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=vjjcuIxqIzY&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=4) / [Bilibili](https://www.bilibili.com/video/av83617789/)
 
-In contrast to monolithic frontend applications, local development with single-spa encourages only running the one microfrontend you're working on, while using deployed versions of all other microfrontends. This is important because running every single-spa microfrontend every time you want to do anything is unwieldy and cumbersome.
+与整体前端应用程序相比，single-spa的本地开发鼓励只运行您正在开发的一个microfrontend，而使用其他所有microfrontend的部署版本。这一点很重要，因为每次您想要做任何事情时运行每个single-spa microfrontend都是非常笨拙和麻烦的。
 
-To accomplish local development of only one microfrontend at a time, we can customize the URL for that microfrontend within the import map. For example, the following import map is set up for local development of the `navbar` application, since that's the only one pointing to a local web server. The `planets` and `things` applications are pointing to deployed (already hosted) versions of the applications.
+为了一次只完成一个微前端的本地开发，我们可以在导入映射中定制该微前端的URL。例如，如下的import map 设置了`navbar`应用本地开发，因为它是唯一指向本地web服务器的应用，而`planets` 和 `things`都指向已部署的应用版本。
 
 ```json
 {
@@ -110,34 +107,34 @@ To accomplish local development of only one microfrontend at a time, we can cust
 }
 ```
 
-A tool called [import-map-overrides](https://github.com/joeldenning/import-map-overrides) exists to customize your import map through an in-browser UI. This tool will automatically let you toggle one or more microfrontends between your localhost and the deployed version.
+有一个名为[import-map-overrides](https://github.com/joeldenning/import-map-overrides)的工具可以通过浏览器内的UI定制导入地图。该工具将自动允许您在本地主机和部署版本之间切换一个或多个微前端。
 
-Additionally, you have the choice of running your single-spa root config locally, or using the single-spa config that is running on a deployed environment. The single-spa core team finds it easiest to develop on deployed environments (perhaps an "integration", "development", or "staging" environment that is running within your organization) so that you do you not have to constantly run your single-spa root config.
+此外，您还可以选择在本地运行single-spa基础配置，或者使用在已部署环境上运行的single-spa配置。single-spa核心团队发现在部署的环境(可能是在您的组织中运行的“集成”、“开发”或“暂存”环境)上开发是最容易的，因此您不必经常运行signle-spa基础配置。
 
-## Build tools (Webpack / Rollup)
+## 构建工具 (Webpack / Rollup)
 
-Tutorial video: [Youtube](https://www.youtube.com/watch?v=I6COIg-2lyM&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=9) / [Bilibili](https://www.bilibili.com/video/av84104639/)
+教程视频: [Youtube](https://www.youtube.com/watch?v=I6COIg-2lyM&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=9) / [Bilibili](https://www.bilibili.com/video/av84104639/)
 
-It is highly encouraged to use a bundler such as webpack, rollup, parceljs, pikapack, etc. Webpack is an industry-standard for compiling many JavaScript source files into one or more production JavaScript bundles.
+强烈建议使用bundler，如webpack、rollup、parceljs、pikapack等。Webpack是将许多JavaScript源文件编译成一个或多个产品JavaScript包的行业标准。
 
-Below are some tips for configuring your bundler to be consumable by SystemJS and single-spa. Note that if you're using [create-single-spa](/docs/create-single-spa) that these are all set up for you. We leave these instructions here not to overwhelm you with webpack configuration hell, but rather to help you if you choose not to use create-single-spa.
+下面是一些配置您的bundler使其可被SystemJS和single-spa使用的技巧。注意，如果你使用[create-single-spa](/docs/create-single-spa)，这些都是为你设置的。我们把这些指示留在这里，不是为了让你在webpack配置方面不知所措，而是为了帮助你，如果你选择不使用creite-single-spa的话。
 
-1. Set the output target to `system`. In webpack, this is done via [`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget)
-2. Use a single [entry point](https://webpack.js.org/concepts/entry-points/#root), with [dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports) for any code splitting that you'd like to accomplish. This best matches the "one bundled project = one in-browser module" paradigm encouraged by the single-spa core team.
-3. Do not use webpack's [`optimization`](https://webpack.js.org/configuration/optimization/#root) configuration options, as they make it harder to load the outputted JavaScript files as a single in-browser JavaScript module. Doing so does not make your bundle less optimized - dynamic imports are a viable strategy for accomplishing optimized bundles.
+1. 将输出目标设置为“system”。在webpack中，这是通过[`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget)完成的。
+2. 使用一个单独的[入口点](https://webpack.js.org/concepts/entry-points/#root)和[dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports)来完成任何你想完成的代码分割。这很符合single-spa核心团队鼓励的“一个捆绑项目是一个运行时模块”理念。
+3. 不要使用webpack的[`optimization`](https://webpack.js.org/configuration/optimization/#root)配置选项，因为它们会使输出的JavaScript文件难以作为一个单一的浏览器内JavaScript模块加载。这样做并不会降低bundle的优化程度 - 动态导入是实现优化bundle的可行策略。
 4. Follow [the systemjs docs for webpack](https://github.com/systemjs/systemjs#compatibility-with-webpack).
-5. Consider using [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) to create or verify your webpack config.
-6. Use [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) to [set your webpack public path "on the fly"](https://webpack.js.org/guides/public-path/#on-the-fly).
-7. Do not set webpack [`output.library`](https://webpack.js.org/configuration/output/#outputlibrary). SystemJS does not need a name, and in fact does not support named modules without additional configuration.
-8. Consider turning off [webpack hashing](https://webpack.js.org/configuration/output/#outputfilename) for both entry and code split bundles. It is often easier to add in a commit hash during deployment of your microfrontend via your CI environment variables.
-9. Configure webpack-dev-server to not do host checks. ([docs](https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck)).
-10. Configure webpack-dev-server for CORS by setting `{headers: {'Access-Control-Allow-Origin': '*'}}`. ([docs](https://stackoverflow.com/questions/31602697/webpack-dev-server-cors-issue))
-11. If developing on https, [configure webpack-dev-server for HTTPS](https://webpack.js.org/configuration/dev-server/#devserverhttps). Also consider [trusting SSL certificates from localhost](https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate).
-12. Make sure that your [webpack externals](https://webpack.js.org/configuration/externals/#root) are correctly configured for any shared, in-browser modules that you are importing.
-13. Set [output.jsonpFunction](https://webpack.js.org/configuration/output/#outputjsonpfunction) to be a unique string for this project. Since you'll have multiple webpack bundles running in the same browser tab, a collision of the `jsonpFunction` could result in webpack modules getting mixed between bundles.
-14. Set [sockPort](https://webpack.js.org/configuration/dev-server/#devserversockport), [sockPath](https://webpack.js.org/configuration/dev-server/#devserversockpath), and [sockHost](https://webpack.js.org/configuration/dev-server/#devserversockhost) inside of your `devServer` configuration.
+5. 使用 [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) 来创建或验证你的webpack配置。
+6. 使用 [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) 来 [运行时设置webpack public path](https://webpack.js.org/guides/public-path/#on-the-fly).
+7. 不要设置 [`output.library`](https://webpack.js.org/configuration/output/#outputlibrary)。 SystemJS 不需要一个名称，事实上在没有更多配置的情况下也不支持具名模块。
+8. 考虑关闭 [webpack hashing](https://webpack.js.org/configuration/output/#outputfilename) 为入口文件和fbundles。在部署microfrontend期间通过CI环境变量添加commit hash通常更容易。
+9. 设置webpack-dev-server不要检查hosts ([docs](https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck)).
+10. 通过设置 `{headers: {'Access-Control-Allow-Origin': '*'}}`. ([docs](https://stackoverflow.com/questions/31602697/webpack-dev-server-cors-issue)) 为webpack-dev-server 开启CORS。
+11. 如果开发需要HTTPS [configure webpack-dev-server for HTTPS](https://webpack.js.org/configuration/dev-server/#devserverhttps). 也可使用 [trusting SSL certificates from localhost](https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate).
+12. 确保[webpack externals](https://webpack.js.org/configuration/externals/#root) 是配置正确并共享的运行时模块。
+13. 设置 [output.jsonpFunction](https://webpack.js.org/configuration/output/#outputjsonpfunction) 为一个本项目唯一的字符串。因为你会有很多webpack bundles会同时在同一个浏览器tab里运行， jsonpFunction的碰撞可能会导致webpack模块在bundle之间混合。
+14. 设置 [sockPort](https://webpack.js.org/configuration/dev-server/#devserversockport), [sockPath](https://webpack.js.org/configuration/dev-server/#devserversockpath), 和 [sockHost](https://webpack.js.org/configuration/dev-server/#devserversockhost) 在你的 `devServer` 设置中。
 
-For a bit more information specific to webpack code splits, see [the code splits FAQ](/docs/faq#code-splits).
+更多关于webpack代码拆分的信息请见[the code splits FAQ](/docs/faq#code-splits).
 
 ## Utility modules (styleguide, API, etc)
 
