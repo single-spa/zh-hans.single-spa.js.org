@@ -64,7 +64,9 @@ import singleSpaVue from 'single-spa-vue';
 const vueLifecycles = singleSpaVue({
   Vue,
   appOptions: {
-    render: h => h(App),
+    render(h) {
+      return h(App);
+    },
     router,
   },
 });
@@ -87,9 +89,48 @@ export const mount = props => vueLifecycles.mount(props).then(instance => {
 })
 ```
 
+<<<<<<< HEAD
 ## 依赖共享
 
 出于性能上的考虑，Vue、Vue Router以及其他较大的库，最好使用相同的版本
+=======
+## Custom props
+
+[Single-spa custom props](/docs/building-applications/#lifecycle-props) can be passed to your root component like so:
+
+```js
+// main.js
+const vueLifecycles = singleSpaVue({
+  Vue,
+  appOptions: {
+    render(h) {
+      return h(App, {
+        props: {
+          mountParcel: this.mountParcel,
+          otherProp: this.otherProp,
+        },
+      });
+    },
+    router,
+  },
+});
+```
+
+
+```vue
+// App.vue
+<template>
+  <button>{{ otherProp }}</button>
+</template>
+<script>
+export default {
+  props: ['mountParcel', 'otherProp'],
+}
+</script>
+```
+
+## Shared dependencies
+>>>>>>> ae7047e961da30157547f594c3da846de6c48af4
 
 要实现不同应用间的依赖共享，添加你想要共享的依赖作为[webpack externals](https://webpack.js.org/configuration/externals)。然后使用
 一个工作在浏览器中的模块加载工具，比如[systemjs](https://github.com/systemjs/systemjs)，来为single-spa中的每个项目提供这些共享的依赖，将`vue`以及其他库添加到[import map](http://single-spa-playground.org/playground/import-map)中。
