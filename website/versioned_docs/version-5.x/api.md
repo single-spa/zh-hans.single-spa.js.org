@@ -436,7 +436,7 @@ const parcel2 = singleSpa.mountRootParcel(() => import('./some-parcel.js'), {pro
 
 ## pathToActiveWhen
 
-The `pathToActiveWhen` function converts a string URL path into an [activity function](./configuration#activity-function). The string path may contain route parameters that single-spa will match any characters to. It assumes that the string provided is a **prefix**.
+The `pathToActiveWhen` function converts a string URL path into an [activity function](/docs/configuration/#activity-function). The string path may contain route parameters that single-spa will match any characters to. It assumes that the string provided is a **prefix**.
 
 This function is used by single-spa when a string is passed into `registerApplication` as the `activeWhen` argument.
 

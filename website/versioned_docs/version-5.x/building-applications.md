@@ -9,8 +9,12 @@ single-spa 应用与普通的单页面是一样的，只不过它没有HTML页�
 ## 创建并注册一个应用程序
 要添加一个应用，首先需要[注册该应用](configuration#registering-applications)。一旦应用被注册后，必须在其入口文件(entry point)实现下面提到的各个生命周期函数。
 
+<<<<<<< HEAD
 ## 注册应用的生命周期
 在一个 single-spa 页面，注册的应用会经过下载(loaded)、初始化(initialized)、被挂载(mounted)、卸载(unmounted)和unloaded（被移除）等过程。single-spa会通过“生命周期”为这些过程提供钩子函数。
+=======
+To create a registered application, first [register the application with single-spa](/docs/configuration/#registering-applications). Once registered, the registered application must correctly implement **all** of the following lifecycle functions inside of its main entry point.
+>>>>>>> e115fe201e34fff2e0a14ab68c185e37780e06af
 
 生命周期函数是 single-spa 在注册的应用上调用的一系列函数，single-spa 会在各应用的主文件中，查找对应的函数名并进行调用。
 

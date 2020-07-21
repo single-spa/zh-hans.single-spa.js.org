@@ -98,7 +98,7 @@ singleSpa.registerApplication({
 查看 [示例](https://github.com/joeldenning/single-spa-es5-angularjs)
 ## Custom Props
 
-[single-spa custom props](./building-applications.md#lifecycle-props) are made available as `$rootScope.singleSpaProps`.
+[single-spa custom props](/docs/building-applications/#lifecycle-props) are made available as `$rootScope.singleSpaProps`.
 
 ## Examples
 

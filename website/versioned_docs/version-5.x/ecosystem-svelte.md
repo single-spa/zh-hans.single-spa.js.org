@@ -39,4 +39,15 @@ Svelte相关选项
 
 ## single-spa 属性
 
+<<<<<<< HEAD
 所有的[single-spa 属性](./api.md#registerapplication)都会传递给svelte组件。通过`singleSpaSvelte({props: {...}})`传的属性会和single-spa的属性做合并。
+=======
+- `anchor`: (optional) A child of the dom element identified by `domElementGetter` to render the component immediately before
+- `hydrate`: (optional) See the svelte [Creating a component](https://svelte.dev/docs#Creating_a_component) documentation
+- `intro`: (optional) If `true`, will play transitions on initial render, rather than waiting for subsequent state changes
+- `props`: (optional) An object of properties to supply to the component
+
+## single-spa props
+
+All [single-spa props](/docs/api/#registerapplication) are passed to the svelte component as props. The props provided to `singleSpaSvelte({props: {...}})` are merged with the single-spa props.
+>>>>>>> e115fe201e34fff2e0a14ab68c185e37780e06af
