@@ -88,20 +88,18 @@ function Footer() {
             ))}
           </div>
         )}
-        {(logo || copyright) && (
-          <div className="text--center">
-            {logo && logo.src && (
-              <a
-                className="footer__logo margin-bottom--sm"
-                href="https://www.canopytax.com/"
-                target="_blank"
-                rel="noopener noreferrer">
-                <img alt={logo.alt} src={useBaseUrl(logo.src)} />
-              </a>
-            )}
-            {copyright}
+        <div className="text--center">
+          {logo && logo.src && (
+            <img
+              className="footer__logo margin-bottom--sm"
+              alt={logo.alt} src={useBaseUrl(logo.src)}
+            />
+          )}
+          <div>
+            Originally developed at <a href='https://getcanopy.com'>Canopy</a>
           </div>
-        )}
+          {copyright && copyright}
+        </div>
       </div>
     </footer>
   );

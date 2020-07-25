@@ -15,7 +15,8 @@
 
 ### 如何安装
 
-1. `cd single-spa.js.org` to go into the project root
+1. `git clone git@github.com:single-spa/single-spa.js.org.git`
+1. `cd single-spa.js.org/website` to go into the website root
 1. `yarn` to install the website's npm dependencies
 
 ### 本地执行
@@ -26,6 +27,7 @@
 ## 贡献翻译
 
 如果你想帮助翻译`single-spa.js.org`? 请参考下列步骤。
+[加入 Slack 一起讨论](https://single-spa.slack.com/archives/C011K55BAB0/p1586591177000200)(可能有点慢~)
 
 ### 新建分支
 
@@ -52,6 +54,6 @@
 ### 提交代码
 
 1. `git add . && git commit -m "My message"` (在 `My message` 出填入提交信息, 比如`修改页面顶部logo`) to 暂存和提交代码
-1. `git push my-fork-name the-name-of-my-branch`
+1. `git push my-fork-name the-name-of-my-branch`。
 1. 去自己 fork 仓库下查找新提交的 `my-fork-name` 分支，发起Pull Request。
 1. 如果方便，请把改动截图一并提交。

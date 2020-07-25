@@ -103,8 +103,15 @@ Single spa支持代码拆分。代码拆分的方法有很多，我们无法一�
     ```js
     import { setPublicPath } from 'systemjs-webpack-interop';
 
-    setPublicPath('name-of-module-in-import-map');
-    ```
+   - For SystemJS >= 6, use [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop):
+
+   ```js
+   import { setPublicPath } from 'systemjs-webpack-interop';
+
+   setPublicPath('name-of-module-in-import-map');
+   ```
+
+   - For SystemJS 2-5: Find a code example [here](https://gitlab.com/TheMcMurder/single-spa-portal-example/blob/master/people/src/set-public-path.js#L3)
 
     * SystemJS 2-5: [example](https://gitlab.com/TheMcMurder/single-spa-portal-example/blob/master/people/src/set-public-path.js#L3)
 

@@ -1,15 +1,13 @@
 ---
 id: ecosystem
-title: The single-spa ecosystem
-sidebar_label: Overview
+title: single-spa 生态系统
+sidebar_label: 概述
 ---
 
-The single-spa ecosystem is quickly growing to support as many frameworks and build tools as possible.
+single-spa 生态系统正在迅速发展，支持尽可能多的框架和构建工具。
 
-## Help for frameworks
-There is a growing number of projects that help you bootstrap, mount,
-and unmount your applications that are written with popular frameworks. Feel free
-to contribute to this list with your own project:
+## 对框架的支持
+现在有越来越多的项目可以帮助你`用流行的框架编写`的应用程序进行 初始化、挂载和卸载。欢迎你用你自己的项目来为这个列表做贡献。
 
 - [single-spa-react](./ecosystem-react.md)
 - [single-spa-vue](./ecosystem-vue.md)
@@ -24,7 +22,7 @@ to contribute to this list with your own project:
 - [single-spa-backbone](./ecosystem-backbone.md)
 - [single-spa-dojo](./ecosystem-dojo.md)
 
-## Other helpful libraries
+## 其他有帮助的库
 
 - [import-map-overrides](https://github.com/joeldenning/import-map-overrides)
 - [import-map-deployer](https://github.com/single-spa/import-map-deployer)

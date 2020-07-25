@@ -20,6 +20,7 @@ module.exports = {
   },
   scripts: [
     'https://unpkg.com/vanilla-back-to-top@7.2.1/dist/vanilla-back-to-top.min.js',
+    'https://cdn.jsdelivr.net/npm/racial-equity-banner@1.0.3/racial-equity-banner-bottom.js',
     '/js/index.js',
   ],
   themeConfig: {
@@ -31,7 +32,7 @@ module.exports = {
     footer: {
       logo: {
         alt: 'single-spa',
-        src: 'img/canopy-logo-icon.svg',
+        src: 'img/logo-white-bgblue.svg',
       },
       copyright: `Copyright © ${new Date().getFullYear()} single-spa.`,
       style: 'dark',

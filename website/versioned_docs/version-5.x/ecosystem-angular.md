@@ -31,7 +31,7 @@ AngularJS is supported by [single-spa-angularjs](https://github.com/single-spa/s
 See [AngularJS docs](/docs/ecosystem-angularjs.html).
 
 ### Angular 2
-Angular 2 is supported by single-spa-angular.
+Angular 2 is supported by single-spa-angular@3.
 
 The [single-spa-angular schematics](#schematics) are not supported by Angular 2, so you'll have to
 follow the [steps for manual installation](#manual-installation). The
@@ -41,42 +41,51 @@ follow the [steps for manual installation](#manual-installation). The
 Angular 3 [never existed](https://www.infoworld.com/article/3150716/forget-angular-3-google-skips-straight-to-angular-4.html).
 
 ### Angular 4
-Angular 4 is supported by single-spa-angular.
+Angular 4 is supported by single-spa-angular@3.
 
 The [single-spa-angular schematics](#schematics) are not supported by Angular 4, so you'll have to
 follow the [steps for manual installation](#manual-installation). The
 [single-spa helpers](#the-single-spa-helpers) work with Angular 4.
 
 ### Angular 5
-Angular 5 is supported by single-spa-angular.
+Angular 5 is supported by single-spa-angular@3.
 
 The [single-spa-angular schematics](#schematics) are not supported by Angular 5, so you'll have to
 follow the [steps for manual installation](#manual-installation). The
 [single-spa helpers](#the-single-spa-helpers) work with Angular 5.
 
 ### Angular 6
-Angular 6 is supported by single-spa-angular.
+Angular 6 is supported by single-spa-angular@3.
 
 The [single-spa-angular schematics](#schematics) are not supported by Angular 6, so you'll have to
 follow the [steps for manual installation](#manual-installation). The
 [single-spa helpers](#the-single-spa-helpers) work with Angular 6.
 
 ### Angular 7
-Angular 7 is supported by single-spa-angular.
+Angular 7 is supported by single-spa-angular@3.
 
 Both the [single-spa-angular schematics](#schematics) and the [single-spa helpers](#the-single-spa-helpers)
 work with Angular 7. Follow the [Angular CLI instructions](#angular-cli).
 
-Note that the schematics for Angular 7 use an [Angular Builder](#angular-builder) that is no longer
+Note that the schematics for Angular 7 use an [Angular Builder](#use-angular-builder) that is no longer
 used in the Angular 8 schematics.
 
 ### Angular 8
-Angular 8 is supported by single-spa-angular.
+Angular 8 is supported by single-spa-angular@3.
 
 Both the [single-spa-angular schematics](#schematics) and the [single-spa helpers](#the-single-spa-helpers)
 work with Angular 8. Follow the [Angular CLI instructions](#angular-cli).
 
 Note that the schematics for Angular 8 [do not use the custom Angular builder](#angular-builder), but instead use
+[@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
+
+### Angular 9
+Angular 9 is supported by single-spa-angular@4.
+
+Both the [single-spa-angular schematics](#schematics) and the [single-spa helpers](#the-single-spa-helpers)
+work with Angular 9. Follow the [Angular CLI instructions](#angular-cli).
+
+Note that the schematics for Angular 9 [do not use the custom Angular builder](#angular-builder), but instead use
 [@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
 
 ## Angular CLI
@@ -125,18 +134,20 @@ npm install --save single-spa-angular
 
 ### Manually apply schematics
 Since the single-spa-angular schematics didn't run, you'll need to make the following changes:
+
 1. Create all of the files that would have been created by the schematic.
-  [See schematics files](https://github.com/single-spa/single-spa-angular/tree/master/src/schematics/ng-add/_files).
+  [See schematics files](https://github.com/single-spa/single-spa-angular/tree/master/schematics/ng-add/_files).
   Be sure to get the files in the subdirectories, too.
 2. Add `build:single-spa` and `serve:single-spa` to the [scripts](https://docs.npmjs.com/misc/scripts) in your package.json.
-  [See `addNPMScripts` function](https://github.com/single-spa/single-spa-angular/blob/master/src/schematics/ng-add/index.ts#L122).
+  [See `addNPMScripts` function](https://github.com/single-spa/single-spa-angular/blob/master/schematics/ng-add/index.ts#L161).
 3. Use the angular builder, as described in the next section.
 
 ### Use Angular Builder
 
 **Note that this only applies to Angular versions pre Angular 8**. Up until Angular 8, we maintained an angular builder
 that allowed us to control the webpack config, but since Angular 8 we use
-[@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack) instead.
+[@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack) instead. See [documentation](#use-custom-webpack) for
+using the custom webpack builder with single-spa-angular and Angular 8+.
 
 **If you installed this library with Angular 7 using the Angular Schematic, this is already configured and
 you don't need to change it. Otherwise, you might need to do this manually.**
@@ -186,6 +197,36 @@ Configuration options are provided to the `architect.serve.options` section of y
 | ---- | ----------- | ------------- |
 | singleSpaWebpackConfigPath | (optional) Path to partial webpack config to be merged with angular's config. Example: `extra-webpack.config.js` | undefined |
 
+### Use Custom Webpack
+
+Starting with Angular 8, single-spa-angular's schematics install and use [`@angular-builders/custom-webpack`](https://github.com/just-jeb/angular-builders/tree/master/packages/custom-webpack) to modify the webpack config. The schematics also create an `extra-webpack.config.js` file in your project where you can modify the configuration further.
+
+The extra-webpack.config.js file should include the following:
+
+```js
+const singleSpaAngularWebpack = require('single-spa-angular/lib/webpack').default;
+
+module.exports = (config, options) => {
+  const singleSpaWebpackConfig = singleSpaAngularWebpack(config, options);
+
+  // Feel free to modify this webpack config however you'd like to
+  return singleSpaWebpackConfig;
+};
+```
+
+Older versions of single-spa-angular@3 and single-spa-angular@4 created extra-webpack.config.js files that did not pass `options` into `singleSpaAngularWebpack`. When you upgrade to newer versions, you'll need to pass in the options as shown above.
+
+In addition to modifying the webpack config directly, you may alter some of single-spa-angular's behavior by changing the angular.json. Configuration options are provided to the `architect.build.options.customWebpackConfig` section of your angular.json. 
+
+| Name | Description | Default Value |
+| ---- | ----------- | ------------- |
+| path | (required) Path to the the above `extra-webpack.config.js` file. | N/A |
+| libraryName | (optional) Specify the name of the module | Angular CLI project name |
+| libraryTarget | (optional) The type of library to build [see available options](https://github.com/webpack/webpack/blob/master/declarations/WebpackOptions.d.ts#L1111) | "UMD" |
+
+If you're using SystemJS, you may want to consider changing the [webpack output.libraryTarget](https://webpack.js.org/configuration/output/#outputlibrarytarget) to be `"system"`, for better interop with SystemJS.
+
+
 ## Routing
 
 ### Configure routes
@@ -233,8 +274,8 @@ Run the following:
 npm run serve:single-spa
 ```
 
-This **will not** open up an html file, since single-spa applications all [share one html file](/docs/configuration.html). Instead, go to
-http://single-spa-playground.org and follow the instructions there to verify everything is working and for instructions on creating the shared html file.
+This **will not** open up an HTML file, since single-spa applications all [share one html file](/docs/configuration.html). Instead, go to
+http://single-spa-playground.org and follow the instructions there to verify everything is working and for instructions on creating the shared HTML file.
 
 ## Building
 Run `npm run build:single-spa`, which will create a `dist` directory with your compiled code.
@@ -250,21 +291,80 @@ regardless of whether you are using Angular CLI or not. This is the core of the 
 for Angular applications to bootstrap, mount, and unmount. See
 [single-spa lifecycles](http://localhost:3000/docs/building-applications.html#registered-application-lifecycle) for more information.
 
+### Migrating from single-spa-angular@3.x to single-spa-angular@4.x
+​
+Migrating from 3.x to 4.x requires only few API updates.
+​
+#### Packages
+​
+```shell
+npm i --save single-spa-angular@4.0.0
+# Or if you're using yarn
+yarn add single-spa-angular@4.0.0
+```
+​
+#### API Updates
+​
+`single-spa-angular` doesn't have a default export anymore, instead you have to import a named `singleSpaAngular` function. Given the following code:
+​
+```js
+import singleSpaAngular from 'single-spa-angular'; // single-spa-angular@3.x
+import { singleSpaAngular } from 'single-spa-angular'; // single-spa-angular@4.x
+```
+​
+Also, if your application uses routing then you have to import the `getSingleSpaExtraProviders` function. Let's look at the following example, this is how it was in `single-spa-angular@3.x`:
+​
+```js
+import { NgZone } from '@angular/core';
+import { Router } from '@angular/router';
+import singleSpaAngular, { getSingleSpaExtraProviders } from 'single-spa-angular';
+​
+const lifecycles = singleSpaAngular({
+  bootstrapFunction: singleSpaProps => {
+    singleSpaPropsSubject.next(singleSpaProps);
+    return platformBrowserDynamic(getSingleSpaExtraProviders()).bootstrapModule(AppModule);
+  },
+  template: '<app-root />',
+  Router,
+  NgZone,
+});
+```
+​
+And this is how it should be in `single-spa-angular@4.x`:
+​
+```js
+import { NgZone } from '@angular/core';
+import { Router } from '@angular/router';
+import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
+​
+const lifecycles = singleSpaAngular({
+  bootstrapFunction: singleSpaProps => {
+    singleSpaPropsSubject.next(singleSpaProps);
+    return platformBrowserDynamic(getSingleSpaExtraProviders()).bootstrapModule(AppModule);
+  },
+  template: '<app-root />',
+  Router,
+  NgZone,
+});
+```
+
 ## Basic usage
+
 ```ts
-import singleSpaAngular from 'single-spa-angular';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgZone } from '@angular/core';
 import { Router } from '@angular/router';
+import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
+
 import { AppModule } from './app/app.module';
 
 const lifecycles = singleSpaAngular({
   bootstrapFunction: singleSpaProps => {
-    return platformBrowserDynamic().bootstrapModule(AppModule);
+    return platformBrowserDynamic(getSingleSpaExtraProviders()).bootstrapModule(AppModule);
   },
   template: '<app-root />',
   Router,
-  NgZone: NgZone,
+  NgZone,
 });
 
 export const bootstrap = lifecycles.bootstrap;
@@ -273,7 +373,7 @@ export const unmount = lifecycles.unmount;
 ```
 
 ### Full Example
-See [this schematic file](https://github.com/single-spa/single-spa-angular/blob/master/src/schematics/ng-add/_files/src/main.single-spa.ts.template#L16)
+See [this schematic file](https://github.com/single-spa/single-spa-angular/blob/master/schematics/ng-add/_files/src/main.single-spa.ts.template#L16)
 for a good example of how to use the single-spa helpers.
 
 ### Options
@@ -284,7 +384,7 @@ The following options are available:
 
 - `bootstrapFunction`: (required) A function that is given custom props as an argument and returns a promise that resolves with a resolved Angular module that is bootstrapped. Usually, your implementation will look like this: `bootstrapFunction: (customProps) => platformBrowserDynamic().bootstrapModule()`.
   See [custom props documentation](https://single-spa.js.org/docs/building-applications.html#custom-props) for more info on the argument passed to the function.
-- `template`: (required) An html string that will be put into the DOM Element returned by `domElementGetter`. This template can be anything,
+- `template`: (required) An HTML string that will be put into the DOM Element returned by `domElementGetter`. This template can be anything,
   but it is recommended that you keeping it simple by making it only one Angular component. For example, `<app-root />` is recommended,
   but `<div><app-root /><span>Hello</span><another-component /></div>` is allowed. Note that `innerHTML` is used to put the template
   onto the DOM. Also note that when using multiple angular applications simultaneously, you will want to make sure that the component
@@ -304,12 +404,11 @@ The following options are available:
 [ZoneJS](https://github.com/angular/zone.js/) is the library that Angular uses for change detection. You absolutely must have exactly
 one instance of the ZoneJS library on the page. ZoneJS will throw errors if you have more than one instance of ZoneJS on the page.
 
-The preferred way to do ensure only one instance of ZoneJS is with an
-[import map](http://single-spa-playground.org/playground/html-file) and [webpack externals](https://webpack.js.org/configuration/externals/#root).
-Use the latest version of ZoneJS, even if your Angular applications use an older version. The latest version is backwards compatible all the
-way back to Angular 4 and will let you write new Angular applications with newer versions of Angular.
+The preferred way to ensure only one instance of ZoneJS is loaded on your page is with a script tag in your root-config's HTML file. You should load ZoneJS upfront a single time, before loading SystemJS or any of your microfrontends.
 
-If you have followed the installation instructions correctly, your code is already set up to do all of this.
+```html
+<script src="https://cdn.jsdelivr.net/npm/zone.js@0.10.3/dist/zone.min.js"></script>
+```
 
 Note that having only one instance of ZoneJS is different than having only one zone within that instance. single-spa-angular
 automatically will ensure that each of your Angular applications has its own isolated, separate zone.
@@ -341,7 +440,7 @@ angular cli schematic, you may subscribe to the singleSpaPropsSubject in your co
 ```ts
 // An example showing where you get access to the single-spa props:
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import singleSpaAngular from 'single-spa-angular';
+import { singleSpaAngular } from 'single-spa-angular';
 
 const lifecycles = singleSpaAngular({
   bootstrapFunction(singleSpaProps) {
@@ -357,25 +456,31 @@ const lifecycles = singleSpaAngular({
 // If you're using the singleSpaPropsSubject generated by the single-spa-angular schematics,
 // here's an example component that uses the custom props
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { singleSpaPropsSubject, SingleSpaProps } from 'src/single-spa/single-spa-props';
 import { Subscription } from 'rxjs';
+import { singleSpaPropsSubject, SingleSpaProps } from 'src/single-spa/single-spa-props';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  singleSpaProps: SingleSpaProps = null;
-  subscription: Subscription = null;
-  ngOnInit() {
+  singleSpaProps: SingleSpaProps;
+  subscription: Subscription;
+
+  ngOnInit(): void {
     this.subscription = singleSpaPropsSubject.subscribe(
-      props => this.singleSpaProps = props
-    )
+      props => (this.singleSpaProps = props),
+    );
   }
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
+
+  // OR if you don't need to access `singleSpaProps` inside the component
+  // then create `Observable` property and use it in template with `async` pipe.
+  singleSpaProps$ = singleSpaPropsSubject.asObservable();
 }
 ```
 
@@ -397,7 +502,7 @@ import { assetUrl } from 'src/single-spa/asset-url';
 const imageUrl = assetUrl('yoshi.png')
 ```
 
-#### Within html templates
+#### Within HTML templates
 
 ##### Option 1
 
@@ -413,15 +518,11 @@ Create an [Angular Pipe](https://angular.io/guide/pipes) that lets you calculate
 import { Pipe, PipeTransform } from '@angular/core';
 import { assetUrl } from 'src/single-spa/public-path';
 
-@Pipe({
-  name: 'assetUrl'
-})
+@Pipe({ name: 'assetUrl' })
 export class AssetUrlPipe implements PipeTransform {
-
-  public transform(value: any, args?: any): any {
+  transform(value: string): string {
     return assetUrl(value);
   }
-
 }
 ```
 
@@ -437,7 +538,7 @@ This is because single-spa applications have to all share an HTML file.
 have no impact on your single-spa build.
 
 #### Option 1
-Add the script tags directly into your [root html file](http://single-spa-playground.org/playground/html-file). This way is easiest.
+Add the script tags directly into your [root HTML file](http://single-spa-playground.org/playground/html-file). This way is easiest.
 The downside is that all of the scripts get loaded even for routes that don't need them. However, that is generally okay and this
 is the preferred way to do it.
 
@@ -446,7 +547,7 @@ If you want the scripts to only be loaded when needed, you can add a custom
 [bootstrap lifecycle](http://localhost:3000/docs/building-applications.html#bootstrap) to your code.
 
 Note that lazy loading these scripts can actually be worse for performance *if you always need them*, since
-they will start downloading later than if you put them right into the root html file.
+they will start downloading later than if you put them right into the root HTML file.
 
 ```ts
 // main.single-spa.ts
@@ -460,18 +561,30 @@ export const bootstrap = [
   lifecycles.bootstrap,
 ]
 
-function loadScript(url) {
+function loadScript(url: string) {
   return new Promise((resolve, reject) => {
-    const scriptEl = document.createElement('script');
-    scriptEl.src = url;
-    scriptEl.addEventListener('error', errEvt => {
-      reject(errEvt.error)
-    })
-    scriptEl.addEventListener('load', () => {
-      resolve()
-    })
-    document.head.appendChild(scriptEl);
-  })
+    const script = document.createElement('script');
+    script.src = url;
+
+    function onLoad() {
+      resolve();
+      cleanup();
+    }
+
+    function onError(event: Event) {
+      reject(event);
+      cleanup();
+    }
+
+    function cleanup() {
+      script.removeEventListener('load', onLoad);
+      script.removeEventListener('error', onError);
+    }
+
+    script.addEventListener('load', onLoad);
+    script.addEventListener('error', onError);
+    document.head.appendChild(script);
+  });
 }
 ```
 
@@ -481,15 +594,47 @@ be loaded by single-spa-angular's webpack config, without you having to configur
 
 Your component styles will also be loaded like normal without you having to configure anything.
 
+**rebaseRootRelativeCssUrls**
+
+The [rebaseRootRelativeCssUrls](https://angular.io/cli/build) option allows you to keep your css referencing asset urls, which will be rewritten to respect the webpack public path:
+
+```css
+.body-row {
+    background: url("/assets/images/person.jpg") no-repeat right bottom;
+}
+```
+
+To do this, you may change your angular.json or run `ng build --rebaseRootRelativeCssUrls`. In the angular.json file, you should modify
+architect > build > options and update the property `rebaseRootRelativeCssUrls` to be `true`.
+
+Now inside the assets attribute (which is an array) you should add a slash **"/"** to the value of the **"output"** attribute which outputs its external styles (this is optional). Example:
+
+ ```json
+{
+  "options": {	
+    "rebaseRootRelativeCssUrls": true,
+    "assets": [
+      "src/favicon.ico",
+      "src/assets",
+      {
+        "glob": "**/*",
+        "input": "node_modules/@material/dist/collection/assets",
+        "output": "/assets"
+      }
+    ]
+  }
+}
+```
+
 ### Polyfills
-[Polyfills in your angular.json](https://angular.io/guide/browser-support) are javascript code that make your project work in older browsers,
+[Polyfills in your angular.json](https://angular.io/guide/browser-support) are JavaScript code that make your project work in older browsers,
 such as IE11.
 
 **The polyfills that you specify in your angular.json file will not be loaded automatically**. This is because we should only load
-polyfills once in the root html file, instead of once per application.
+polyfills once in the root HTML file, instead of once per application.
 
 To load polyfills, you'll need to follow the instructions in the [Angular documentation for non-CLI users](https://angular.io/guide/browser-support#polyfills-for-non-cli-users).
-Even if you are using Angular CLI, you will need to follow those instructions, since your [single-spa root html file](https://single-spa-playground.org/playground/html-file)
+Even if you are using Angular CLI, you will need to follow those instructions, since your [single-spa root HTML file](https://single-spa-playground.org/playground/html-file)
 is not using Angular CLI and that's where the polyfills need to go.
 
 If you're looking for a quick one-liner, try adding this line near the top of your index.html.
@@ -505,3 +650,60 @@ If you need to support IE11 or older, do the following:
 - Change angular.json `target` to `es5` ([example](https://github.com/joeldenning/coexisting-angular-microfrontends/commit/22cbb2dc1c15165c39b10aa4019fe517fa88af32#diff-acbfc718bf309f27dd3699a4ad80a2d1R13))
 
 [Full example commit to get IE11 support](https://github.com/joeldenning/coexisting-angular-microfrontends/commit/22cbb2dc1c15165c39b10aa4019fe517fa88af32)
+
+## Advanced
+
+### Zone-less applications
+
+> ⚠️ This feature is available starting from `single-spa-angular@4.1`.
+
+It's possible to develop Angular applications that don't rely on `zone.js` library, these applications are called _zone-less_. You have to run change detection manually in _zone-less_ applications through `ApplicationRef.tick()` or `ChangeDetectorRef.detectChanges()`. You can find more info in [Angular NoopZone docs](https://angular.io/guide/zone#noopzone).
+
+The point is that you do not need to load `zone.js` library in your root HTML file. As Angular docs mention that you should have a comprehensive knowledge of change detection to develop such applications. Let's start by _nooping_ zone when bootstrapping module:
+
+```ts
+import { singleSpaAngular } from 'single-spa-angular';
+
+const lifecycles = singleSpaAngular({
+  bootstrapFunction: () =>
+    platformBrowserDynamic().bootstrapModule(AppModule, { ngZone: 'noop' }),
+  template: '<app-root />',
+  NgZone: 'noop',
+});
+```
+
+> 💡 Note, that we have to specify `noop` 2 times: when bootstrapping `AppModule` and setting `NgZone` property to `noop`, thus we tell Angular and single-spa-angular that we're not going to use zones.
+
+### Routing in zone-less applications
+
+Since routing is managed by single-spa and there is no zone that tells Angular that some asynchronous event has occured, then we need to tell Angular when to run change detection if routing occurs. Let's look at the below code:
+
+```js
+import { ApplicationRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { singleSpaAngular } from 'single-spa-angular';
+
+const lifecycles = singleSpaAngular({
+  bootstrapFunction: async () => {
+    const ngModuleRef = await platformBrowserDynamic().bootstrapModule(
+      AppModule,
+      { ngZone: 'noop' },
+    );
+
+    const appRef = ngModuleRef.injector.get(ApplicationRef);
+    const listener = () => appRef.tick();
+    window.addEventListener('popstate', listener);
+
+    ngModuleRef.onDestroy(() => {
+      window.removeEventListener('popstate', listener);
+    });
+
+    return ngModuleRef;
+  },
+  template: '<app-root />',
+  NgZone: 'noop',
+  Router,
+});
+```
+
+> ⚠️ `single-spa-angular@4.x` requires calling `getSingleSpaExtraProviders` function in applications that have routing. Do not call this function in _zone-less_ application.
