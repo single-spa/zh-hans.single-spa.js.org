@@ -5,6 +5,7 @@ sidebar_label: Overview
 ---
 Parcels是single-spa的一个高级特性。在对single-spa的注册相关api有更多了解之前，请尽量避免使用该特性。一个single-spa 的 parcel，指的是一个与框架无关的组件，由一系列功能构成，可以被应用手动挂载，无需担心由哪种框架实现。Parcels 和注册应用的api一致，不同之处在于parcel组件需要手动挂载，而不是通过activity方法被激活。
 
+
 一个parcel可以大到一个应用，也可以小至一个组件，可以用任何语言实现，只要能导出正确的生命周期事件即可。在 single-spa 应用中，你的SPA可能会包括很多个注册应用，也可以包含很多parcel。通常情况下我们建议你在挂载parcel时传入应用的上下文，因为parcel可能会和应用一起卸载。
 
 如果你只使用了一种框架，建议使用框架组件（如React、Vue、Angular组件）而不是parcel共享功能。Parcel多包裹了一层中间层，而框架组件在应用间调用时会更容易，你可以通过`import`语法直接在注册应用里导入一个组件。只有在涉及到跨框架的应用之间进行组件调用时，我们才需要考虑parcel的使用。 ([更多细节](/docs/recommended-setup#in-browser-versus-build-time-modules))

@@ -42,9 +42,9 @@ single-spa 核心团队已经汇总了文档，工具和视频，展示了当前
 
 ## 使用 single-spa 很难么？
 
-Single-spa 适用于 ES5、 ES6 + 、 TypeScript、 Webpack、 SystemJS、 Gulp、 Grunt、 Bower、 ember-cli 或 任何可用的构建系统。 您可以 npm 安装它，jspm 安装它，如果您愿意，甚至可以使用 `<script>` 标签。
-
 我们的目标是尽可能简化single-spa的使用过程。但是我们还应该指出，这是一种高级架构，它不同于前端应用程序通常的实现方式。
+
+Single-spa 适用于 ES5、 ES6 + 、 TypeScript、 Webpack、 SystemJS、 Gulp、 Grunt、 Bower、 ember-cli 或 任何可用的构建系统。 您可以 npm 安装它，jspm 安装它，如果您愿意，甚至可以使用 `<script>` 标签。
 
 如果您不是从头开始开发应用程序，则必须将传统 SPA [迁移至单single-spa](migrating-existing-spas.md) 应用程序
 
@@ -76,7 +76,6 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
 有关完整的示例，请查看 [简单的Webpack示例](https://github.com/joeldenning/simple-single-spa-webpack-example) 或 [从头开始的教程](starting-from-scratch.md)。
 
-
 要创建single-spa应用程序，您需要做三件事：
 
 1. 创建一个 html 文件:
@@ -89,28 +88,29 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 </html>
 ```
 
-2. 创建一个single-spa-config。查看[文档](configuration)以获取更多详细信息。
+3. 创建一个single-spa-config。查看[文档](configuration)以获取更多详细信息。
 
 ```js
 //main.js
 
 import * as singleSpa from 'single-spa';
 
-const appName = 'app1';
+const name = 'app1';
 
 /* loading 是一个返回 promise 的函数，用于 加载/解析 应用代码。
  * 它的目的是为延迟加载提供便利 —— single-spa 只有在需要时才会下载应用程序的代码。
  * 在这个示例中，在 webpack 中支持 import ()并返回 Promise，但是 single-spa 可以使用任何返回 Promise 的加载函数。
  */
-const loadingFunction = () => import('./app1/app1.js');
+const app = () => import('./app1/app1.js');
 
 /* Single-spa 配置顶级路由，以确定哪个应用程序对于指定 url 是活动的。
  * 您可以以任何您喜欢的方式实现此路由。
  * 一种有用的约定是在url前面加上活动应用程序的名称，以使顶层路由保持简单。
  */
-const activityFunction = location => location.pathname.startsWith('/app1');
+const activeWhen = '/app1';
 
-singleSpa.registerApplication(appName, loadingFunction, activityFunction);
+singleSpa.registerApplication({ name, app, activeWhen });
+
 singleSpa.start();
 ```
 
