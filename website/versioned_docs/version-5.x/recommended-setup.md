@@ -136,13 +136,13 @@ SystemJS为导入映射提供polyfill行为的另一种选择是[es-module-shims
 
 更多关于webpack代码拆分的信息请见[the code splits FAQ](/docs/faq#code-splits).
 
-## Utility modules (styleguide, API, etc)
+## 通用模块 (样式指南, API等等)
 
-A "utility module" is an in-browser JavaScript module that is not a single-spa application or parcel. In other words, it's only purpose is to export functionality for other microfrontends to import.
+“通用模块”是一个运行时的JavaScript模块，它不是一个single-spa应用程序或parcel。换句话说，它的唯一目的是为其他微前端导出要导入的功能。
 
-Common examples of utility modules include styleguides, authentication helpers, and API helpers. These modules do not need to be registered with single-spa, but are important for maintaining consistency between several single-spa applications and parcels.
+实用程序模块的常见示例包括样式指南、身份验证助手和API助手。这些模块不需要向single-spa注册，但是对于维护几个single-spa应用程序和parcel之间的一致性非常重要。
 
-Example code in a utility module:
+通用模块中的示例代码:
 ```js
 // In a repo called "api", you may export functions from the repo's entry file.
 // These functions will be available to single-spa application, parcels, and other in-browser modules
@@ -156,7 +156,7 @@ export function authenticatedFetch(url, init) {
 }
 ```
 
-Example code in a single-spa application that is using the utility module:
+在single-spa应用中引用的实例代码:
 ```js
 // Inside of a single-spa application, you can import the functions from the 'api' repo
 import React from 'react'
@@ -179,94 +179,99 @@ export function Foo(props) {
 }
 ```
 
-To make utility modules work, you must ensure that your webpack externals and import map are properly configured. An example of a working styleguide may be found at https://github.com/vue-microfrontends/styleguide.
+要使通用模块工作，你必须确保你的webpack externals和import map正确配置。使用样式指南的一个例子可以在https://github.com/vue-microfrontends/styleguide上找到。
 
-## Shared dependencies
+## 共享依赖
 
-For performance, it is crucial that your web app loads large JavaScript libraries only once. Your framework of choice (React, Vue, Angular, etc) should only be loaded on the page a single time.
+为了提高性能，web应用程序只加载一次大型JavaScript库是至关重要的。你选择的框架(React, Vue, Angular等)应该只在页面上加载一次。
 
-It is not advisable to make everything a shared dependency, because shared dependencies must be upgraded at once for every microfrontend that uses them. For small libraries, it is likely acceptable to duplicate them in each microfrontend that uses them. For example, react-router is likely small enough to duplicate, which is nice when you want to upgrade your routing one microfrontend at a time. However, for large libraries like react, momentjs, rxjs, etc, you may consider making them shared dependencies.
+不建议把所有东西都变成共享依赖项，因为当每个微前沿需要升级时共享依赖项必须立即升级。对于小型库，在使用它们的每个微前端中重复加载它们是可以接受的。例如，react-router可能足够小，可以重复，当您想一次升级一个微前端路由时，这是很好的。然而，对于像react、momentjs、rxjs等大型库，你可以考虑让它们共享依赖。
 
-There are two approaches to sharing dependencies:
+有两种共享依赖关系的方法:
 
-1. [In-browser modules with import maps](#import-maps)
-2. [Build-time modules with module federation](#module-federation)
+1. [运行时import maps](#import-maps)
+2. [构建时module federation](#module-federation)
 
-You may use either one, or both. We currently recommend only using import maps, although we have no objection to module federation.
+你可以用其中一个，也可以两者都用。我们目前建议只使用导入映射，但我们也不反对模块联合。
 
-### Comparison of approaches
+### 两种方案对比
 
-| Approach          | Share dependencies | Bundler requirements |  Managing dependencies |
+| 方案          | 共享依赖 | 打包依赖 |  依赖管理 |
 | ----------------- | ------------------ | -------------------- | ---------------------- |
-| Import Maps       | Fully supported    | Any bundler          | [shared dependecies repo](https://github.com/polyglot-microfrontends/shared-dependencies/blob/master/importmap.json) |
-| Module Federation | Fully supported    | Only webpack@>=5     | [multiple webpack configs](https://github.com/ScriptedAlchemy/mfe-webpack-demo/blob/f48ff0bd0b7d62b722ea000e5ded73f0d076a0b7/packages/01-host/webpack.config.js#L47) |
+| Import Maps       | 完全支持    | 任何包          | [共享依赖demo](https://github.com/polyglot-microfrontends/shared-dependencies/blob/master/importmap.json) |
+| 模块联合 | 完全支持    | 只支持webpack@>=5     | [多个webpack配置](https://github.com/ScriptedAlchemy/mfe-webpack-demo/blob/f48ff0bd0b7d62b722ea000e5ded73f0d076a0b7/packages/01-host/webpack.config.js#L47) |
 
-### Sharing with Import Maps
+### 使用Import Maps共享
 
-To share a dependency between microfrontends with [Import Maps](#import-maps), you should use [webpack externals](https://webpack.js.org/configuration/externals/#root), [rollup externals](https://rollupjs.org/guide/en/#external), or similar. Marking libraries as external tells your bundler to not use the version in your node_modules, but rather to expect the library to exist as an in-browser module.
+使用[Import Maps](#import-maps)共享依赖，你可以使用[webpack externals](https://webpack.js.org/configuration/externals/#root), [rollup externals](https://rollupjs.org/guide/en/#external),或者类似配置，使依赖包作为外部依赖，告诉你的应用不在node_modules里寻找，而是去运行时的模块中寻找。
 
 To make the shared dependencies available as in-browser modules, they must be present in your import map. A good way of managing them is to create a repository called `shared-dependencies` that has a partial import map in it. The CI process for that repository updates your deployed import map. Upgrading the shared dependencies can then be achieved by making a pull request to that repository.
 
-Not all libraries publish their code in a suitable format for SystemJS consumption. In those cases, check https://github.com/esm-bundle for a SystemJS version of those libraries. Alternatively, you may use [SystemJS extras](https://github.com/systemjs/systemjs#extras) to support UMD bundles, which are often available.
+要使共享依赖项作为运行时模块可用，它们在import map中。管理它们的一个好方法是创建一个名为“共享依赖”的存储库，其中有部分import map。存储库的CI流程更新已部署的import map。然后可以通过向存储库发出拉请求来升级共享依赖项。
 
-An example of a shared-dependencies repo, along with a functioning CI process for it, can be found at https://github.com/polyglot-microfrontends/shared-dependencies.
+不是所有的模块都发布SystemJs格式的包，这种情况下，可以先查看https://github.com/esm-bundle 有没有SystemJs的版本，或者在[SystemJS extras](https://github.com/systemjs/systemjs#extras)查找适合UMD格式的包。
 
-### Sharing with Module Federation
+在 https://github.com/polyglot-microfrontends/shared-dependencies 网址下，每一个依赖共享仓库都有一个可用的CI，
+
+### 模块联合共享
 
 At the time of this writing, module federation is new and still changing. Check out [this example repo](https://github.com/joeldenning/mfe-webpack-demo/tree/system) which uses systemjs to load the microfrontends, but module federation to share `react`, `react-dom`, and `react-router`.
 
-## Deployment and Continuous Integration (CI)
+在撰写本文时，模块联合还是一个新事物，而且还在不断变化。看看[这个示例repo](https://github.com/joeldenning/mfe webpack-demo/tree/system)，它使用systemjs加载微前端，但是模块联合来共享`react`, `react-dom`, 和 `react-router`
 
-Tutorial video (Part 1): [Youtube](https://www.youtube.com/watch?v=QHunH3MFPZs&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=5) / [Bilibili](https://www.bilibili.com/video/av84100303/)
+## 部署和持续集成 (CI)
 
-Tutorial video (Part 2): [Youtube](https://www.youtube.com/watch?v=nC7rpDXa4B8&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=6) / [Bilibili](https://www.bilibili.com/video/av84099642/)
+教程视频 (Part 1): [Youtube](https://www.youtube.com/watch?v=QHunH3MFPZs&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=5) / [Bilibili](https://www.bilibili.com/video/av84100303/)
 
-[Example CI configuration files](https://github.com/single-spa/import-map-deployer/tree/master/examples)
+教程视频 (Part 2): [Youtube](https://www.youtube.com/watch?v=nC7rpDXa4B8&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=6) / [Bilibili](https://www.bilibili.com/video/av84099642/)
 
-Microfrontends are built and deployed completely independently. This means that the git repository, CI, build, and deployments all occur without going through a centralized repository. For this reason, monorepos are not encouraged for microfrontends since monorepos may only have one CI for all of the packages in the repo.
+[CI配置文件阳历](https://github.com/single-spa/import-map-deployer/tree/master/examples)
 
-There are two steps to deploying a microfrontend.
+微前端是完全独立地构建和部署的。这意味着git存储库、CI、构建和部署都无需通过集中式存储库。由于这个原因，不鼓励使用一个大项目，因为对于这样项目中的所有包，可能只有一个CI。
 
-1. Uploading production JavaScript bundles to a web server / CDN. It is encouraged to use a CDN such as AWS S3 + Cloudfront, Google Cloud Storage, Microsoft Azure Storage, Digital Ocean Spaces, etc because of their superior availability, caching, and performance due to edge locations. The JavaScript files that you upload are completely static. It is encouraged to always write new files to the CDN instead of overwriting files.
-2. Updating your import map to point to the newly deployed file.
+有两个步骤即可部署微前端：
 
-The implementation of Step 1 is dependent on the infrastructure you're using for your CDN. The AWS CLI ([`aws s3 sync`](https://docs.aws.amazon.com/cli/latest/reference/s3/)), Google gsutil ([`gsutil cp`](https://github.com/single-spa/import-map-deployer/blob/master/examples/ci-for-javascript-repo/gitlab-gcp-storage/.gitlab-ci.yml)), etc are easy ways of accomplishing this.
+1. 上传生产JavaScript包到web服务器或CDN，我们鼓励使用诸如AWS S3 + Cloudfront、谷歌云存储、Microsoft Azure存储、Digital Ocean space等CDN，因为它们具有优越的可用性、缓存和性能。您上传的JavaScript文件是完全静态的。鼓励总是向CDN写入新文件，而不是覆盖文件。
 
-For the implementation of Step 2, you have a choice:
+2. 更新import map指向新部署文件。
 
-a) Your CI makes a `curl` HTTP call to a running instance of [import-map-deployer](https://github.com/single-spa/import-map-deployer), which updates the import map in a concurrent-safe way.
-b) Your CI runner pulls down the import map, modify it, and reuploads it.
+第一步的实现依赖你所使用的CDN，AWS CLI ([`aws s3 sync`](https://docs.aws.amazon.com/cli/latest/reference/s3/)), Google gsutil ([`gsutil cp`](https://github.com/single-spa/import-map-deployer/blob/master/examples/ci-for-javascript-repo/gitlab-gcp-storage/.gitlab-ci.yml)) 等等都很方便的实现这些功能。
 
-The advantage of a) is that it is concurrent-safe for multiple, simultaneous deployments. Without a concurrent-safe solution, there might be multiple processes pulling down and reuploading the import map at the same time, which could result in a race condition where one CI process thinks it successfully updated the import map when in reality the other CI process wrote the import map later, having based its changes on a stale version of the import map.
+对于第二步的实现，你可以有以下选择：
 
-The advantage of b) is that it doesn't require running the import-map-deployer in your production environment. Ultimately, you should choose whichever option makes sense for your organization.
+a) 你的CI可以发送`curl` HTTP请求一个执行的[import-map-deployer](https://github.com/single-spa/import-map-deployer)实例, 它可以可靠的，并发的更新import map.
+b) 你的CI机器可以下载import map, 修改后再上传。
 
-## Applications versus parcels versus utility modules
+a)的优势在于同时部署的多个请求的并发是很安全的，如果没有并发的解决方案，会造成多个程序同时下载和上传import map，它会导致谁快谁赢的竞速情况，即当一个CI成功更新后，另一个CI会基于旧版本来覆盖import map。
 
-Single-spa has [different categories](/docs/microfrontends-concept#types-of-microfrontends) of microfrontends. It is up to you where and how you use each of them. However, the single-spa core team recommends the following:
+b)的优势在于它不需要一个机器执行生产环境的import-map-deployer，最终，你应该选择对你的组织有意义的任何选项。
 
-**Many route-based single-spa applications, very few single-spa parcels**
+## 应用 vs. parcels vs. 通用模块
 
-1. Prefer splitting microfrontends by route, instead of by components within a route. This means preferring single-spa applications over single-spa parcels whenever possible. The reason for this is that transitions between routes often involve destroying and recreating most UI state, which means your single-spa applications on different routes do not need to ever share UI state.
-2. Move fixed navigation menus into their own single-spa applications. Implement their [activity functions](/docs/configuration#activity-function) to be active by default, only unmounting for the login page.
-3. Create utility modules for your core component library / styleguide, for shared authentication / authorization code, and for global error handling.
-4. If you are only using one framework, prefer framework components (i.e. React, Vue, and Angular components) over single-spa parcels. This is because framework components interop easier with each other than when there is an intermediate layer of single-spa parcels. You can import components between single-spa applications You should only create a single-spa parcel if you need it to work with multiple frameworks.
+Single-spa 有微前端的[不同目录](/docs/microfrontends-concept#types-of-microfrontends)。在何处和如何使用他们，决定权在于你。然而，single-spa核心团队有如下推荐：
 
-## Inter-app communication
+**多用基于路由的single-spa应用, 少用 single-spa parcels**
 
-*A good architecture is one in which microfrontends are decoupled and do not need to frequently communicate. Following the guidelines above about applications versus parcels helps you keep your microfrontends decoupled. Route-based single-spa applications inherently require less inter-app communication.*
+1. 首选按路由而不是按路由中的组件拆分微前端。 这意味着在可能的情况下，首选single-spa应用程序而不是single-spa parcels。 原因是路由之间的转换通常涉及破坏和重新创建大多数UI状态，这意味着位于不同路由上的single-spa应用程序无需共享UI状态。
+2. 将固定的导航菜单移至其自己的single-spa应用程序中时，要使自己的[激活函数](/docs/configuration#activity-function)默认激活, 除此之外只有在登录页才需要卸载。
+3. 为你核心的组件，样式，权限和全局错误处理新增通用模块。
+4. 如果你只使用一个框架，尽可能使用框架组件(例如 React, Vue, and Angular 组件)而不是single-spa parcels。这是因为框架组件之间的互操作比有single-spa包的中间层时更容易。 您应该只在需要使用多个框架时创建single-spa parcels，在多个single-spa应用程序之间导入组件。
 
-There are three things that microfrontends might need to share / communicate:
+## 应用内通信
 
-1. Functions, components, logic, and environment variables.
-2. API data
-3. UI state
+*一个好的体系结构是将微前端解耦，并且不需要频繁通信。遵循上面关于应用程序与parces的指导原则，可以帮助您保持微前端的解耦。基于路由的single-spa应用程序本质上需要较少的应用程序间通信。*
 
-### Functions, components, logic, and environment variables
+微前端直接通信的可能有三样东西：
 
-Example - [exporting a shared component](https://github.com/vue-microfrontends/styleguide/blob/af3eaa70bec7daa74635eb3ec76140fb647b0b14/src/vue-mf-styleguide.js#L5) and [importing a shared component](https://github.com/vue-microfrontends/rate-dogs/blob/fe3196234b9cbd6d627199b03a96e7b5f0285c4b/src/components/rate-dogs.vue#L25).
+1. 方法，组件，逻辑，全局状态
+2. API数据
+3. UI状态
 
-You can import and export functions, components, logic, and environment variables between your microfrontends that are in different git repos and JavaScript bundles:
+### 方法，组件，逻辑，全局状态
+
+例子 - [导出一个共享的组件](https://github.com/vue-microfrontends/styleguide/blob/af3eaa70bec7daa74635eb3ec76140fb647b0b14/src/vue-mf-styleguide.js#L5) 和 [导入一个共享的组件](https://github.com/vue-microfrontends/rate-dogs/blob/fe3196234b9cbd6d627199b03a96e7b5f0285c4b/src/components/rate-dogs.vue#L25).
+
+你可以在不同git仓库或JS包的微前端之间导入或导出方法，组件，逻辑，全局状态：
 
 ```js
 // Inside of a utility module called @org-name/auth
@@ -282,12 +287,11 @@ import { userHasAccess } from '@org-name/auth'
 const showLinkToInvoiceFeature = userHasAccess('invoicing');
 ```
 
-### API Data
+### API数据
 
-Example - [exporting a `fetchWithCache` function](https://github.com/react-microfrontends/api/blob/c3c336129e920bbc6137f04cce24b718105efed1/src/react-mf-api.js#L3) and [importing the function](https://github.com/react-microfrontends/people/blob/ad18de9b96b52e6975244e6662becfe13e41a2db/src/utils/api.js#L1).
+例子 - [导出一个`fetchWithCache` 方法](https://github.com/react-microfrontends/api/blob/c3c336129e920bbc6137f04cce24b718105efed1/src/react-mf-api.js#L3) and [导入方法](https://github.com/react-microfrontends/people/blob/ad18de9b96b52e6975244e6662becfe13e41a2db/src/utils/api.js#L1).
 
-API data often does not need to be shared between microfrontends, since each single-spa application controls different routes and different routes often have different data. However, occasionally you do need to share API data between microfrontends. An in-memory JavaScript cache of API objects is a solution used by several companies to solve this. For React users, this is similar to Data Fetching with Suspense, where the fetching logic for routes is split out from the component code that uses the data.
-
+API数据通常不需要在microfrontend之间共享，因为每个单独的spa应用程序控制不同的路由，而不同的路由通常有不同的数据。然而，有时您确实需要在microfrontend之间共享API数据。API对象的内存中的JavaScript缓存是一些公司用来解决这个问题的解决方案。对于React用户，这类似于带Suspense的数据获取，其中路由的获取逻辑是从使用数据的组件代码中分离出来的。
 ```js
 // Inside of your api utility module, you can lazily fetch data either when another microfrontend calls your exported
 // functions, or eagerly fetch it when the route changes.
@@ -313,20 +317,21 @@ getLoggedInUser().then(user => {
 });
 ```
 
-### UI State
+### UI状态
 
-*If two microfrontends are frequently passing state between each other, consider merging them. The disadvantages of microfrontends are enhanced when your microfrontends are not isolated modules.*
+*如果两个微前端经常在彼此之间传递状态，可以考虑合并它们。当你的microfrontend不是孤立的模块时，它的缺点就会被放大*
 
-UI State, such as "is the modal open," "what's the current value of that input," etc. largely does not need to be shared between microfrontends. If you find yourself needing constant sharing of UI state, your microfrontends are likely more coupled than they should be. Consider merging them into a single microfrontend.
+比如“是模态打开的”、“输入的当前值是多少”等等的UI状态，基本上不需要在微前端之间共享。如果您发现自己需要不断共享UI状态，那么您的微前端可能拆分的太多了。考虑将它们合并。
 
-Under the rare circumstances where you do need to share UI state between single-spa applications, an event emitter may be used to do so. Below are a few examples of event emitters that might help you out.
+在极少的情况下在需要在singlespa应用程序之间共享UI状态，可以使用event emitter来实现。下面是一些event emitter的例子，可能会对你有所帮助。
 
-1. Observables / Subjects (rxjs) - one microfrontend emits new values to a stream that can be consumed by any other microfrontend. It exports the observable to all microfrontends from its in-browser module, so that others may import it.
+1. Observables / Subjects (rxjs) - 一个微前端发布一个新值到一个可以被其他微前端消费的流对象，它可以向所有的微前端应用暴露出来以便其他应用可以订阅。
 2. CustomEvents - browsers have a built-in event emitter system that allows you to fire custom events. Check out [this documentation](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events) for more information. Firing the events with `window.dispatchEvent` allows you to subscribe in any other microfrontend with `window.addEventListener`.
-3. Any other pub/sub event emitter system.
+2. CustomEvents - 浏览器有一个内置的事件发射器系统，允许你触发自定义事件。查看[此文档](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events)以获得更多信息。`window.dispatchEvent`事件允许任何其他的微前端通过`window.addEventListener`订阅。
+3. 其他订阅发布系统。
 
-## State management
+## 状态管理
 
-The single-spa core team cautions against using redux, mobx, and other global state management libraries. However, if you'd like to use a state management library, we recommend keeping the state management tool specific to a single repository / microfrontend instead of a single store for all of your microfrontends. The reason is that microfrontends are not truly decoupled or framework agnostic if they all must use a global store. You cannot independently deploy a microfrontend if it relies on the global store's state to be a specific shape or have specific actions fired by other microfrontends - to do so you'd have to think really hard about whether your changes to the global store are backwards and forwards compatible with all other microfrontends. Additionally, managing global state during route transitions is hard enough without the complexity of multiple microfrontends contributing to and consuming the global state.
+Single-spa核心团队警告不要使用redux、mobx和其他全局状态管理库。然而，如果您想使用状态管理库，我们建议您将状态管理工具保持为特定于单个仓库/微前端，而不是为所有的微前端应用存储。原因是，如果它们都必须使用全局存储，那么微前端就不是真正的解耦。如果它们依赖全局状态或其他应用的特性行为，你不能独立的部署某一个微前端应用，所以你需要思考是否需要改变全局存储向前或向后的兼容性是否需要调整。另外，在路由转换期间管理全局状态足够困难，而不会导致多个微前端复杂和消耗全局状态。
 
-Instead of a global store, the single-spa core team recommends using local component state for your components, or a store for each of your microfrontends. See the above section "Inter-app communication" for more related information.
+Single-spa核心团队推荐使用组件状态或微前端应用级别状态来代替全局状态，查看“应用内通信”获取更多信息。
