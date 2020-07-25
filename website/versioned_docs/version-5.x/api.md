@@ -13,18 +13,22 @@ import * as singleSpa from 'single-spa';
 ```
 
 ## registerApplication
-
-```js
-singleSpa.registerApplication('appName', () => System.import('appName'), location => location.pathname.startsWith('appName'))
-```
-
 `registerApplication` 是基础配置会用到的最重要的API，调用这个方法可以在single-spa中注册一个应用。
 
 请注意，如果一个应用是从另一个应用中注册的，则不会在在多个应用之间维护层次结构。
 
-> 详细解析请见 [Configuration docs](configuration#registering-applications)
+有两种方法注册应用：
 
-<h3>arguments</h3>
+### 简单参数
+```js
+singleSpa.registerApplication(
+	'appName',
+	() => System.import('appName'),
+	location => location.pathname.startsWith('appName')
+)
+```
+
+<h3>参数</h3>
 
 <dl className="args-list">
 	<dt>appName: string</dt>
@@ -34,7 +38,6 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 	<dt>activityFn: (location) => boolean</dt>
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
-	<dd>Will be passed to the application during each lifecycle method.</dd>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
 </dl>
 
@@ -42,16 +45,75 @@ singleSpa.registerApplication('appName', () => System.import('appName'), locatio
 
 `undefined`
 
+### 对象参数
+```js
+singleSpa.registerApplication({
+	name: 'appName',
+	app: () => System.import('appName'),
+	activeWhen: '/appName'
+	customProps: {}
+})
+```
+
+<h3>参数</h3>
+
+<dl className="args-list">
+	<dt>name: string</dt>
+	<dd>应用的名字将会在single-spa中注册和引用, 并在开发工具中标记。</dd>
+	<dt>app: Application | () => Application | Promise&lt;Application&gt; </dt>
+	<dd>必须是一个应用对象，返回一个家在函数。</dd>
+	<dt>activeWhen: string | (location) => boolean | (string | (location) => boolean)[]</dt>
+	<dd>可以是一个路径前缀，它将匹配每个以该路径开头的URL，也可以是激活函数(如简单参数中所述)或一个数组两者都包含在内。如果任何条件为真，则保留应用活动。路径前缀也接受动态值(以':'开头)，因为有些路径会接收url参数，但仍然应该激活您的应用。
+	Examples:
+		<dl>
+			<dt>'/app1'</dt>
+			<dd>✅ https://app.com/app1</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+			<dd>🚫 https://app.com/app2</dd>
+			<dt>'/users/:userId/profile'</dt>
+			<dd>✅ https://app.com/users/123/profile</dd>
+			<dd>✅ https://app.com/users/123/profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users//profile/sub-profile/</dd>
+			<dd>🚫 https://app.com/users/profile/sub-profile/</dd>
+			<dt>'/pathname/#/hash'</dt>
+			<dd>✅ https://app.com/pathname/#/hash</dd>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/hash/route/nested</dd>
+			<dd>🚫 https://app.com/pathname#/another-hash</dd>
+			<dt>['/pathname/#/hash', '/app1']</dt>
+			<dd>✅ https://app.com/pathname/#/hash/route/nested</dd>
+			<dd>✅ https://app.com/app1/anything/everything</dd>
+			<dd>🚫 https://app.com/pathname/app1</dd>
+			<dd>🚫 https://app.com/app2</dd>
+		</dl>
+	</dd>
+	<dt>customProps?: Object = &#123;&#125;</dt>
+	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
+</dl>
+
+<h3>returns</h3>
+
+`undefined`
+
+> 详细解析请见 [Configuration docs](configuration#registering-applications)
+
 ## start
 ```js
 singleSpa.start();
+
+// Optionally, you can provide configuration
+singleSpa.start({
+	urlRerouteOnly: true
+});
 ```
 
 必须在你single spa的配置中调用！在调用 `start` 之前, 应用会被加载, 但不会初始化，挂载或卸载。 `start` 的原因是让你更好的控制你单页应用的性能。举个栗子，你想立即声明已经注册过的应用（开始下载那些激活应用的代码），但是实际上直到初始化AJAX（或许去获取用户的登录信息）请求完成之前不会挂载它们 。 在这个例子里，立马调用 `registerApplication` 方法，完成AJAX后再去调用 `start`方法会获得最佳性能。
 
 <h3>arguments</h3>
 
-none
+The `start(opts)` api optionally accepts a single `opts` object, with the following properties. If the opts object is omitted, all defaults will be applied.
+
+- `urlRerouteOnly`: A boolean that defaults to false. If set to true, calls to `history.pushState()` and `history.replaceState()` will not trigger a single-spa reroute unless the client side route was changed. Setting this to true can be better for performance in some situations. For more information, read [original issue](https://github.com/single-spa/single-spa/issues/484).
 
 <h3>returns</h3>
 
@@ -165,7 +227,7 @@ console.log(status); // one of many statuses (see list below). e.g. MOUNTED
 <dl className="args-list">
 	<dt>appStatus: &lt;string | null&gt;</dt>
 	<dd>
-		将会是下列字符串常量中的一个 或者如果应用不存在是 <code>null</code>
+		将会是下列字符串常量中的一个,如果应用不存在是 <code>null</code>
 		<dl className="dl-inline">
 			<div>
 				<dt>NOT_LOADED</dt>
@@ -372,6 +434,45 @@ const parcel2 = singleSpa.mountRootParcel(() => import('./some-parcel.js'), {pro
 	<dd>详细信息请见 <a href="/docs/parcels-api.html">Parcels API</a> 。</dd>
 </dl>
 
+## pathToActiveWhen
+
+The `pathToActiveWhen` function converts a string URL path into an [activity function](./configuration#activity-function). The string path may contain route parameters that single-spa will match any characters to. It assumes that the string provided is a **prefix**.
+
+This function is used by single-spa when a string is passed into `registerApplication` as the `activeWhen` argument.
+
+***Arguments***
+
+1. `path` (string): The URL prefix that.
+
+***Return Value***
+
+`(location: Location) => boolean`
+
+A function that accepts a URL as an argument and returns a boolean indicating whether the path matches that URL.
+
+***Examples:***
+
+```js
+let activeWhen = singleSpa.pathToActiveWhen('/settings');
+activewhen(new URL('http://localhost/settings')); // true
+activewhen(new URL('http://localhost/settings/password')); // true
+activeWhen(new URL('http://localhost/')); // false
+
+activeWhen = singleSpa.pathToActiveWhen('/user/:id/settings');
+activewhen(new URL('http://localhost/users/6f7dsdf8g9df8g9dfg/settings')); // true
+activewhen(new URL('http://localhost/users/1324/settings')); // true
+activewhen(new URL('http://localhost/users/1324/settings/password')); // true
+activewhen(new URL('http://localhost/users/1/settings')); // true
+activewhen(new URL('http://localhost/users/1')); // false
+activewhen(new URL('http://localhost/settings')); // false
+activeWhen(new URL('http://localhost/')); // false
+
+activeWhen = singleSpa.pathToActiveWhen('/page#/hash');
+activeWhen(new URL('http://localhost/page#/hash')); // true
+activeWhen(new URL('http://localhost/#/hash')); // false
+activeWhen(new URL('http://localhost/page')); // false
+```
+
 ## ensureJQuerySupport
 
 ```js
@@ -530,61 +631,110 @@ singleSpa.setUnloadMaxTime(3000, true, 10000);
 
 `undefined`
 
-# Events
+## Events
 
-浏览器的所有的下列事件 [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) 都会被single-spa 触发。`detail`事件包含触发路由重定向的原生DOM事件，例如 [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) 或 [HashChangeEvent](https://developer.mozilla.org/en-US/docs/Web/API/HashChangeEvent)。通过 [`addEventListener`] 可以控制这些事件(https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener), 就像:
+single-spa fires Events to the `window` as a way for your code to hook into URL transitions.
 
-<!-- TODO: are these events augmented like the addErrorHandler Error is? -->
+### PopStateEvent
 
-```js
-window.addEventListener('single-spa:before-routing-event', evt => {
-  const originalEvent = evt.detail;
-  console.log('single-spa event', originalEvent);
-})
-```
-
-## before routing event
+single-spa fires [PopStateEvent](https://developer.mozilla.org/en-US/docs/Web/API/PopStateEvent) events when it wants to instruct all active applications to re-render. This occurs when one application calls [history.pushState](https://developer.mozilla.org/en-US/docs/Web/API/History/pushState), [history.replaceState](https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState), or [triggerAppChange](#triggerAppChange). Single-spa deviates from the browser's default behavior in some cases, as described in [this Github issue](https://github.com/single-spa/single-spa/issues/484#issuecomment-601279869).
 
 ```js
-window.addEventListener('single-spa:before-routing-event', () => {
-	console.log('single-spa is about to mount/unmount applications!');
+window.addEventListener('popstate', evt => {
+	if (evt.singleSpa) {
+		console.log('This event was fired by single-spa to forcibly trigger a re-render')
+		console.log(evt.singleSpaTrigger); // pushState | replaceState
+	} else {
+		console.log('This event was fired by native browser behavior')
+	}
 });
 ```
 
-每次路由跳转前 `single-spa:before-routing-event` 事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时也会触发。
+### Custom Events
 
-## routing event
+single-spa fires a series of [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) whenever it reroutes. A reroute occurs whenever the browser URL changes in any way or a `triggerAppChange` is called. The custom events are fired to the `window`. Each custom event has a [`detail` property](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) with the following properties:
 
 ```js
-window.addEventListener('single-spa:routing-event', () => {
-	console.log('single-spa finished mounting/unmounting applications!');
+window.addEventListener('single-spa:before-routing-event', evt => {
+	const { originalEvent, newAppStatuses, appsByNewStatus, totalAppChanges } = evt.detail;
+	console.log('original event that triggered this single-spa event', originalEvent); // PopStateEvent | HashChangeEvent | undefined
+	console.log('the new status for all applications after the reroute finishes', newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
+	console.log('the applications that changed, grouped by their status', appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
+	console.log('number of applications that changed status so far during this reroute', totalAppChanges); // 2
+})
+```
+
+The following table shows the order in which the custom events are fired during a reroute:
+
+| Event order | Event Name | Condition for firing |
+| ----------- | ---------- | -------------------- |
+| 1 | `single-spa:before-app-change` or `single-spa:before-no-app-change` | Will any applications change status? |
+| 2 | `single-spa:before-routing-event` | &mdash; |
+| 3 | `single-spa:before-mount-routing-event` | &mdash; |
+| 4 | `single-spa:before-first-mount` | Is this the first time any application is mounting? |
+| 5 | `single-spa:first-mount` | Is this the first time any application was mounted? |
+| 6 | `single-spa:app-change` or `single-spa:no-app-change` | Did any applications change status? |
+| 7 | `single-spa:routing-event` | &mdash; |
+
+### before-app-change event
+
+```js
+window.addEventListener('single-spa:before-app-change', (evt) => {
+	console.log('single-spa is about to mount/unmount applications!');
+	console.log(evt.detail.originalEvent) // PopStateEvent
+	console.log(evt.detail.newAppStatuses) // { app1: MOUNTED }
+	console.log(evt.detail.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: [] }
+	console.log(evt.detail.totalAppChanges) // 1
+});
+```
+
+A `single-spa:before-app-change` event is fired before reroutes that will result in at least one application changing status.
+
+### before-no-app-change
+
+```js
+window.addEventListener('single-spa:before-no-app-change', (evt) => {
+	console.log('single-spa is about to do a no-op reroute');
+	console.log(evt.detail.originalEvent) // PopStateEvent
+	console.log(evt.detail.newAppStatuses) // { }
+	console.log(evt.detail.appsByNewStatus) // { MOUNTED: [], NOT_MOUNTED: [] }
+	console.log(evt.detail.totalAppChanges) // 0
 });
 ```
 
 每次路由跳转后`single-spa:routing-event`事件会被触发，它可能是 hashchange, popstate, 或者 triggerAppChange，甚至当前应用不需要修改时
 ; 在single-spa 校验所有app都正确加载，初始化，挂载，卸载之后此此事件触发。
 
-## app-change event
+### before-routing-event
 
 ```js
-window.addEventListener('single-spa:app-change', () => {
-	console.log('A routing event occurred where at least one application was mounted/unmounted');
+window.addEventListener('single-spa:before-routing-event', (evt) => {
+	console.log('single-spa is about to mount/unmount applications!');
+	console.log(evt.detail.originalEvent) // PopStateEvent
+	console.log(evt.detail.newAppStatuses) // { }
+	console.log(evt.detail.appsByNewStatus) // { MOUNTED: [], NOT_MOUNTED: [] }
+	console.log(evt.detail.totalAppChanges) // 0
 });
 ```
 
 每次加载，初始化，挂载，卸载或移除一个或多个应用程序时，都会触发 `single-spa:app-change` 事件。它与 `single-spa:routing-event` 路由事件类似，只是在一个或多个应用程序真正加载，初始化，挂载，卸载或移除之后，它才会启动。如果hashchange、popstate或triggerAppChange不会导致其中任何一个更改，则不会引发事件。
 
-## no-app-change event
+### before-mount-routing-event
 
 ```js
-window.addEventListener('single-spa:no-app-change', () => {
-	console.log('A routing event occurred where zero applications were mounted/unmounted');
+window.addEventListener('single-spa:before-mount-routing-event', (evt) => {
+	console.log('single-spa is about to mount/unmount applications!');
+	console.log(evt.detail)
+	console.log(evt.detail.originalEvent) // PopStateEvent
+	console.log(evt.detail.newAppStatuses) // { app1: MOUNTED }
+	console.log(evt.detail.appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: [] }
+	console.log(evt.detail.totalAppChanges) // 1
 });
 ```
 
 当没有加载，初始化，挂载，卸载或移除应用程序时，single-spa触发 `single-spa:no-app-change` 事件。这与 `single-spa:app-change` 事件正好相反。每个路由事件只会触发一个。
 
-## before-first-mount	
+### before-first-mount
 
 ```js
 window.addEventListener('single-spa:before-first-mount', () => {
@@ -596,7 +746,7 @@ window.addEventListener('single-spa:before-first-mount', () => {
 
 > **推荐用例：** 在用户将要看到第一个应用挂载之前，移除一个loading。
 
-## first-mount
+### first-mount
 
 ```js
 window.addEventListener('single-spa:first-mount', () => {

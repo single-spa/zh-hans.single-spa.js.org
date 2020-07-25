@@ -3,58 +3,56 @@ id: parcels-overview
 title: Parcels
 sidebar_label: Overview
 ---
-_Parcels are an advanced feature of single-spa. Avoid using them until you have a better understanding of single-spa's registerApplication api._
-A single-spa parcel is a framework agnostic component. It is a chunk of functionality meant to be mounted manually by an application, without having to worry about which framework was used to implement the parcel or application. Parcels use similar methodology as registered applications but are mounted by a manual function call rather than the activity function.
-A parcel can be as large as an application or as small as a component and written in
-any language as long as it exports the correct lifecycle events. In a single-spa world, your SPA contains
-many registered applications and potentially many parcels. Typically we recommend you mount a parcel within
-the context of an application because the parcel will be unmounted with the application.
+Parcels是single-spa的一个高级特性。在对single-spa的注册相关api有更多了解之前，请尽量避免使用该特性。一个single-spa 的 parcel，指的是一个与框架无关的组件，由一系列功能构成，可以被应用手动挂载，无需担心由哪种框架实现。Parcels 和注册应用的api一致，不同之处在于parcel组件需要手动挂载，而不是通过activity方法被激活。
 
-If you are only using one framework, it is recommended to prefer framework components (i.e., React, Vue, and Angular components) over single-spa parcels. This is because framework components interop easier with each other than when there is an intermediate layer of single-spa parcels. You may import components between registered applications via `import` statements. You should only create a single-spa parcel if you need it to work with multiple frameworks. ([More details](/docs/recommended-setup#in-browser-versus-build-time-modules))
 
-## Quick Example
+一个parcel可以大到一个应用，也可以小至一个组件，可以用任何语言实现，只要能导出正确的生命周期事件即可。在 single-spa 应用中，你的SPA可能会包括很多个注册应用，也可以包含很多parcel。通常情况下我们建议你在挂载parcel时传入应用的上下文，因为parcel可能会和应用一起卸载。
+
+如果你只使用了一种框架，建议使用框架组件（如React、Vue、Angular组件）而不是parcel共享功能。Parcel多包裹了一层中间层，而框架组件在应用间调用时会更容易，你可以通过`import`语法直接在注册应用里导入一个组件。只有在涉及到跨框架的应用之间进行组件调用时，我们才需要考虑parcel的使用。 ([更多细节](/docs/recommended-setup#in-browser-versus-build-time-modules))
+
+## 快速示例
 
 ```js
-// The parcel implementation
+// parcel 的实现
 const parcelConfig = {
   bootstrap() {
-    // one time initialization
+    // 初始化
     return Promise.resolve()
   },
   mount() {
-    // use a framework to create dom nodes and mount the parcel
+    // 使用某个框架来创建和初始化dom
     return Promise.resolve()
   },
   unmount() {
-    // use a framework to unmount dom nodes and perform other cleanup
+    // 使用某个框架卸载dom，做其他的清理工作
     return Promise.resolve()
   }
 }
 
-// How to mount the parcel
+// 如何挂载parcel
 const domElement = document.getElementById('place-in-dom-to-mount-parcel')
 const parcelProps = {domElement, customProp1: 'foo'}
 const parcel = singleSpa.mountRootParcel(parcelConfig, parcelProps)
 
-// The parcel is being mounted. We can wait for it to finish with the mountPromise.
+// parcel 被挂载，在mountPromise中结束挂载
 parcel.mountPromise.then(() => {
   console.log('finished mounting parcel!')
-  // If we want to re-render the parcel, we can call the update lifecycle method, which returns a promise
+  // 如果我们想重新渲染parcel，可以调用update生命周期方法，其返回值是一个 promise
   parcelProps.customProp1 = 'bar'
   return parcel.update(parcelProps)
 })
 .then(() => {
-  // Call the unmount lifecycle when we need the parcel to unmount. This function also returns a promise
+  // 在此处调用unmount生命周期方法来卸载parcel. 返回promise
   return parcel.unmount()
 })
 ```
+## Pacel 配置
+一个parcel只是一个由3到4个方法组成的对象。当挂载一个parcel时，你可以直接提供挂载对象，也可以提供loading方法来异步下载parcel对象。
+parcel对象上的每个方法都是一个生命周期函数，返回值是promise。Parcels有3个必填生命周期函数(bootstrap， mount 和 unmount)和1个可选生命周期函数(update)。
+强烈建议通过[生命周期helper方法](ecosystem.md#help-for-frameworks)来当实现一个parcel。 
 
-## Parcel configuration
+一个React parcel示例如下：
 
-A parcel is just an object with 3 or 4 functions on it. When mounting a parcel, you can provide either the object itself or a loading function that asynchronously downloads the parcel object.
-Each function on a parcel object is a lifecycle method, which is a function that returns a promise. Parcels have three required lifecycle methods (bootstrap, mount, and unmount) and one optional lifecycle method (update).
-When implementing a parcel, it's strongly recommended that you use the [lifecycle helper methods](ecosystem.md#help-for-frameworks).
-An example of a parcel written in React would look like this:
 ```js
 // myParcel.js
 import React from 'react'
@@ -67,10 +65,10 @@ export const MyParcel = singleSpaReact({
   rootComponent: MyParcelComponent
 })
 
-// in this case singleSpaReact is taking our inputs and generating an object with the required lifecycles.
+// 在这个示例中，singleSpaReact 处理input并生成了一个含有生命周期函数的parcel
 ```
 
-Then to use the parcel you just created all you need to do is use the `Parcel` component provided in [single-spa-react](single-spa-react.md#parcels)
+需要使用上面例子生成的parcel，你只需引用由[single-spa-react](single-spa-react.md#parcels)提供的`Parcel`组件。
 
 ```jsx
 // mycomponent.js
@@ -90,84 +88,78 @@ export class myComponent extends React.Component {
 }
 ```
 
-Note that in some cases the optional props are required [(see additional examples)](single-spa-react.md#examples).
+注意在某些情况下，可选属性也可能会要求必填。[(查看更多示例)](single-spa-react.md#examples)
 
-## Parcel Lifecycles
+## Parcel 生命周期
 
-Start with [applications](api.md#registered-application-lifecycle) to learn more about the functionality of single-spa's lifecycle methods.
+可以先查看 [应用生命周期](api.md#registered-application-lifecycle) 来了解single-spa的生命周期方法。
 
-### Bootstrap
+### 初始化(Bootstrap)
 
-This lifecycle function will be called once, right before the parcel is
-mounted for the first time.
+这个生命周期函数只在parcel第一次挂载前调用一次。
 
 ```js
 function bootstrap(props) {
   return Promise
     .resolve()
     .then(() => {
-      // This is where you do one-time initialization
+      // 在这里做初始化相关工作
       console.log('bootstrapped!')
     });
 }
 ```
 
-### Mount
+### 挂载（Mount）
 
-If the parcel is not mounted this lifecycle function is called when ever `mountParcel` is called. When
-called, this function should create DOM elements, DOM event listeners, etc. to render content to the user.
+在`mountParcel`方法被调用且parcel未挂载时触发，一般会创建DOM元素、初始化事件监听等，从而为用户提供展示内容。
 
 ```js
 function mount(props) {
   return Promise
     .resolve()
     .then(() => {
-      // This is where you tell a framework (e.g., React) to render some ui to the dom
+      // 在这里通知框架（如React等）渲染DOM
       console.log('mounted!')
     });
 }
 ```
 
 ### Unmount
+### 卸载(Unmount)
 
-This lifecycle function will be called whenever the parcel is mounted and one of the following cases is true:
+这个生命周期函数被调用的时机是parcel已经被挂载，且满足下列某个条件：
+- `unmount()`被调用
+- 父parcel或者应用被卸载
 
-- `unmount()` is called
-- The parent parcel or application is unmounted
-
-When called, this function should clean up all DOM elements, DOM event listeners, leaked memory, globals,
-observable subscriptions, etc. that were created at any point when the parcel was mounted.
+当被调用时，这个方法会清除DOM元素、DOM事件监听，清理内存泄漏、全局变量、事件订阅等在挂载parcel时创建的内容。
 
 ```js
 function unmount(props) {
   return Promise
     .resolve()
     .then(() => {
-      // This is where you tell a framework (e.g., React) to unrender some ui from the dom
+      // 在这里通过框架语言停止渲染和移除dom
       console.log('unmounted!');
     });
 }
 ```
 
 ### Update (optional)
+### 更新(Update)(可选)
 
-The update lifecycle function will be called whenever the user of the parcel calls `parcel.update()`.
-Single this lifecycle is optional, the user of a parcel needs to check whether the parcel has implemented the update lifecycle before attempting to make the call.
+当调用`parcel.update()`会触发更新生命周期函数。该生命周期函数是可选的，parcel使用者需要在调用该方法之前确认其已经实现。
 
-## Example use cases
+## 使用示例
+### 模态框
 
-### Modals
+`App1` 处理和联系人相关的所有逻辑(高内聚)，但`App2`中需要新建一个联系人。
+我们有以下方法在应用1和应用2中共享功能：
+- 如果两个应用使用同一个框架，可以 export/import组件实现
+- 重新实现一份创建联系人的逻辑(逻辑分散，不再内聚)
+- 使用single-spa parcels
 
-`App1` handles everything related to contacts (highly cohesive) but somewhere in `App2` we need to create a contact.
-We could do any number of things to share the functionality between application 1 and 2:
-
-- If both are written in the same framework we could export/import components.
-- We could reimplement creating a contact (loss of cohesion)
-- We could use single-spa parcels.
-
-Exporting a parcel from `App1` that wraps the createContact modal component gives us the ability to share components and behavior across disparate frameworks, without losing application cohesion.
-App1 can export a modal as a single-spa parcel and App2 can import the parcel and use it easily. One major advantage is that in the below example
-the parcel/modal from App1 that is being used by App2 will also be unmounted, without unmounting/mounting of App1.
+从`App1`导出一个parcel，包括创建联系人的功能。这样就可以在不丢失应用高内聚特性的基础上，在跨框架的应用间共享组件行为。
+App1可以将moadel导出作为parcel，App2导入该parcel并使用。在下面的例子中，一个主要的好处在于从App1导出的parcel/modal也将会被卸载，而无需卸载/加载App1。
 
 ```js
 // App1
@@ -178,33 +170,30 @@ export const AddContactParcel = {
 }
 
 // App2
-// get the parcel configuration in this case I'm using systemJS and react
-...
+// 获取parcel，该例子使用systemJS和React
 componentDidMount() {
   SystemJS.import('App1').then(App1 => {
     const domElement = document.body
     App2MountProps.mountParcel(App1.AddContactParcel, {domElement})
   })
 }
-...
 ```
-## `mountRootParcel` vs `mountParcel`
-
-Single spa exposes two APIs for working with parcels. These API's are differentiated primarily by the context in which the parcel is created and how to access the API's
+## `mountRootParcel` 和 `mountParcel`
+single-spa 对外暴露了两套parcels相关接口。二者的区别主要在于调用者和调用接口的方式。
 
 |                   | mountRootParcel        | mountParcel                  |
 | ----------------- | ---------------------- | ---------------------------- |
-| context           | singleSpa              | application                  |
-| unmount condition | manual only            | manual + application unmount |
-| api location      | singleSpa named export | provided in lifecycle prop   |
+| 上下文           | singleSpa              | application                  |
+| 卸载条件  | 手动卸载            | 手动卸载 + 应用被卸载时 |
+| api 位置      | singleSpa 命名导出 | 生命周期属性中提供   |
 
-### Which should I use?
-In general we suggest using the application-aware `mountParcel` API. `mountParcel` allows you to treat the parcel just like a component inside your application without considering what framework it was written in and being forced to remember to call unmount.
+### 我应该使用哪个
+通常我们建议使用`mountParcel`API。`mountParcel`允许你将parcel在应用里当做一个普通组件处理，不需要考虑parcel由哪个框架实现，也不需要强制调用`unmount()`方法卸载parcel
 
-### How do I get the `mountParcel` API?
-In order to keep the function contextually bound to an application it is provided to the application as a [lifecycle prop](building-applications.md#lifecyle-props). You will need to store and manage that function yourself in your application. 
+### 如何获取`mountParcel` API ？
+为了能够绑定在应用的上下文中，mountParcel会作为[生命周期属性](building-applications.md#lifecyle-props)进行传入。你需要在自己的应用中存储和管理其方法。
 
-Example of storing the application specific `mountParcel` API:
+`mountParcel` API例子：
 ```js
 // App1
 let mountParcel
@@ -213,8 +202,12 @@ export const bootstrap = [
     mountParcel = props.mountParcel
     return Promise.resolve()
   },
-  // more bootstrap lifecycles if necessary
+  // 其他更多boostrap
 ]
-...
 ```
-note: some libraries (such as react) support a framework specific context that makes it easy to store/manage. In those cases we've written some helper methods to abstract away the need to manage and store the `mountParcel` method.
+注意：一些类库(如React)支持在框架里存储和管理parcel。在这些情况下我们不需要写helper方法来存储和管理`mountParcel`方法。
+
+
+
+
+

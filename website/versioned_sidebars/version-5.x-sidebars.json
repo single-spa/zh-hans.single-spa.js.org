@@ -27,6 +27,10 @@
         {
           "type": "doc",
           "id": "version-5.x/single-spa-playground"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.x/videos"
         }
       ]
     },
@@ -47,6 +51,10 @@
         {
           "type": "doc",
           "id": "version-5.x/microfrontends-concept"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.x/module-types"
         }
       ]
     },
@@ -85,6 +93,24 @@
         {
           "type": "doc",
           "id": "version-5.x/parcels-overview"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Layout Engine (Beta)",
+      "items": [
+        {
+          "type": "doc",
+          "id": "version-5.x/layout-overview"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.x/layout-definition"
+        },
+        {
+          "type": "doc",
+          "id": "version-5.x/layout-api"
         }
       ]
     },

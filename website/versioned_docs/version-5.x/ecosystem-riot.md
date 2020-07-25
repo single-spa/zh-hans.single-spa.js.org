@@ -4,7 +4,7 @@ title: single-spa-riot
 sidebar_label: Riot
 ---
 
-single-spa-riot is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for for use with [riot](https://riot.js.org/). Check out the [single-spa-riot github](https://github.com/ariesjia/single-spa-riot).
+single-spa-riot是一个帮助实现[single-spa注册应用](configuration#registering-applications)[生命周期函数](building-applications.md#registered-application-lifecycle)(引导、挂载和卸载)的工具库，可与[riot](https://riot.js.org/)一起使用。 仓库地址见[single-spa-riot github](https://github.com/ariesjia/single-spa-riot)。
 
 [![NPM](https://img.shields.io/npm/v/single-spa-riot.svg)](https://www.npmjs.com/package/single-spa-riot)
 
@@ -38,8 +38,8 @@ export const unmount = riotLifecycles.unmount;
 
 ## Options
 
-All options are passed to single-spa-riot via the `opts` parameter when calling `singleSpaRiot(opts)`. The following options are available:
+在调用`singleSpaRiot(opts)`方法时，`opts` 参数会将所有选项传递给single-spa-riot。选项如下：
 
-- `domElementGetter`: (required) the callback to get root component mount element.
-- `rootComponent`: (optional and replaces `appOptions.loadRootComponent`) the root riot component.
-- `loadRootComponent`: (optional and replaces `appOptions.rootComponent`) A promise that resolves with your root component. This is useful for lazy loading.
+- `domElementGetter`: (必填) 回调函数，返回根组件挂载的元素。
+- `rootComponent`: (选填，将会替换 `appOptions.loadRootComponent`) riot根组件。
+- `loadRootComponent`: (选填，将会替换 `appOptions.rootComponent`) 一个返回根元素的Promise对象，它对于实现懒加载很有帮助。
