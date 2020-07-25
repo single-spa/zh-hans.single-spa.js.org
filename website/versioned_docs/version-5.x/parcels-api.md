@@ -3,17 +3,14 @@ id: parcels-api
 title: Parcels API
 sidebar_label: Parcels API
 ---
+除了挂载之外，大部分parcel相关的api都可以被自身调用。
 
-Most parcel methods will be called on the parcel itself, with the exception being around mounting.
+## 挂载
+Parcel有两种挂载方式，入参分别是 [parcelConfig](parcels-overview.md#parcel-configuration) 和 [parcelProps](parcels-api.md#parcel-props)。
+都会返回一个[parcel 对象](parcels-api.md#parcel-object)。该对象会对外暴露parcel相关的api。
 
-## mounting
-
-Both mount methods take a [parcelConfig](parcels-overview.md#parcel-configuration) and [additional props](parcels-api.md#parcel-props).
-They both return a [parcel object](parcels-api.md#parcel-object). The parcel object contains all additional exposed methods.
-
-### Parcel Props
-
-When mounting a parcel the second argument is props, a JavaScript object of properties to be passed to the parcel. This object must have a domElement prop, which is the dom node that the parcel will mount into.
+### Parcel 属性(Parcel Props)
+当挂载一个parcel时，第二个参数是props，javascript对象类型。该对象包含一个domElement属性，将作为parcel的挂载点。
 
 ```js
 const parcelProps = {
@@ -25,29 +22,24 @@ const parcelProps = {
 
 ### mountParcel
 
-`applicationProps.mountParcel(parcelConfig, parcelProps)`. Each application is provided a mountParcel function.
-The main advantage to using an applications `mountParcel` function is that parcels mounted via an
-applications `mountParcel` will be automatically unmounted when the application is unmounted.
-
-The first argument may be either an object or a function that returns a promise that resolves with the object (a loading function).
-
+`applicationProps.mountParcel(parcelConfig, parcelProps)`。每个应用会提供一个mountParcel方法。
+Parcel可以直接调用应用的`mountParcel`函数进行挂载，好处在于当应用被卸载时，挂载的parcel也会自动卸载。
+第一个参数可以是对象或者函数（加载函数），函数的返回值为Promise，resolve的结果是一个对象。【译者注：挂载方式一】
 ```js
 // Synchronous mounting
 const parcel1 = applicationProps.mountParcel(parcelConfig, parcelProps);
-
 // Asynchronous mounting. Feel free to use webpack code splits or SystemJS dynamic loading
 const parcel2 = applicationProps.mountParcel(() => import('./some-parcel'), parcelProps);
 ```
 
 ### mountRootParcel
 
-The [mountRootParcel](api.md#mountrootparcel) method will mount the parcel but `unmount` must be called manually.
+ [mountRootParcel](api.md#mountrootparcel) 方法也可以对parcel进行挂载，不过需要手动调用`unmount`卸载。【译者注：挂载方式二】
 
-## Parcel Object
+ ## Parcel 对象
 
-The parcel object contains the following functions and methods:
-
-- [mount](parcels-api.md#mount)
+ 一个parcel对象包含下面的方法：
+ - [mount](parcels-api.md#mount)
 - [unmount](parcels-api.md#unmount)
 - [update](parcels-api.md#update)
 - [getStatus](parcels-api.md#getstatus)
@@ -58,15 +50,15 @@ The parcel object contains the following functions and methods:
 
 ### unmount
 
-`parcel.unmount()` returns a promise that resolves once the parcel is successfully unmounted. The promise may throw an error which needs to be handled.
+`parcel.unmount()` 返回一个promise，当parcel卸载成功后resolve。promise可能会抛出异常，需进行处理。
 
 ### mount
 
-`parcel.mount()` returns a promise that resolves once the parcel is successfully mounted. The promise can throw an error which needs to be handled.
+`parcel.unmount()` 返回一个promise，当parcel卸载成功后resolve。promise可能会抛出异常，需进行处理。
 
 ### update
 
-`parcel.update(props)` allows you to change the props passed into a parcel. Note that not all parcels support being updated. The `update` function returns a promise that resolves when the parcel is finished updating. See [other documentation](parcels-overview.html#update-optional) and [example](https://single-spa.js.org/docs/parcels-overview.html#quick-example) for more information.
+`parcel.update(props)` 允许你改变传给parcel的参数。注意不是所有的parcel都支持update方法。`update`方法返回一个promise，更新成功后resolve。如有需求可查阅[其他文档](parcels-overview.html#update-optional) 和 [示例](https://single-spa.js.org/docs/parcels-overview.html#quick-example) 。
 
 ```js
 const parcel = singleSpa.mountRootParcel(parcelConfig, parcelProps);
@@ -75,28 +67,28 @@ parcel.update(newParcelProps);
 
 ### getStatus
 
-`parcel.getStatus()` retuns a string of that parcels status. The string status is one of the following:
+`parcel.getStatus()` 返回一个字符串代表parcel的状态。所有状态如下：
 
-- `NOT_BOOTSTRAPPED`: The parcel has not been bootstrapped
-- `BOOTSTRAPPING`: The parcel is bootstrapping but has not finished
-- `NOT_MOUNTED`: The parcel has bootstrapped, but is not mounted
-- `MOUNTED`: The parcel is currently active and mounted to the DOM
-- `UNMOUNTING`: The parcel is unmounting, but has not finished
-- `UPDATING`: The parcel is currently being updated, but has not finished
-- `SKIP_BECAUSE_BROKEN`: The parcel threw an error during bootstrap, mount, unmount, or update. Other parcels may continue normally, but this one will be skipped.
+- `NOT_BOOTSTRAPPED`: 未初始化
+- `BOOTSTRAPPING`: 初始化中
+- `NOT_MOUNTED`: 完成初始化，未挂载
+- `MOUNTED`: 激活状态，且已挂载至DOM
+- `UNMOUNTING`: 卸载中
+- `UPDATING`: 更新中
+- `SKIP_BECAUSE_BROKEN`: 在初始化、挂载、卸载或更新时发生异常。其他parcel可能会被正常使用，但当前parcel会被跳过。
 
 ### loadPromise
 
-`parcel.loadPromise()` returns a promise that will resolve once the parcel has been loaded.
+`parcel.loadPromise()` 返回一个promise，当parcel被装载(loaded)后resolve。
 
 ### bootstrapPromise
 
-`parcel.bootstrapPromise()` returns a promise that will resolve once the parcel has been bootstrapped.
+`parcel.bootstrapPromise()` 返回一个promise，当parcel初始化后resolve。
 
 ### mountPromise
 
-`parcel.mountPromise()` returns a promise that will resolve once the parcel has been mounted. This is helpful for knowing exactly when a parcel has been appended to the DOM
+`parcel.mountPromise()` 返回一个promise，当parcel加载后resolve。通常用于检测parcel生成的DOM是否已经挂载。
 
 ### unmountPromise
 
-`parcel.unmountPromise()` returns a promise that will resolve once the parcel has been unmounted.
+`parcel.unmountPromise()` 返回一个promise，当parcel卸载后resolve。
