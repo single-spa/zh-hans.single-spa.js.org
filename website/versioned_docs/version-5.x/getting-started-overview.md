@@ -40,11 +40,8 @@ Single-spa 包括以下内容:
 single-spa 核心团队已经汇总了文档，工具和视频，展示了当前使用single-spa鼓励的最佳实践。
 查看[这些文档](./recommended-setup.md)以获取更多信息。
 
-<<<<<<< HEAD
+
 ## 使用 single-spa 很难么？
-=======
-The single-spa core team has put together documentation, tools, and videos showing the currently encouraged best practices with single-spa. Check out [these docs](/docs/recommended-setup/) for more information.
->>>>>>> e115fe201e34fff2e0a14ab68c185e37780e06af
 
 我们的目标是尽可能简化single-spa的使用过程。但是我们还应该指出，这是一种高级架构，它不同于前端应用程序通常的实现方式。
 
@@ -78,11 +75,7 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 
 ## 简单用法
 
-<<<<<<< HEAD
 有关完整的示例，请查看 [简单的Webpack示例](https://github.com/joeldenning/simple-single-spa-webpack-example) 或 [从头开始的教程](starting-from-scratch.md)。
-=======
-For a full example, check out [this simple webpack example](https://github.com/joeldenning/simple-single-spa-webpack-example) or [these examples](/docs/examples/).
->>>>>>> e115fe201e34fff2e0a14ab68c185e37780e06af
 
 要创建single-spa应用程序，您需要做三件事：
 
@@ -172,11 +165,7 @@ Single-spa 已经通过了一个行为准则，我们希望项目参与者能够
 
 ### [贡献指南](contributing-overview.md)
 
-<<<<<<< HEAD
 阅读我们的[贡献指南](./contributing-overview.md)，以了解我们的开发过程，如何提出错误修正和改进，以及如何对single-spa的更改进行构建和测试。
-=======
-Read our [contributing guide](/docs/contributing-overview/) to learn about our development process, how to propose bugfixes and improvements, and how to build and test your changes to single-spa.
->>>>>>> e115fe201e34fff2e0a14ab68c185e37780e06af
 
 ## 谁在使用这个？
 
