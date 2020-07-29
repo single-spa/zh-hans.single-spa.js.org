@@ -21,6 +21,7 @@ single-spa 生态系统正在迅速发展，支持尽可能多的框架和构建
 - [single-spa-riot](/docs/ecosystem-riot/)
 - [single-spa-backbone](/docs/ecosystem-backbone/)
 - [single-spa-dojo](/docs/ecosystem-dojo/)
+- [single-spa-alpinejs](/docs/ecosystem-alpinejs/)
 
 ## 其他有帮助的库
 
