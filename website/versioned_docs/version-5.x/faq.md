@@ -48,6 +48,7 @@ single-spa是一个顶层路由。当路由处于活动状态时，它讲下载�
 
 然而，如果你刚开始有一个小项目或一个小团队，建议暂时不实用微服务。当到你的项目扩展（如：结构扩展、功能扩展等）变得困难时，别担心，我们会在这里帮你迁移的。
 
+<<<<<<< HEAD
 ## 我能使用多个框架吗？
 是的。然而，这是你需要认证考虑的问题，因为他将在你的前端结构中分成了不兼容的专业领域（如：React专家可能在使用Angular应用时遇到问题），而且还会导致更多的代码被发送给用户。
 
@@ -61,6 +62,21 @@ single-spa是一个顶层路由。当路由处于活动状态时，它讲下载�
 如果你使用[recommended setup](#is-there-a-recommended-setup)安装single-spa，你只需要在你的开发环境下，添加指向本地运行代码的导入映射，并刷新页面即可。
 
 你可以在开发中使用[library](https://github.com/joeldenning/import-map-overrides)，或者你可以自己实现-你会注意到源码非常的简单。主要的收获是，你可以拥有多个[import maps](#what-are-import-maps)，并且最后的一个会被应用-可以通过添加import map来覆盖应用指向本地localhost的默认url。
+=======
+The primary means of communicating between applications is [cross microfrontend imports](/docs/recommended-setup#cross-microfrontend-imports). This allows you define a public interface for a microfrontend that others can use. You may expose functions, data, components, stores, or anything else from any microfrontend to be available in any other.
+
+We recommend that each application manage as much of its own state as possible so that your applications remain independently deployable without the risk of breaking each other. Generally, it’s better to make an API request for the data that each app needs, even if parts of it have been requested by other apps. If you've split your applications well, there will end up being very little application state that is truly shared — for example, your friends list has different data requirements than your social feed.
+
+The list below shows some common practices:
+
+1. Create a shared API [utility microfrontend](/docs/recommended-setup#utility-modules-styleguide-api-etc) that caches fetch/XHR requests and their responses. All microfrontends call into the API microfrontend when making a request, so that the microfrontend can control whether to refetch the data or not.
+1. Create a shared Auth [utility microfrontend](/docs/recommended-setup#utility-modules-styleguide-api-etc) that exposes a `userCanAccess` function for other microfrontends to use when checking permissions. The auth module may also include other exports such as the logged in user object, auth tokens, etc.
+1. Export shared state from the public interface of your microfrontend so that libraries can import it. For values that change over time, Observables ([RxJS docs](https://rxjs-dev.firebaseapp.com/)) can be useful. Create a [ReplaySubject](https://www.learnrxjs.io/learn-rxjs/subjects/replaysubject) so that you can push new values out to all subscribers at any time.
+1. Use [custom browser events](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Creating_and_triggering_events#Creating_custom_events) to communicate. Fire them on the window in one microfrontend, and listen to the event in a different microfrontend.
+1. Use [cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies), [local/session storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), or other similar methods for storing and reading that state. These methods work best with things that don't change often, e.g. logged-in user info.
+
+## Should I use frontend microservices?
+>>>>>>> 727ec66ea8face1f985b6a41a6a89a544363a761
 
 我们还打算将该功能作为[Chrome/Firefox browser extension](https://github.com/single-spa/single-spa-inspector)的一部分来提供。
 
