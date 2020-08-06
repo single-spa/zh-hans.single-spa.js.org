@@ -73,7 +73,7 @@ export const MyParcel = singleSpaReact({
 ```jsx
 // mycomponent.js
 import Parcel from 'single-spa-react/parcel'
-import MyParcel from './myparcel.js'
+import { MyParcel } from './myparcel.js'
 
 export class myComponent extends React.Component {
   render () {
