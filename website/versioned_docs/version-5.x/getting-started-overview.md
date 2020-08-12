@@ -89,7 +89,7 @@ single-spa 可以在 Chrome、 Firefox、 Safari、 IE11和 Edge 中使用。
 </html>
 ```
 
-3. 创建一个single-spa-config。查看[文档](configuration)以获取更多详细信息。
+2. 创建一个single-spa-config。查看[文档](configuration)以获取更多详细信息。
 
 ```js
 //main.js
@@ -115,7 +115,7 @@ singleSpa.registerApplication({ name, app, activeWhen });
 singleSpa.start();
 ```
 
-1. 创建一个应用程序。查看[文档](building-applications.md)以获取更多详细信息。
+3. 创建一个应用程序。查看[文档](building-applications.md)以获取更多详细信息。
 
 ```js
 //app1.js
