@@ -29,3 +29,7 @@ single-spa 生态系统正在迅速发展，支持尽可能多的框架和构建
 - [import-map-deployer](https://github.com/single-spa/import-map-deployer)
 - [SystemJS](https://github.com/systemjs/systemjs)
 - [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop)
+<<<<<<< HEAD
+=======
+- [webpack-import-map-plugin](https://github.com/zleight1/webpack-import-map-plugin)
+>>>>>>> e8ed6e99eca04716660138222f11ad4bab024eb8
