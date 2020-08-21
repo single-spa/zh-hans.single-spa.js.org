@@ -52,7 +52,27 @@ import { setPublicPath } from 'systemjs-webpack-interop';
 setPublicPath('appName');
 ```
 
+<<<<<<< HEAD
 将你的应用的入口文件改成如下内容：
+=======
+Note that if you are using the Vue CLI Plugin, your `main.ts` or `main.js` file will be updated with this code automatically and the `set-public-path.js` file
+will automatically be created with the app name being your package.json's name property.
+
+If you want to deal with your Vue instance, you can modify the mount method by following this. mount method will return Promise with Vue instance after [v1.6.0](https://github.com/single-spa/single-spa-vue/releases/tag/v1.6.0).
+
+```js
+const vueLifecycles = singleSpaVue({...})
+
+export const mount = props => vueLifecycles.mount(props).then(instance => {
+  // do what you want with the Vue instance
+  ...
+})
+```
+
+### Vue 2
+
+For Vue 2, change your application's entry file to be the following:
+>>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
 
 ```js
 import './set-public-path';
@@ -76,17 +96,43 @@ export const mount = vueLifecycles.mount;
 export const unmount = vueLifecycles.unmount;
 ```
 
+<<<<<<< HEAD
 注意：如果你正在使用Vue CLI插件，你的`main.ts`或`main.js`文件将会被自动更新为上面这段代码，`set-public-path.js`文件也将自动被创建，你的应用的名字将作为package.json文件中name属性的值
 
 如果你想要获取到vue实例做一些操作，你可以通过如下指引修改mount方法。mount方法将会以Promise的形式返回Vue对象，该功能仅限于[v1.6.0](https://github.com/single-spa/single-spa-vue/releases/tag/v1.6.0)版本之后
+=======
+### Vue 3
+
+For Vue 3, change your application's entry file to be the following:
+>>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
 
 ```js
-const vueLifecycles = singleSpaVue({...})
+import './set-public-path';
+import { h, createApp } from 'vue';
+import singleSpaVue from '../lib/single-spa-vue.js';
 
-export const mount = props => vueLifecycles.mount(props).then(instance => {
-  // do what you want with the Vue instance
-  ...
-})
+import App from './App.vue';
+
+const vueLifecycles = singleSpaVue({
+  createApp,
+  appOptions: {
+    render() {
+      return h(App, {
+        props: {
+          // single-spa props are available on the "this" object. Forward them to your component as needed.
+          // https://single-spa.js.org/docs/building-applications#lifecyle-props
+          name: this.name,
+          mountParcel: this.mountParcel,
+          singleSpa: this.singleSpa,
+        },
+      });
+    },
+  },
+});
+
+export const bootstrap = vueLifecycles.bootstrap;
+export const mount = vueLifecycles.mount;
+export const unmount = vueLifecycles.unmount;
 ```
 
 <<<<<<< HEAD
@@ -186,4 +232,10 @@ const vueLifecycles = singleSpaVue({
 
 ## 自定义数据
 
+<<<<<<< HEAD
 [single-spa 自定义数据](/docs/building-applications.html#custom-props)通常以`appOptions.data`添加到你的App组件中，可以通过`vm.$data`得到。参考[Vue文档中相关的说明](https://vuejs.org/v2/api/#data)获取更多内容。
+=======
+[single-spa custom props](/docs/building-applications.html#custom-props) are added to your App component as
+`appOptions.data`, and are accessible via `vm.$data`. See [this Vue documentation](https://vuejs.org/v2/api/#data)
+for more information on `appOptions.data`.
+>>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d

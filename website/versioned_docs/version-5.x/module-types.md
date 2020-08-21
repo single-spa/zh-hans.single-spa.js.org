@@ -10,6 +10,7 @@ Single-spa有[不同类别](/docs/microfrontends-concept/#types-of-microfrontend
 
 这是每个single-spa概念上的工作方式，这些信息有助于你理解我们的[建议](/docs/recommended-setup/#applications-versus-parcels-versus-utility-modules)。
 
+<<<<<<< HEAD
 | 主题                | 应用程序                       | 沙箱                              | 公共模块                              |
 | -------------------- | --------------------------------- | ------------------------------------ | ------------------------------------ |
 | 路由              | 有多个路由              | 无路由                         | 无路由                        |
@@ -17,6 +18,15 @@ Single-spa有[不同类别](/docs/microfrontends-concept/#types-of-microfrontend
 | 渲染UI          | 渲染UI                       | 渲染UI                           | 不直接渲染UI          |
 | 生命周期           | single-spa管理生命周期     | 自定义管理生命周期            | 没有生命周期                        |
 | 什么时候使用          | 核心构建模块              | 仅在多个框架中需要 | 共享通用逻辑时使用         |
+=======
+| Topic                | Application                       | Parcel                               | Utility                                           |
+| -------------------- | --------------------------------- | ------------------------------------ | ------------------------------------------------- |
+| Routing              | has multiple routes               | has no routes                        | has no routes                                     |
+| API                  | declarative API                   | imperative API                       | exports a public interface                        |
+| Renders UI           | renders UI                        | renders UI                           | may or may not render UI                          |
+| Lifecycles           | single-spa managed lifecycles     | custom managed lifecycles            | external module: no direct single-spa lifecycles  |
+| When to use          | core building block               | only needed with multiple frameworks | useful to share common logic, or create a service |
+>>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
 
 每个微前端都是一个浏览器内的JavaScript模块([说明](/docs/recommended-setup#in-browser-versus-build-time-modules)).
 
@@ -36,6 +46,7 @@ single-spa管理注册的应用程序，并负责其所有生命周期。这样�
 
 Parcels以多种方式存在，是正常声明流中的出口。 它们的存在主要是让您在多个框架中编写应用程序时可以在应用程序之间重用UI。
 
+<<<<<<< HEAD
 ### 管理parcels的生命周期
 
 当您调用 `mountParcel` 或 `mountRootParcel` [(请参见API)](/docs/parcels-api.md)时，将立即挂载parcel并返回这个parcel对象。 当调用 `mountParcel` 的组件卸载后，你需要在parcel上手动调用`unmount`方法。
@@ -54,3 +65,21 @@ Parcels以多种方式存在，是正常声明流中的出口。 它们的存在
 例如：授权。 每个应用程序怎么知道哪个用户已登录？ 你可以让每个应用程序都询问服务器或读取JWT，但这会在每个应用程序中创建重复的工作。
 使用Utility程序模块模式会让你创建一个实现授权逻辑的模块。 该模块将导出所有你需要的方法，然后你的其他的single-spa 应用程序可以通过导入这个模块来使用这些授权方法。
 这种方法也适用于数据[fetching](/docs/recommended-setup#api-data)。
+=======
+### How do Utilites relate to single-spa?
+A utility is an in-browser module that (generally) has it's own repository and CI process. It exports a public interface of functions and variables that any other microfrontend can import and use. A utility microfrontend is just like any other microfrontend, except it doesn't serve as a single-spa application or parcel.
+
+### Utility modules share common logic
+Utility modules are a great place to share common logic. Instead of each application creating their own implementation of common logic, you can use a plain JavaScript object (single-spa utility) to share that logic.
+For example: Authorization. How does each application know which user is logged in? You could have each application ask the server or read a JWT but that creates duplicate work in each application.
+Using the utility module pattern would allow you to create one module that implements the authorization logic. This module would export any needed methods, and then your other single-spa applications could use those authorization methods by importing them.
+This approach also works well for data [fetching](/docs/recommended-setup#api-data).
+
+### Examples of Utility MFEs
+The following are commonly implemented as a Utility MFE:
+- Notification service
+- Styleguide/component library
+- Error tracking service
+- Authorization service
+- Data fetching
+>>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
