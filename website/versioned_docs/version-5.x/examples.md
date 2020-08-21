@@ -18,7 +18,7 @@ sidebar_label: Resources
 - [coexisting-angular-microfrontends](https://github.com/joeldenning/coexisting-angular-microfrontends) 是一个完全用Angular 8开发的、融合了3个的Angular CLI的案例.
 - [coexisting-vue-microfrontends](https://github.com/joeldenning/coexisting-vue-microfrontends) 展示了在一个页面中运行3个Vue CLI项目的案例.
 - [single-spa-portal-example](https://gitlab.com/TheMcMurder/single-spa-portal-example)是一个大型的React微前端案例.
-- [single-spa-parcel-example](https://github.com/Guillembonet/single-spa-parcel-example)是一个由一个vue项目、一个react项目（有各自的parcel），还有两个个node线程，分别运行在6个不同的docker虚拟机中构成的微前端案例，该这几个虚拟机整体又完美地运行在另一个虚拟机中.
+- [single-spa-parcel-example](https://github.com/Guillembonet/single-spa-parcel-example)是一个由一个vue项目、一个react项目（有各自的parcel），还有两个node线程，分别运行在6个不同的docker虚拟机中构成的微前端案例，该这几个虚拟机整体又完美地运行在另一个虚拟机中.
 - [simple-single-spa-webpack-example](https://github.com/joeldenning/simple-single-spa-webpack-example) 是一个小型的案例，webpack入门案例.
 
 ## 社区的案例
