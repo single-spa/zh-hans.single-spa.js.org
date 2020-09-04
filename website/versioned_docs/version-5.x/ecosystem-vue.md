@@ -4,7 +4,11 @@ title: single-spa-vue
 sidebar_label: Vue
 ---
 
+<<<<<<< HEAD
 single-spa-vue是一个针对vue项目的初始化、挂载、卸载的库函数，可以实现[single-spa注册的应用](configuration#registering-applications)、[生命周期函数](building-applications.md#registered-application-lifecycle)等功能，详情请查看[single-spa-vue的github](https://github.com/single-spa/single-spa-vue)。
+=======
+single-spa-vue is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [Vue.js](https://vuejs.org/). Check out the [single-spa-vue github](https://github.com/single-spa/single-spa-vue).
+>>>>>>> 1a98f4cb92de64f7ffe5a8f6011a199d43478998
 
 ## 入门案例
 
@@ -238,4 +242,7 @@ const vueLifecycles = singleSpaVue({
 [single-spa custom props](/docs/building-applications.html#custom-props) are added to your App component as
 `appOptions.data`, and are accessible via `vm.$data`. See [this Vue documentation](https://vuejs.org/v2/api/#data)
 for more information on `appOptions.data`.
+<<<<<<< HEAD
 >>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
+=======
+>>>>>>> 1a98f4cb92de64f7ffe5a8f6011a199d43478998
