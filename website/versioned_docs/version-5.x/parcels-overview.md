@@ -68,7 +68,11 @@ export const MyParcel = singleSpaReact({
 // 在这个示例中，singleSpaReact 处理input并生成了一个含有生命周期函数的parcel
 ```
 
+<<<<<<< HEAD
 需要使用上面例子生成的parcel，你只需引用由[single-spa-react](single-spa-react.md#parcels)提供的`Parcel`组件。
+=======
+Then to use the parcel you just created all you need to do is use the `Parcel` component provided in [single-spa-react](ecosystem-react.md#parcels)
+>>>>>>> 8f20bcf0a9faec6973fb6b13463414f4c96adb71
 
 ```jsx
 // mycomponent.js
@@ -88,7 +92,11 @@ export class myComponent extends React.Component {
 }
 ```
 
+<<<<<<< HEAD
 注意在某些情况下，可选属性也可能会要求必填。[(查看更多示例)](single-spa-react.md#examples)
+=======
+Note that in some cases the optional props are required [(see additional examples)](ecosystem-react.md#examples).
+>>>>>>> 8f20bcf0a9faec6973fb6b13463414f4c96adb71
 
 ## Parcel 生命周期
 
