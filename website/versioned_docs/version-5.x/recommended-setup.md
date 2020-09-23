@@ -264,7 +264,11 @@ At the time of this writing, module federation is new and still changing. Check 
 
 教程视频 (Part 2): [Youtube](https://www.youtube.com/watch?v=nC7rpDXa4B8&list=PLLUD8RtHvsAOhtHnyGx57EYXoaNsxGrTU&index=6) / [Bilibili](https://www.bilibili.com/video/av84099642/)
 
+<<<<<<< HEAD
 [CI配置文件阳历](https://github.com/single-spa/import-map-deployer/tree/master/examples)
+=======
+Microfrontends are built and deployed completely independently. This means that the git repository, CI, build, and deployments all occur without going through a centralized repository. For this reason, monorepos are not encouraged for microfrontends. CI for monorepos can be configured to only build and deploy the packages that have changed but it is often more complex. Modern CI platforms such as [AWS Amplify](https://aws.amazon.com/blogs/mobile/set-up-continuous-deployment-and-hosting-for-a-monorepo-with-aws-amplify-console/) and [Vercel](https://vercel.com/blog/monorepos) are starting to have built-in support for monorepos however.
+>>>>>>> 7e2cd112684002197b8203b3df5bfd9087f7e14c
 
 微前端是完全独立地构建和部署的。这意味着git存储库、CI、构建和部署都无需通过集中式存储库。由于这个原因，不鼓励使用一个大项目，因为对于这样项目中的所有包，可能只有一个CI。
 
