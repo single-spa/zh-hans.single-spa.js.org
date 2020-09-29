@@ -114,7 +114,7 @@ For Vue 3, change your application's entry file to be the following:
 import './set-public-path';
 import { h, createApp } from 'vue';
 import singleSpaVue from '../lib/single-spa-vue.js';
-
+import router from './router';
 import App from './App.vue';
 
 const vueLifecycles = singleSpaVue({
@@ -132,6 +132,9 @@ const vueLifecycles = singleSpaVue({
       });
     },
   },
+  handleInstance: (app) => {
+    app.use(router);
+  }
 });
 
 export const bootstrap = vueLifecycles.bootstrap;
@@ -214,9 +217,16 @@ module.exports = {
 
 当调用`singleSpaVue(opts)`时，所有选项都是通过`opts`参数传入single-spa-vue的
 
+<<<<<<< HEAD
 - `Vue`: (必传项) 主Vue对象, 通常暴露在window对象上，或通过`require('vue')` `import Vue from 'vue'`获得
 - `appOptions`: (必传项) 类型为Object对象类型，用来实例化Vue应用。`appOptions`将直接透传为Vue构造函数实例化时的初始化参数`new Vue(appOptions)`。需要注意：如果你没有传el选项，插件就会自动创建一个div，并作为一个Vue项目的默认容器附加到DOM中。
 - `loadRootComponent`: (非必传，用于取代`appOptions.render`) 在懒加载时有用，一个以root component为成功回调参数的Promise对象。
+=======
+- `Vue`: (required) The main Vue object, which is generally either exposed onto the window or is available via `require('vue')` `import Vue from 'vue'`.
+- `appOptions`: (required) An object which will be used to instantiate your Vue.js application. `appOptions` will pass directly through to `new Vue(appOptions)`. Note that if you do not provide an `el` to appOptions, that a div will be created and appended to the DOM as a default container for your Vue application.
+- `loadRootComponent`: (optional and replaces `appOptions.render`) A promise that resolves with your root component. This is useful for lazy loading.
+- `handleInstance`: (optional) A method can be used to handle Vue instance. Vue 3 brings [new instance API](https://v3.vuejs.org/guide/migration/global-api.html#a-new-global-api-createapp), and you can access *the app instance* from this, like `handleInstance: (app) => app.use(router)`. For Vue 2 users, a [Vue instance](https://vuejs.org/v2/guide/instance.html) can be accessed.
+>>>>>>> 52708255db5df93babb2c24e531253cea37ecb76
 
 可以用[appOptions.el](https://vuejs.org/v2/api/#el)配置single-spa要挂载到哪个dom元素上，:
 
