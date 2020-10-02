@@ -458,7 +458,7 @@ activewhen(new URL('http://localhost/settings')); // true
 activewhen(new URL('http://localhost/settings/password')); // true
 activeWhen(new URL('http://localhost/')); // false
 
-activeWhen = singleSpa.pathToActiveWhen('/user/:id/settings');
+activeWhen = singleSpa.pathToActiveWhen('/users/:id/settings');
 activewhen(new URL('http://localhost/users/6f7dsdf8g9df8g9dfg/settings')); // true
 activewhen(new URL('http://localhost/users/1324/settings')); // true
 activewhen(new URL('http://localhost/users/1324/settings/password')); // true
@@ -756,4 +756,8 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
+<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
+=======
+A `single-spa:routing-event` event is fired every time that a routing event has occurred, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary; and after single-spa verified that all apps were correctly loaded, bootstrapped, mounted, and unmounted.
+>>>>>>> f146f4fe4643ff198dd75c1777fc35cc586f1b8c
