@@ -181,46 +181,7 @@ export function Foo(props) {
 
 要使通用模块工作，你必须确保你的webpack externals和import map正确配置。使用样式指南的一个例子可以在https://github.com/vue-microfrontends/styleguide上找到。
 
-<<<<<<< HEAD
 ## 共享依赖
-=======
-## Cross microfrontend imports
-
-Example - [exporting a shared component](https://github.com/vue-microfrontends/styleguide/blob/af3eaa70bec7daa74635eb3ec76140fb647b0b14/src/vue-mf-styleguide.js#L5), [importing a shared component](https://github.com/vue-microfrontends/rate-dogs/blob/fe3196234b9cbd6d627199b03a96e7b5f0285c4b/src/components/rate-dogs.vue#L25), and [required webpack config](https://github.com/vue-microfrontends/rate-dogs/blob/97489e2acb1de44aca910ef5e3e0a9d2494200c7/vue.config.js#L14).
-
-You can import and export functions, components, logic, data, event emitters, and environment variables between your microfrontends that are in different git repos and JavaScript bundles. Each microfrontend should have a single [entry file](https://webpack.js.org/concepts/entry-points/#root) that serves as the "public interface" that controls what is exposed outside of the microfrontend.
-
-To make cross microfrontend imports possible, configure your bundler so that the microfrontends are treated as "externals" ([webpack docs](https://webpack.js.org/configuration/externals/#root) / [rollup docs](https://rollupjs.org/guide/en/#external)). Marking them as externals ensures that they are treated as [in-browser modules](#in-browser-versus-build-time-modules) instead of build-time modules.
-
-```js
-// Inside of the "entry file" for a utility module called @org-name/auth,
-// expose your public interface that other microfrontends can access.
-// Often this is within the main.js or main.single-spa.js file.
-
-export function userHasAccess(permission) {
-  return loggedInUser.permissions.some(p => p === permission);
-}
-```
-
-```js
-import { userHasAccess } from '@org-name/auth'
-
-// Inside of a single-spa application, import and use a util function from a different microfrontend
-const showLinkToInvoiceFeature = userHasAccess('invoicing');
-```
-
-```js
-// In your webpack config, mark @org-name auth as a webpack external
-module.exports = {
-  externals: ['@org-name/auth'],
-
-  // Alternatively, mark *all* org-name packages as externals
-  // externals: [/^@org-name\/.+/]
-}
-```
-
-## Shared dependencies
->>>>>>> 727ec66ea8face1f985b6a41a6a89a544363a761
 
 为了提高性能，web应用程序只加载一次大型JavaScript库是至关重要的。你选择的框架(React, Vue, Angular等)应该只在页面上加载一次。
 
@@ -306,7 +267,6 @@ Single-spa 有微前端的[不同目录](/docs/microfrontends-concept#types-of-m
 2. API数据
 3. UI状态
 
-<<<<<<< HEAD
 ### 方法，组件，逻辑，全局状态
 
 例子 - [导出一个共享的组件](https://github.com/vue-microfrontends/styleguide/blob/af3eaa70bec7daa74635eb3ec76140fb647b0b14/src/vue-mf-styleguide.js#L5) 和 [导入一个共享的组件](https://github.com/vue-microfrontends/rate-dogs/blob/fe3196234b9cbd6d627199b03a96e7b5f0285c4b/src/components/rate-dogs.vue#L25).
@@ -326,9 +286,6 @@ import { userHasAccess } from '@org-name/auth'
 // Inside of a single-spa application, import and use a util function from a different microfrontend
 const showLinkToInvoiceFeature = userHasAccess('invoicing');
 ```
-=======
-We recommend using [cross microfrontend imports](#cross-microfrontend-imports) to share functions, components, logic, and environment variables.
->>>>>>> 727ec66ea8face1f985b6a41a6a89a544363a761
 
 ### API数据
 
