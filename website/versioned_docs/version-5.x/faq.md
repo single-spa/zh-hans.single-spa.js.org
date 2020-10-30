@@ -15,7 +15,7 @@ single-spa是一个顶层路由。当路由处于活动状态时，它讲下载�
 ## 我应该有一个根应用和子应用吗？
 不。我们强烈推荐你的single-spa-config或根应用不要使用任何js的ui-frameworks（如：React，Angular，Angularjs，Vue等等）。根据我们的经验，简单的js模块最合适single-spa-config，并且只有已注册的应用程序世纪使用ui-frameworks框架(如：angular, react, vue, etc等)。
 
-为什么？你最终创建的结构具有微服务的所有缺点，并没有任何有点：你的应用相互耦合，并且同时更改多个应用程序才能进行更新。
+为什么？你最终创建的结构具有微服务的所有缺点，并没有任何优点：你的应用相互耦合，并且同时更改多个应用程序才能进行更新。
 
 ## 对性能有什么影响?
 当按照[推荐方式](#is-there-a-recommended-setup)进行配置时，您的代码性能和包的大小将与已被拆分的单个应用程序基本相同。主要区别在于添加single-spa库（如果你选择使用SystemJS）。其他差别主要归结为一个（webpack/rollup等等）的代码包和浏览器内ES模块之间的差异。
@@ -48,7 +48,7 @@ single-spa是一个顶层路由。当路由处于活动状态时，它讲下载�
 
 然而，如果你刚开始有一个小项目或一个小团队，建议暂时不实用微服务。当到你的项目扩展（如：结构扩展、功能扩展等）变得困难时，别担心，我们会在这里帮你迁移的。
 
-<<<<<<< HEAD
+
 ## 我能使用多个框架吗？
 是的。然而，这是你需要认证考虑的问题，因为他将在你的前端结构中分成了不兼容的专业领域（如：React专家可能在使用Angular应用时遇到问题），而且还会导致更多的代码被发送给用户。
 
@@ -114,7 +114,7 @@ CRA不允许你在弹出或使用其他工具情况下修改上述文件。
 ## 代码拆分
 Single spa支持代码拆分。代码拆分的方法有很多，我们无法一一涵盖，但是如果你在webpack中使用[recommended setup](#is-there-a-recommended-setup)，你至少要做以下两件事：
 
-<<<<<<< HEAD
+
 Finally, this setup also enables you to do overrides _in your production environment_. It obviously should be used with caution, but it does enable a powerful way of debugging problems and validating solutions.
 
 As a point of reference, nearly all developers we've worked with **prefer the developer experience of microservices + single-spa** over a monolithic setup.
