@@ -119,6 +119,7 @@ SystemJS为导入映射提供polyfill行为的另一种选择是[es-module-shims
 
 下面是一些配置您的bundler使其可被SystemJS和single-spa使用的技巧。注意，如果你使用[create-single-spa](/docs/create-single-spa)，这些都是为你设置的。我们把这些指示留在这里，不是为了让你在webpack配置方面不知所措，而是为了帮助你，如果你选择不使用creite-single-spa的话。
 
+<<<<<<< HEAD
 1. 将输出目标设置为“system”。在webpack中，这是通过[`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget)完成的。
 2. 使用一个单独的[入口点](https://webpack.js.org/concepts/entry-points/#root)和[dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports)来完成任何你想完成的代码分割。这很符合single-spa核心团队鼓励的“一个捆绑项目是一个运行时模块”理念。
 3. 不要使用webpack的[`optimization`](https://webpack.js.org/configuration/optimization/#root)配置选项，因为它们会使输出的JavaScript文件难以作为一个单一的浏览器内JavaScript模块加载。这样做并不会降低bundle的优化程度 - 动态导入是实现优化bundle的可行策略。
@@ -133,6 +134,23 @@ SystemJS为导入映射提供polyfill行为的另一种选择是[es-module-shims
 12. 确保[webpack externals](https://webpack.js.org/configuration/externals/#root) 是配置正确并共享的运行时模块。
 13. 设置 [output.jsonpFunction](https://webpack.js.org/configuration/output/#outputjsonpfunction) 为一个本项目唯一的字符串。因为你会有很多webpack bundles会同时在同一个浏览器tab里运行， jsonpFunction的碰撞可能会导致webpack模块在bundle之间混合。
 14. 设置 [sockPort](https://webpack.js.org/configuration/dev-server/#devserversockport), [sockPath](https://webpack.js.org/configuration/dev-server/#devserversockpath), 和 [sockHost](https://webpack.js.org/configuration/dev-server/#devserversockhost) 在你的 `devServer` 设置中。
+=======
+1. Set the output target to `system`. In webpack, this is done via [`output.libraryTarget`](https://webpack.js.org/configuration/output/#outputlibrarytarget)
+1. Use a single [entry point](https://webpack.js.org/concepts/entry-points/#root), with [dynamic imports](https://webpack.js.org/guides/code-splitting/#dynamic-imports) for any code splitting that you'd like to accomplish. This best matches the "one bundled project = one in-browser module" paradigm encouraged by the single-spa core team.
+1. Do not use webpack's [`optimization`](https://webpack.js.org/configuration/optimization/#root) configuration options, as they make it harder to load the outputted JavaScript files as a single in-browser JavaScript module. Doing so does not make your bundle less optimized - dynamic imports are a viable strategy for accomplishing optimized bundles.
+1. Follow [the systemjs docs for webpack](https://github.com/systemjs/systemjs#compatibility-with-webpack).
+1. Consider using [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) to create or verify your webpack config.
+1. Use [systemjs-webpack-interop](https://github.com/joeldenning/systemjs-webpack-interop) to [set your webpack public path "on the fly"](https://webpack.js.org/guides/public-path/#on-the-fly).
+1. Do not set webpack [`output.library`](https://webpack.js.org/configuration/output/#outputlibrary). SystemJS does not need a name, and in fact does not support named modules without additional configuration.
+1. Consider turning off [webpack hashing](https://webpack.js.org/configuration/output/#outputfilename) for both entry and code split bundles. It is often easier to add in a commit hash during deployment of your microfrontend via your CI environment variables.
+1. Configure webpack-dev-server to not do host checks. ([docs](https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck)).
+1. Configure webpack-dev-server for CORS by setting `{headers: {'Access-Control-Allow-Origin': '*'}}`. ([docs](https://stackoverflow.com/questions/31602697/webpack-dev-server-cors-issue))
+1. If developing on https, [configure webpack-dev-server for HTTPS](https://webpack.js.org/configuration/dev-server/#devserverhttps). Also consider [trusting SSL certificates from localhost](https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate).
+1. Make sure that your [webpack externals](https://webpack.js.org/configuration/externals/#root) are correctly configured for any shared, in-browser modules that you are importing.
+1. Set [output.jsonpFunction](https://webpack.js.org/configuration/output/#outputjsonpfunction) to be a unique string for this project. Since you'll have multiple webpack bundles running in the same browser tab, a collision of the `jsonpFunction` could result in webpack modules getting mixed between bundles.
+1. Set [sockPort](https://webpack.js.org/configuration/dev-server/#devserversockport), [sockPath](https://webpack.js.org/configuration/dev-server/#devserversockpath), and [sockHost](https://webpack.js.org/configuration/dev-server/#devserversockhost) inside of your `devServer` configuration.
+1. For webpack, set [`output.devtoolNamespace`](https://webpack.js.org/configuration/output/#outputdevtoolnamespace) to your MFE's name. This helps namespace your sourcemaps to each MFE.
+>>>>>>> 1035d3e6c1a859c595187468003c17546cf791ec
 
 更多关于webpack代码拆分的信息请见[the code splits FAQ](/docs/faq#code-splits).
 
@@ -235,7 +253,11 @@ At the time of this writing, module federation is new and still changing. Check 
 
 2. 更新import map指向新部署文件。
 
+<<<<<<< HEAD
 第一步的实现依赖你所使用的CDN，AWS CLI ([`aws s3 sync`](https://docs.aws.amazon.com/cli/latest/reference/s3/)), Google gsutil ([`gsutil cp`](https://github.com/single-spa/import-map-deployer/blob/master/examples/ci-for-javascript-repo/gitlab-gcp-storage/.gitlab-ci.yml)) 等等都很方便的实现这些功能。
+=======
+Microfrontends are built and deployed completely independently. This means that the git repository, CI, build, and deployments all occur without going through a centralized repository. For this reason, monorepos are not encouraged for microfrontends. CI for monorepos can be configured to only build and deploy the packages that have changed but it is often more complex. Modern CI platforms such as [AWS Amplify](https://aws.amazon.com/blogs/mobile/set-up-continuous-deployment-and-hosting-for-a-monorepo-with-aws-amplify-console/) and [Vercel](https://vercel.com/blog/monorepos) are starting to have built-in support for monorepos however.
+>>>>>>> 1035d3e6c1a859c595187468003c17546cf791ec
 
 对于第二步的实现，你可以有以下选择：
 
