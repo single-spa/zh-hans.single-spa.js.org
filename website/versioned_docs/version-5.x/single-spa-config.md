@@ -158,10 +158,8 @@ start();
 // 注册应用。。。。
 ```
 
-<<<<<<< HEAD
 ## 同时注册两个路由??
 emm...也是可以的。 一种实现方式是为每个app创建一个`<div id="app name"></div>`，这样这两个应用就不会同时修改相同的DOM节点了。[考虑一个path变动，同时有两个应用被激活的场景，译者注]
-=======
 ## Two registered applications simultaneously??
 Yep, it's possible. And it's actually not that scary if you do it right. And once you do,
 it's really really powerful. One approach to do this is to create a `<div>` for each app,
@@ -177,4 +175,3 @@ An example with multiple applications would look like this:
 <div id="single-spa-application:app-name"></div>
 <div id="single-spa-application:other-app"></div>
 ```
->>>>>>> 13ad974088fb6fad4a5bb65df5eba9dd9879a158
