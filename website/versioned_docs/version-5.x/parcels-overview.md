@@ -146,16 +146,9 @@ function unmount(props) {
 
 ### Update (optional)
 ### 更新(Update)(可选)
-
-<<<<<<< HEAD
 当调用`parcel.update()`会触发更新生命周期函数。该生命周期函数是可选的，parcel使用者需要在调用该方法之前确认其已经实现。
-=======
-The update lifecycle function will be called whenever the user of the parcel calls `parcel.update()`.
-Since this lifecycle is optional, the user of a parcel needs to check whether the parcel has implemented the update lifecycle before attempting to make the call.
 
 ## Example use cases
->>>>>>> 7115511064b81e340d4e71ae26a9c2a9ecab730c
-
 ## 使用示例
 ### 模态框
 
