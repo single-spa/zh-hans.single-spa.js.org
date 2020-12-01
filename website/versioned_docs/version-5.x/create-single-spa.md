@@ -83,6 +83,10 @@ create-single-spa --framework vue
 create-single-spa --framework angular
 ```
 
+### --layout
+
+When generating a root config, the `--layout` CLI argument indicates that you want to use [single-spa-layout](/docs/layout-overview) in your root config.
+
 ## Project types
 
 create-single-spa 将询问你将要创建 single-spa应用，公共模块，或者根配置。所有这三种模式都会假定你使用的是[推荐安装](/docs/recommended-setup)。
@@ -162,7 +166,7 @@ yarn add --dev webpack-config-single-spa-react webpack-merge
 
 ```js
 const webpackMerge = require('webpack-merge');
-const singleSpaDefaults = require('webpack-config-single-spa');
+const singleSpaDefaults = require('webpack-config-single-spa-react');
 
 module.exports = webpackConfigEnv => {
   const defaultConfig = singleSpaDefaults({
