@@ -15,6 +15,7 @@ Parcels是single-spa的一个高级特性。在对single-spa的注册相关api�
 ```js
 // parcel 的实现
 const parcelConfig = {
+<<<<<<< HEAD
   bootstrap() {
     // 初始化
     return Promise.resolve()
@@ -26,6 +27,27 @@ const parcelConfig = {
   unmount() {
     // 使用某个框架卸载dom，做其他的清理工作
     return Promise.resolve()
+=======
+  // optional
+  bootstrap(props) {
+    // one time initialization
+    return Promise.resolve();
+  },
+  // required
+  mount(props) {
+    // use a framework to create dom nodes and mount the parcel
+    return Promise.resolve();
+  },
+  // required
+  unmount(props) {
+    // use a framework to unmount dom nodes and perform other cleanup
+    return Promise.resolve();
+  },
+  // optional
+  update(props) {
+    // use a framework to update dom nodes
+    return Promise.resolve();
+>>>>>>> e0dd016514c282ea5ba5b032fe360b3c602e0d4a
   }
 }
 
@@ -53,6 +75,13 @@ parcel对象上的每个方法都是一个生命周期函数，返回值是promi
 
 一个React parcel示例如下：
 
+<<<<<<< HEAD
+=======
+A parcel is just an object with 3 or 4 functions on it. When mounting a parcel, you can provide either the object itself or a loading function that asynchronously downloads the parcel object.
+Each function on a parcel object is a lifecycle method, which is a function that returns a promise. Parcels have two required lifecycle methods (mount and unmount) and two optional lifecycles method (bootstrap and update).
+When implementing a parcel, it's strongly recommended that you use the [lifecycle helper methods](ecosystem.md#help-for-frameworks).
+An example of a parcel written in React would look like this:
+>>>>>>> e0dd016514c282ea5ba5b032fe360b3c602e0d4a
 ```js
 // myParcel.js
 import React from 'react'
@@ -68,7 +97,11 @@ export const MyParcel = singleSpaReact({
 // 在这个示例中，singleSpaReact 处理input并生成了一个含有生命周期函数的parcel
 ```
 
+<<<<<<< HEAD
 需要使用上面例子生成的parcel，你只需引用由[single-spa-react](single-spa-react.md#parcels)提供的`Parcel`组件。
+=======
+Then to use the parcel you just created all you need to do is use the `Parcel` component provided in [single-spa-react](ecosystem-react.md#parcels)
+>>>>>>> e0dd016514c282ea5ba5b032fe360b3c602e0d4a
 
 ```jsx
 // mycomponent.js
@@ -88,7 +121,11 @@ export class myComponent extends React.Component {
 }
 ```
 
+<<<<<<< HEAD
 注意在某些情况下，可选属性也可能会要求必填。[(查看更多示例)](single-spa-react.md#examples)
+=======
+Note that in some cases the optional props are required [(see additional examples)](ecosystem-react.md#examples).
+>>>>>>> e0dd016514c282ea5ba5b032fe360b3c602e0d4a
 
 ## Parcel 生命周期
 
