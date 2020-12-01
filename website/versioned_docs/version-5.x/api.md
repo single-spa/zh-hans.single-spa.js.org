@@ -36,9 +36,15 @@ singleSpa.registerApplication(
 	<dt>applicationOrLoadingFn: () => &lt;Function | Promise&gt;</dt>
 	<dd>必须是一个加载函数，返回一个应用或者一个Promise。</dd>
 	<dt>activityFn: (location) => boolean</dt>
+<<<<<<< HEAD
 	<dd>必须是个纯函数, 该函数由 <code>window.location</code> 作为第一个参数被调用, 当应用应该被激活时它应该返回一个真值。</dd>
 	<dt>customProps?: Object = {}</dt>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
+=======
+	<dd>Must be a pure function. The function is called with <codehtml>window.location</codehtml> as the first argument {/* TODO: any only? */} and should return a truthy value whenever the application should be active.</dd>
+	<dt>customProps?: Object | () => Object</dt>
+	<dd>Will be passed to the application during each lifecycle method.</dd>
+>>>>>>> 6e68753cb3b218e7321a3c5b0b85d04191ae6d9e
 </dl>
 
 <h3>returns</h3>
@@ -51,7 +57,21 @@ singleSpa.registerApplication({
 	name: 'appName',
 	app: () => System.import('appName'),
 	activeWhen: '/appName'
-	customProps: {}
+	customProps: {
+		authToken: 'xc67f6as87f7s9d'
+	}
+})
+
+singleSpa.registerApplication({
+	name: 'appName',
+	app: () => System.import('appName'),
+	activeWhen: '/appName',
+	// Dynamic custom props that can change based on route
+	customProps(appName, location) {
+		return {
+			authToken: 'xc67f6as87f7s9d'
+		}
+	}
 })
 ```
 
@@ -87,8 +107,13 @@ singleSpa.registerApplication({
 			<dd>🚫 https://app.com/app2</dd>
 		</dl>
 	</dd>
+<<<<<<< HEAD
 	<dt>customProps?: Object = &#123;&#125;</dt>
 	<dd>在生命周期钩子函数执行时会被作为参数传入</dd>
+=======
+	<dt>customProps?: Object | () => Object</dt>
+	<dd>Will be passed to the application during each lifecycle method.</dd>
+>>>>>>> 6e68753cb3b218e7321a3c5b0b85d04191ae6d9e
 </dl>
 
 <h3>returns</h3>
@@ -324,9 +349,43 @@ singleSpa.unloadApplication('app1', {waitForUnmount: true});
 
 <dl className="args-list">
 	<dt>Promise</dt>
+<<<<<<< HEAD
 	<dd>当应用被成功移除时，Promise对象会被resolved。</dd>
+=======
+	<dd>This promise will be resolved when the registered application has been successfully unloaded.</dd>
 </dl>
 
+## unregisterApplication
+
+```js
+import { unregisterApplication } from 'single-spa';
+
+unregisterApplication('app1').then(() => {
+	console.log('app1 is now unmounted, unloaded, and no longer registered!');
+})
+```
+
+The `unregisterApplication` function will unmount, unload, and unregister an application. Once it is no longer registered, the application will never again be mounted.
+
+This api was introduced in single-spa@5.8.0. A few notes about this api:
+
+- Unregistering an application does not delete it from the SystemJS module registry.
+- Unregistering an application does not delete its code or javascript frameworks from browser memory.
+- An alternative to unregistering applications is to perform permission checks inside of the application's activity function. This has a similar effect of preventing the application from ever mounting.
+
+<h3>arguments</h3>
+
+<dl className="args-list">
+	<dt>appName: string</dt>
+>>>>>>> 6e68753cb3b218e7321a3c5b0b85d04191ae6d9e
+</dl>
+
+<h3>returns</h3>
+
+<dl className="args-list">
+	<dt>Promise</dt>
+	<dd>This promise will be resolved when the application has been successfully unregistered.</dd>
+</dl>
 ## checkActivityFunctions
 
 ```js
@@ -458,7 +517,7 @@ activewhen(new URL('http://localhost/settings')); // true
 activewhen(new URL('http://localhost/settings/password')); // true
 activeWhen(new URL('http://localhost/')); // false
 
-activeWhen = singleSpa.pathToActiveWhen('/user/:id/settings');
+activeWhen = singleSpa.pathToActiveWhen('/users/:id/settings');
 activewhen(new URL('http://localhost/users/6f7dsdf8g9df8g9dfg/settings')); // true
 activewhen(new URL('http://localhost/users/1324/settings')); // true
 activewhen(new URL('http://localhost/users/1324/settings/password')); // true
@@ -650,17 +709,41 @@ window.addEventListener('popstate', evt => {
 });
 ```
 
+### Canceling navigation
+
+Canceling navigation refers to the URL changing and then immediately changing back to what it was before. This is done before any mounting, unmounting, or loading that would otherwise take place. This can be used in conjunction with Vue router and Angular router's built-in navigation guards that allow for cancelation of a navigation event.
+
+To cancel a navigation event, listen to the `single-spa:before-routing-event` event:
+
+```js
+window.addEventListener('single-spa:before-routing-event', ({detail: {oldUrl, newUrl, cancelNavigation}}) => {
+	if (new URL(oldUrl).pathname === '/route1' && new URL(newUrl).pathname === '/route2') {
+		cancelNavigation();
+	}
+})
+```
+
+When a navigation is canceled, no applications will be mounted, unmounted, loaded, or unloaded. All single-spa routing events will fire for the canceled navigation, but they will each have the `navigationIsCanceled` property set to `true` on the `event.detail` (Details below in Custom Events section).
+
+Navigation cancelation is sometimes used as a mechanism for preventing users from accessing routes for which they are unauthorized. However, we generally recommend permission checks on each route as the proper way to guard routes, instead of navigation cancelation.
+
 ### Custom Events
 
 single-spa fires a series of [custom events](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) whenever it reroutes. A reroute occurs whenever the browser URL changes in any way or a `triggerAppChange` is called. The custom events are fired to the `window`. Each custom event has a [`detail` property](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) with the following properties:
 
 ```js
 window.addEventListener('single-spa:before-routing-event', evt => {
-	const { originalEvent, newAppStatuses, appsByNewStatus, totalAppChanges } = evt.detail;
+	const { originalEvent, newAppStatuses, appsByNewStatus, totalAppChanges, oldUrl, newUrl, navigationIsCanceled, cancelNavigation } = evt.detail;
 	console.log('original event that triggered this single-spa event', originalEvent); // PopStateEvent | HashChangeEvent | undefined
 	console.log('the new status for all applications after the reroute finishes', newAppStatuses) // { app1: MOUNTED, app2: NOT_MOUNTED }
 	console.log('the applications that changed, grouped by their status', appsByNewStatus) // { MOUNTED: ['app1'], NOT_MOUNTED: ['app2'] }
 	console.log('number of applications that changed status so far during this reroute', totalAppChanges); // 2
+	console.log('the URL before the navigationEvent', oldUrl); // http://localhost:8080/old-route
+	console.log('the URL after the navigationEvent', newUrl); // http://localhost:8080/new-route
+	console.log('has the navigation been canceled', navigationIsCanceled); // false
+
+	// The cancelNavigation function is only defined in the before-routing-event
+	evt.detail.cancelNavigation();
 })
 ```
 
@@ -756,4 +839,8 @@ window.addEventListener('single-spa:first-mount', () => {
 
 在第一个single-spa应用被挂在之后， single-spa 会触发 `single-spa:first-mount` 事件；因此它只会触发一次。
 
+<<<<<<< HEAD
 > **推荐用例：** 输出用户看到应用之前花费了多长时间。
+=======
+A `single-spa:routing-event` event is fired every time that a routing event has occurred, which is after each hashchange, popstate, or triggerAppChange, even if no changes to registered applications were necessary; and after single-spa verified that all apps were correctly loaded, bootstrapped, mounted, and unmounted.
+>>>>>>> 6e68753cb3b218e7321a3c5b0b85d04191ae6d9e
