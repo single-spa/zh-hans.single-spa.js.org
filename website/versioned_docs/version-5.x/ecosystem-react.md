@@ -75,6 +75,7 @@ single-spa-react也可以用来创建一个 single-spa parcel（而不是single-
 你可以通过npm安装该库并导入single-spa-react/parcel，或者通过添加`<script src="https://unpkg.com/single-spa-react/parcel"></script>`，然后用window.Parcel.default访问Parcel组件。
 
 #### Parcel props
+<<<<<<< HEAD
 - `config` (必填)：要么是一个single-spa parcel配置对象，要么是一个 "加载函数"，返回一个resolve包裹配置的Promise。
 - `wrapWith` (可选)：[tagName](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName) 字符串。`<Parcel>` 将创建一个该类型的 dom 节点，包裹Parcel生成的节点。 默认：`div`
 - `appendTo` (可选)：将 parcel append到此 dom 元素下。 默认情况下，这是不需要的，因为包裹将挂载在包裹组件所呈现的 DOM 中。 当想要把 parcel 放到 document.body 或 指定dom特定位置时很有用。
@@ -83,6 +84,21 @@ single-spa-react也可以用来创建一个 single-spa parcel（而不是single-
 - `parcelDidMount` (可选)：Function 类型。当包 parcel 完成装载时，将调用该命令。
 
 #### 例子
+=======
+- `config` (required): Either a single-spa parcel config object, or a "loading function" that returns a Promise that resolves with the parcel config.
+- `wrapWith` (optional): A string [tagName](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName).`<Parcel>` will create a dom node of that type for the parcel to be mounted into. Defaults to `div`
+- `wrapStyle`(optional): Styles that will apply to `wrapWith`.
+- `wrapClassName` (optional): classNames that will apply to `wrapWith`. 
+- `appendTo` (optional): A dom element to append the parcel to. By default, this is not needed because the parcel will be mounted in the DOM that the `<Parcel>` component was rendered into. Useful for appending parcels to document.body or other separate parts of the dom.
+- `mountParcel` (sometimes required, sometimes not): The `mountParcel` function provided by single-spa. In general, it is preferred to use an application's mountParcel function instead of the
+   single-spa's root mountParcel function, so that single-spa can keep track of the parent-child relationship and automatically unmount the application's parcels when the application unmounts.
+   Note that if the `<Parcel>` component is being rendered by a single-spa application that uses single-spa-react, it is **unnecessary** to pass in the prop, since `<Parcel>` can get the prop
+   from [SingleSpaContext](#singlespacontext)
+- `handleError` (optional): A function that will be called with errors thrown by the parcel. If not provided, errors will be thrown on the window, by default.
+- `parcelDidMount` (optional): A function that will be called when the parcel finishes loading and mounting.
+
+#### Examples
+>>>>>>> 321a149f08dd344e6997eab2c11f4daa94987952
 ```jsx
 import Parcel from 'single-spa-react/parcel'
 import * as parcelConfig from './my-parcel.js'
@@ -132,6 +148,14 @@ import * as parcelConfig from './my-parcel.js'
   wrapWith="div"
   wrapStyle={{ background: 'black' }}
 />
+
+// Add classNames to wrapWith element.
+<Parcel
+  config={parcelConfig}
+  wrapWith="div"
+  wrapClassName="wrapper"
+/>
+
 ```
 
 ## 创建 React 应用
