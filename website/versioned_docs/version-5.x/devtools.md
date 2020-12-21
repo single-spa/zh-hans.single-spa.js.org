@@ -65,4 +65,4 @@ export const devtools = {
 ## 重写导入映射 (import-maps)
 如果你的环境中使用了[导入映射(import-maps)](https://github.com/WICG/import-maps)，当使用[import-map-overrides](https://github.com/joeldenning/import-map-overrides)库时，检测工具会提供一个接口用于添加自定义的‘导入映射’来覆盖默认值，在[满足组件安装条件](https://github.com/joeldenning/import-map-overrides#installation)之后，你就可以创建、移除、刷新页面来查看你覆盖的效果.
 
-![使用导入映射 (import-maps)的single-spa检测工具案例](/static/img/demo-with-importmapoverrides.png)
+![使用导入映射 (import-maps)的single-spa检测工具案例](/img/demo-with-importmapoverrides.png)

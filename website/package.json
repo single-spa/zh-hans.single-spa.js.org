@@ -11,6 +11,10 @@
     "format:check": "prettier --config .prettierrc --check '**/*.{ts,js,tsx,jsx,scss,css,html,md}'"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
     "copyfiles": "^2.2.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
@@ -19,9 +23,9 @@
     "prettier": "^1.19.1"
   },
   "dependencies": {
-    "@docusaurus/core": "2.0.0-alpha.37",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@docusaurus/core": "^2.0.0-alpha.70",
     "@docusaurus/preset-classic": "2.0.0-alpha.37",
-    "babel-loader": "^8.2.2",
     "classnames": "^2.2.6",
     "markdown-to-jsx": "^6.11.4",
     "react": "^16.12.0",
