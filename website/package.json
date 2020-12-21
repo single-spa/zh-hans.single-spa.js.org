@@ -21,6 +21,7 @@
   "dependencies": {
     "@docusaurus/core": "2.0.0-alpha.37",
     "@docusaurus/preset-classic": "2.0.0-alpha.37",
+    "babel-loader": "^8.2.2",
     "classnames": "^2.2.6",
     "markdown-to-jsx": "^6.11.4",
     "react": "^16.12.0",
