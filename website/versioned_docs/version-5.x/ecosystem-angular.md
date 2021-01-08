@@ -3,6 +3,11 @@ id: ecosystem-angular
 title: single-spa-angular
 sidebar_label: Angular
 ---
+
+## Project Status
+
+This project needs new maintainers. The single-spa core team does not have the Angular expertise needed to continously support all versions of Angular, as none of us use single-spa-angular in any of our serious projects. We could use help keeping up with the six month release cadence of Angular, diagnosing problems in the issue queues, and providing support in the single-spa Slack workspace. Angular is the framework that is hardest to support in the single-spa ecosystem, and we rely on the community to help us with it. If you have interest in helping with the maintenance of this project, please let us know!
+
 ## Introduction
 
 [single-spa-angular](https://github.com/single-spa/single-spa-angular/) is a library for creating Angular microfrontends.
@@ -86,6 +91,15 @@ Both the [single-spa-angular schematics](#schematics) and the [single-spa helper
 work with Angular 9. Follow the [Angular CLI instructions](#angular-cli).
 
 Note that the schematics for Angular 9 [do not use the custom Angular builder](#angular-builder), but instead use
+[@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
+
+### Angular 10
+Angular 10 is supported by single-spa-angular@4.
+
+Both the [single-spa-angular schematics](#schematics) and the [single-spa helpers](#the-single-spa-helpers)
+work with Angular 10. Follow the [Angular CLI instructions](#angular-cli).
+
+Note that the schematics for Angular 10 [do not use the custom Angular builder](#angular-builder), but instead use
 [@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
 
 ## Angular CLI
@@ -316,7 +330,7 @@ Also, if your application uses routing then you have to import the `getSingleSpa
 ​
 ```js
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import singleSpaAngular, { getSingleSpaExtraProviders } from 'single-spa-angular';
 ​
 const lifecycles = singleSpaAngular({
@@ -326,6 +340,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 ```
@@ -334,7 +349,7 @@ And this is how it should be in `single-spa-angular@4.x`:
 ​
 ```js
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
 ​
 const lifecycles = singleSpaAngular({
@@ -344,6 +359,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 ```
@@ -353,7 +369,7 @@ const lifecycles = singleSpaAngular({
 ```ts
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
 
 import { AppModule } from './app/app.module';
@@ -364,6 +380,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 
@@ -725,9 +742,68 @@ The following options are available to be passed when calling `singleSpaAngularE
 
 See [options](#options) for detailed explanation.
 
-## Advanced
+## Parcels
 
-### Zone-less applications
+We encourage you to get familiar with the documentation, namely [Parcels overview](/docs/parcels-overview.md) and [Parcels API](/docs/parcels-api.md). This documentation will give you a basic understanding of what parcels are.
+
+Additionally, single-spa-angular provides a `<parcel>` component to make using framework agnostic single-spa parcels easier. This allows you to put the parcel into your component's template, instead of calling `mountRootParcel()` by yourselves.
+
+`single-spa-angular/parcel` package exports the `ParcelModule` which exports the `<parcel>` component:
+
+```ts
+// Inside of src/app/app.module.ts
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { ParcelModule } from 'single-spa-angular/parcel';
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  imports: [BrowserModule, ParcelModule],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}
+```
+
+The example below shows how you can render React parcels:
+
+```ts
+// Inside of src/app/app.component.ts
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { mountRootParcel } from 'single-spa';
+
+import { config } from './ReactWidget/ReactWidget';
+
+@Component({
+  selector: 'app-root',
+  template: '<parcel [config]="config" [mountParcel]="mountRootParcel"></parcel>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class AppComponent {
+  config = config;
+  mountRootParcel = mountRootParcel;
+}
+```
+
+For React, you will need to create a file with the extension `.tsx`:
+
+```tsx
+// Inside of src/app/ReactWidget/ReactWidget.tsx
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import singleSpaReact from 'single-spa-react';
+
+const ReactWidget = () => <div>Hello from React!</div>;
+
+export const config = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: ReactWidget,
+});
+```
+
+## Zone-less applications
 
 > ⚠️ This feature is available starting from `single-spa-angular@4.1`.
 
@@ -754,7 +830,7 @@ Since routing is managed by single-spa and there is no zone that tells Angular t
 
 ```js
 import { ApplicationRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular } from 'single-spa-angular';
 
 const lifecycles = singleSpaAngular({
@@ -777,7 +853,63 @@ const lifecycles = singleSpaAngular({
   template: '<app-root />',
   NgZone: 'noop',
   Router,
+  NavigationStart,
 });
 ```
 
 > ⚠️ `single-spa-angular@4.x` requires calling `getSingleSpaExtraProviders` function in applications that have routing. Do not call this function in _zone-less_ application.
+
+## Inter-app communication via RxJS
+
+First of all, check out this [Inter-app communication guide](/docs/recommended-setup#inter-app-communication).
+
+It's possible to setup a communication between microfrontends via RxJS using [cross microfrontend imports](docs/recommended-setup/#cross-microfrontend-imports).
+
+We can not create complex abstractions, but simply export the `Subject`:
+
+```ts
+// Inside of @org/api
+import { ReplaySubject } from 'rxjs';
+import { User } from '@org/models';
+
+// `1` means that we want to buffer the last emitted value
+export const userSubject$ = new ReplaySubject<User>(1);
+```
+
+And then you just need to import this `Subject` into the microfrontend application:
+
+```ts
+// Inside of @org/app1 single-spa application
+import { userSubject$ } from '@org/api';
+import { User } from '@org/models';
+
+userSubject$.subscribe(user => {
+  // ...
+});
+
+userSubject$.next(newUser);
+```
+
+Also, you should remember that `@org/api` should be an "isolated" dependency, for example the Nrwl Nx library, where each library is in the "libs" folder and you import it via TypeScript paths.
+
+Every application that uses this library should add it to its Webpack config as an external dependency:
+
+```js
+const singleSpaAngularWebpack = require('single-spa-angular/lib/webpack').default;
+
+module.exports = (config, options) => {
+  const singleSpaWebpackConfig = singleSpaAngularWebpack(config, options);
+  singleSpaWebpackConfig.externals = [/^@org\/api$/];
+  return singleSpaWebpackConfig;
+};
+```
+
+But this library should be part of root application bundle and [shared with import maps](/docs/recommended-setup/#sharing-with-import-maps), for example:
+
+```json
+{
+  "imports": {
+    "@org/api": "http://localhost:8080/api.js"
+  }
+}
+```
