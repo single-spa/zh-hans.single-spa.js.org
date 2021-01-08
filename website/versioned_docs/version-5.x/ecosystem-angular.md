@@ -3,6 +3,11 @@ id: ecosystem-angular
 title: single-spa-angular
 sidebar_label: Angular
 ---
+
+## Project Status
+
+This project needs new maintainers. The single-spa core team does not have the Angular expertise needed to continously support all versions of Angular, as none of us use single-spa-angular in any of our serious projects. We could use help keeping up with the six month release cadence of Angular, diagnosing problems in the issue queues, and providing support in the single-spa Slack workspace. Angular is the framework that is hardest to support in the single-spa ecosystem, and we rely on the community to help us with it. If you have interest in helping with the maintenance of this project, please let us know!
+
 ## Introduction
 
 [single-spa-angular](https://github.com/single-spa/single-spa-angular/) is a library for creating Angular microfrontends.
@@ -86,6 +91,15 @@ Both the [single-spa-angular schematics](#schematics) and the [single-spa helper
 work with Angular 9. Follow the [Angular CLI instructions](#angular-cli).
 
 Note that the schematics for Angular 9 [do not use the custom Angular builder](#angular-builder), but instead use
+[@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
+
+### Angular 10
+Angular 10 is supported by single-spa-angular@4.
+
+Both the [single-spa-angular schematics](#schematics) and the [single-spa helpers](#the-single-spa-helpers)
+work with Angular 10. Follow the [Angular CLI instructions](#angular-cli).
+
+Note that the schematics for Angular 10 [do not use the custom Angular builder](#angular-builder), but instead use
 [@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack).
 
 ## Angular CLI
@@ -316,7 +330,7 @@ Also, if your application uses routing then you have to import the `getSingleSpa
 ​
 ```js
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import singleSpaAngular, { getSingleSpaExtraProviders } from 'single-spa-angular';
 ​
 const lifecycles = singleSpaAngular({
@@ -326,6 +340,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 ```
@@ -334,7 +349,7 @@ And this is how it should be in `single-spa-angular@4.x`:
 ​
 ```js
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
 ​
 const lifecycles = singleSpaAngular({
@@ -344,6 +359,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 ```
@@ -353,7 +369,7 @@ const lifecycles = singleSpaAngular({
 ```ts
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular, getSingleSpaExtraProviders } from 'single-spa-angular';
 
 import { AppModule } from './app/app.module';
@@ -364,6 +380,7 @@ const lifecycles = singleSpaAngular({
   },
   template: '<app-root />',
   Router,
+  NavigationStart,
   NgZone,
 });
 
@@ -754,7 +771,7 @@ Since routing is managed by single-spa and there is no zone that tells Angular t
 
 ```js
 import { ApplicationRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationStart } from '@angular/router';
 import { singleSpaAngular } from 'single-spa-angular';
 
 const lifecycles = singleSpaAngular({
@@ -777,6 +794,7 @@ const lifecycles = singleSpaAngular({
   template: '<app-root />',
   NgZone: 'noop',
   Router,
+  NavigationStart,
 });
 ```
 
