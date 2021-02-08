@@ -51,8 +51,16 @@ singleSpa.registerApplication({
 })
 ```
 
+<<<<<<< HEAD
 ## API和配置项
 调用 single-spa-html 时传入的参数对象包含以下属性：
 
 - `template` (必需): HTML字符串或一个返回字符串的函数。如果是函数，这个函数会被传入 single-spa 自定义 props 作为参数并调用，返回的字符串会在 single-spa 的 mount 声明周期阶段被注入到 DOM 中。
 - `domElementGetter` (可选): 函数，返回将注入 HTML 的 容器dom元素。如果省略，则会提供默认实现，即将模板使用一个 `div` 标签包裹，append 到 `document.body` 上。
+=======
+## API / Options
+single-spa-html is called with an object that has the following properties:
+- `template` (required): An HTML string or a function that returns a string or promise that resolves a string. The function will be called with the single-spa custom props. The returned string is injected into the DOM during the single-spa mount lifecycle.
+- `domElementGetter` (optional): A function that is given the single-spa props and returns the dom element container into which the HTML will be injected. If omitted,
+  a default implementation is provided that wraps the template in a `<div>` that is appended to `document.body`.
+>>>>>>> 82d3d0654a4c1d3ea34f978af584b4cdb4f4a83b
