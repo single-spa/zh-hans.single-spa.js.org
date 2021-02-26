@@ -8,18 +8,34 @@ sidebar_label: Resources
 
 ### 正在积极维护的案例
 
+<<<<<<< HEAD
 - [React微前端](https://github.com/react-microfrontends) (最早从root-config仓库中检出)
 - [Vue微前端](https://github.com/vue-microfrontends) (最早从root-config仓库中检出)
 - [Polyglot微前端](https://github.com/polyglot-microfrontends) (最早从root-config仓库中检出)
 - [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs) 是一个用angularjs、基于es5语法的一个小型案例
+=======
+- [React Microfrontends](https://github.com/react-microfrontends) (check out root-config repo first)
+- [Vue Microfrontends](https://github.com/vue-microfrontends) (check out root-config repo first)
+- [Polyglot Microfrontends](https://github.com/polyglot-microfrontends) (check out root-config repo first)
+- [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs) is a very tiny es5 example with angularjs.
+- [Isomorphic Microfrontends](https://github.com/isomorphic-microfrontends) shows server-side rendering (SSR) with single-spa and single-spa-layout.
+>>>>>>> 3d6d54ad1416f9161c5e3b516b660f103363898d
 
 ### 过去的案例
 
+<<<<<<< HEAD
 - [coexisting-angular-microfrontends](https://github.com/joeldenning/coexisting-angular-microfrontends) 是一个完全用Angular 8开发的、融合了3个的Angular CLI的案例.
 - [coexisting-vue-microfrontends](https://github.com/joeldenning/coexisting-vue-microfrontends) 展示了在一个页面中运行3个Vue CLI项目的案例.
 - [single-spa-portal-example](https://gitlab.com/TheMcMurder/single-spa-portal-example)是一个大型的React微前端案例.
 - [single-spa-parcel-example](https://github.com/Guillembonet/single-spa-parcel-example)是一个由一个vue项目、一个react项目（有各自的parcel），还有两个node线程，分别运行在6个不同的docker虚拟机中构成的微前端案例，该这几个虚拟机整体又完美地运行在另一个虚拟机中.
 - [simple-single-spa-webpack-example](https://github.com/joeldenning/simple-single-spa-webpack-example) 是一个小型的案例，webpack入门案例.
+=======
+- [coexisting-angular-microfrontends](https://github.com/joeldenning/coexisting-angular-microfrontends) is a full blown Angular 9 microfrontends repo that combines three separate Angular CLI projects into one page.
+- [coexisting-vue-microfrontends](https://github.com/joeldenning/coexisting-vue-microfrontends) shows three separate Vue CLI projects existing within one page.
+- [single-spa-portal-example](https://gitlab.com/TheMcMurder/single-spa-portal-example) is a great example of coexisting React microfrontends.
+- [single-spa-parcel-example](https://github.com/Guillembonet/single-spa-parcel-example) is an example of one Vue and one React microfrontend, containing a React and a Vue parcel respectively and two Node.js microservices running in 6 different Docker VMs seamlessly working together in a single web app located in a 7th VM.
+- [simple-single-spa-webpack-example](https://github.com/joeldenning/simple-single-spa-webpack-example) is a small, simple example that can be used as a webpack starter.
+>>>>>>> 3d6d54ad1416f9161c5e3b516b660f103363898d
 
 ## 社区的案例
 
