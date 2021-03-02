@@ -35,34 +35,58 @@ export const devtools = {
   overlays: {
     // selectors是必选项
     selectors: [
+<<<<<<< HEAD
       // 该配置时css选择器构成的数组，在每个应用的最外层，以该选择器作为标识
       // 你可以设置多个标识，类似多个parcel或‘不同容器对应不同试图’的用法
       "#my-app",
       ".some-container .app"
+=======
+      // an array of CSS selector strings, meant to be unique ways to identify the outermost container of your app
+      // you can have more than one, for cases like parcels or different containers for differet views
+      '#my-app',
+      '.some-container .app',
+>>>>>>> 7bdfc574b6b1be0a906e2bc8dac9492b17fe189f
     ],
     // options不是必选项
     options: {
+<<<<<<< HEAD
       // 这些选项用来配置‘覆盖’的样式和一些操作
       width: "100%",
       height: "100%",
+=======
+      // these options allow you some control over how the overlay div looks/behaves
+      // the listed values below are the defaults
+
+      width: '100%',
+      height: '100%',
+>>>>>>> 7bdfc574b6b1be0a906e2bc8dac9492b17fe189f
       zIndex: 40,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
+<<<<<<< HEAD
       color: "#000",
       background: "#000",
+=======
+      color: '#000', // the default for this is actually based on the app's name, so it's dynamic. can be a hex or a CSS color name
+      background: '#000', // the default for this is actually based on the app's name, so it's dynamic. can be a hex or a CSS color name
+>>>>>>> 7bdfc574b6b1be0a906e2bc8dac9492b17fe189f
       textBlocks: [
         // 你可以给‘覆盖’添加额外的文本，例如，你可以添加这个配置的开发人员的名字
         // 这个数组中的每个字符串都会在一个新的div中
         // 例如：'blue squad', 'is awesome'会被解析成
         // <div>blue squad</div><div>is awesome</div>
-      ]
-    }
-  }
+      ],
+    },
+  },
 };
 ```
 
 ## 重写导入映射 (import-maps)
 如果你的环境中使用了[导入映射(import-maps)](https://github.com/WICG/import-maps)，当使用[import-map-overrides](https://github.com/joeldenning/import-map-overrides)库时，检测工具会提供一个接口用于添加自定义的‘导入映射’来覆盖默认值，在[满足组件安装条件](https://github.com/joeldenning/import-map-overrides#installation)之后，你就可以创建、移除、刷新页面来查看你覆盖的效果.
 
+<<<<<<< HEAD
 ![使用导入映射 (import-maps)的single-spa检测工具案例](/static/img/demo-with-importmapoverrides.png)
+=======
+![Example of single-spa Inspector extension with import-maps overrides](/img/demo-with-importmapoverrides.png)
+>>>>>>> 7bdfc574b6b1be0a906e2bc8dac9492b17fe189f
