@@ -138,7 +138,7 @@ With the [recommended setup](#is-there-a-recommended-setup), the process general
 
 Some options on _how_ to update your import map include:
 
-- Server render your `index.html` with the import map inlined. This does not mean that your DOM elements need to all be server rendered, but just the `<script type="systemjs-importmap>` element. Provide an API that either updates a database table or a file local to the server.
+- Server render your `index.html` with the import map inlined. This does not mean that your DOM elements need to all be server rendered, but just the `<script type="systemjs-importmap">` element. Provide an API that either updates a database table or a file local to the server.
 - Have your import map itself on a CDN, and use [import-map-deployer](https://github.com/single-spa/import-map-deployer) or similar to update the import map during your CI process. This method has a small impact on performance, but is generally easier to setup if you don't have a server-rendered setup already. (You can also [preload](https://developer.mozilla.org/en-US/docs/Web/HTML/Preloading_content) the import map file to help provide a small speed boost). See [example travis.yml](https://github.com/openmrs/openmrs-esm-root-config/blob/master/.travis.yml). Other CI tools work, too.
 
 ## Create React App
@@ -152,6 +152,7 @@ Create React App (CRA) projects must be altered before use with single-spa. The 
 Here are your options:
 
 1. Remove `react-scripts` and then run [`create-single-spa`](/docs/create-single-spa/) on your project. This will merge create-single-spa's package.json with yours, and provide you with a default webpack config. Run `yarn start` and fix webpack configuration errors until it's working.
+1. Use [craco-plugin-single-spa-application](https://github.com/hasanayan/craco-plugin-single-spa-application) to modify the webpack config without ejecting. See the project's README for basic configuraiton.
 1. Use [react-app-rewired](https://github.com/timarney/react-app-rewired/blob/master/README.md) to modify the webpack config. See [this Gist](https://gist.github.com/joeldenning/79f2592086ad132fae8ee5aae054c0b6) that shows a basic config you can start with. The example config may not work in every case or solve every problem.
 1. [Eject](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#npm-run-eject) your CRA project's webpack config so you can modify it.
 
