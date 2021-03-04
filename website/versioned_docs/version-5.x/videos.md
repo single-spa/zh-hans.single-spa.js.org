@@ -4,10 +4,14 @@ title: Video Tutorials
 sidebar_label: Videos
 ---
 
+<<<<<<< HEAD
 # Video Tutorials
 # 影片教学
 
 在single-spa团队和其他社区成员都可以找到各种视频教程。
+=======
+A variety of video tutorials exist from both the single-spa core team and other community members.
+>>>>>>> 52f4eb8f6bdef84280f8ee561593032d117e1059
 
 ## From the Core Team
 ## 来自核心团队
@@ -17,5 +21,11 @@ sidebar_label: Videos
 ## From the Community
 ## 来自社区
 
+<<<<<<< HEAD
 随时将你的教程视频添加到此列表中！
 - [模块联合和微前端](https://www.youtube.com/watch?v=wxnwPLLIJCY)
+=======
+Feel free to add your tutorial videos to this list!
+
+- [Module Federation and single-spa](https://www.youtube.com/watch?v=wxnwPLLIJCY)
+>>>>>>> 52f4eb8f6bdef84280f8ee561593032d117e1059
