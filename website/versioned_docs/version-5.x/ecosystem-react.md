@@ -46,6 +46,7 @@ export const mount = reactLifecycles.mount;
 export const unmount = reactLifecycles.unmount;
 ```
 
+<<<<<<< HEAD
 ## 选项
 
 所有的选项都是在调用singleSpaReact(opts)时通过opts参数传递给single-spa-react。以下是可用的选项。
@@ -65,6 +66,34 @@ export const unmount = reactLifecycles.unmount;
 
 对于react@>=16，最好的做法是让每个 single-spa 应用程序的根应用程序实现componentDidCatch，以避免整个应用程序在发生错误时意外卸载。更多细节请参见https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html。
 
+=======
+## Options
+
+All options are passed to single-spa-react via the `opts` parameter when calling `singleSpaReact(opts)`. The following options are available:
+
+- `React`: (required) The main React object, which is generally either exposed onto the window or is available via `require('react')` `import React from 'react'`.
+- `ReactDOM`: (required) The main ReactDOMbject, which is available via `require('react-dom')` `import ReactDOM from 'react-dom'`.
+- `rootComponent`: (required) The top level React component which will be rendered. Can be omitted only if `loadRootComponent` is provided.
+- `loadRootComponent`: (optional) A loading function that takes [custom single-spa props](https://single-spa.js.org/docs/building-applications/#custom-props) and returns a promise that resolves with the parcel. This takes the place of the `rootComponent` opt, when provided. It is intended to help people
+   who want to lazy load the source code for their root component. The source code will be lazy loaded during the bootstrap lifecycle.
+- `errorBoundary`: (optional) A function that accepts `err`, `info`, and `props` and must return the UI for a [React Error Boundary](https://reactjs.org/docs/error-boundaries.html). This is provided as a convenient way of implementing an Error boundary without having to write your own class component for it.
+- `suppressComponentDidCatchWarning`: (optional) A boolean that indicates if single-spa-react should warn when the rootComponent does not implement componentDidCatch. Defaults to false. It is preferred to implement `errorBoundary` instead of suppressing this warning.
+- `domElementGetter`: (optional) A function that is given the single-spa props and returns a DOMElement. This dom element is where the
+  React application will be bootstrapped, mounted, and unmounted. Note that this opt can be omitted. When omitted, the `domElementGetter` or `domElement`
+  [custom single-spa props](https://single-spa.js.org/docs/building-applications/#custom-props) are used.
+  To use those, do `singleSpa.registerApplication({ name, app, activeWhen, customProps: {domElementGetter: function() {...}} })` or
+  `singleSpa.registerApplication({ name, app, activeWhen, {domElement: document.getElementById(...)} })`. If no dom element can be found through any
+  of those methods, then a container div will be created and appended to document.body, by default.
+- `parcelCanUpdate`: (optional) A boolean that controls whether an update lifecycle will be created for the returned parcel. Note that option does not impact single-spa applications, but only parcels.
+  It is true by default.
+- `renderType`: (optional) ENUM of one of the following: `'render'`, `'hydrate'`, `'createRoot'`, `'unstable_createRoot'`, `'createBlockingRoot'`, and `'unstable_createBlockingRoot'`. Defaults to `'render'`. Allows you to choose which ReactDOM render method you want to use for your application.
+
+## Notes
+
+For react@>=16, it is best practice to have each single-spa application's root application implement componentDidCatch in order to avoid
+the entire application unmounting unexpectedly when an error occurs. single-spa-react will warn to the console if componentDidCatch is not
+implemented. See https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html for more details.
+>>>>>>> 0b6f9b112c1c70903c5a7c0dc0cc497dabe7805f
 
 ## SingleSpaContext
 
@@ -75,6 +104,7 @@ single-spa-react也可以用来创建一个 single-spa parcel（而不是single-
 你可以通过npm安装该库并导入single-spa-react/parcel，或者通过添加`<script src="https://unpkg.com/single-spa-react/parcel"></script>`，然后用window.Parcel.default访问Parcel组件。
 
 #### Parcel props
+<<<<<<< HEAD
 - `config` (必填)：要么是一个single-spa parcel配置对象，要么是一个 "加载函数"，返回一个resolve包裹配置的Promise。
 - `wrapWith` (可选)：[tagName](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName) 字符串。`<Parcel>` 将创建一个该类型的 dom 节点，包裹Parcel生成的节点。 默认：`div`
 - `appendTo` (可选)：将 parcel append到此 dom 元素下。 默认情况下，这是不需要的，因为包裹将挂载在包裹组件所呈现的 DOM 中。 当想要把 parcel 放到 document.body 或 指定dom特定位置时很有用。
@@ -83,8 +113,35 @@ single-spa-react也可以用来创建一个 single-spa parcel（而不是single-
 - `parcelDidMount` (可选)：Function 类型。当包 parcel 完成装载时，将调用该命令。
 
 #### 例子
+=======
+- `config` (required): Either a single-spa parcel config object, or a "loading function" that returns a Promise that resolves with the parcel config.
+- `wrapWith` (optional): A string [tagName](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName).`<Parcel>` will create a dom node of that type for the parcel to be mounted into. Defaults to `div`
+- `wrapStyle`(optional): Styles that will apply to `wrapWith`.
+- `wrapClassName` (optional): classNames that will apply to `wrapWith`. 
+- `appendTo` (optional): A dom element to append the parcel to. By default, this is not needed because the parcel will be mounted in the DOM that the `<Parcel>` component was rendered into. Useful for appending parcels to document.body or other separate parts of the dom.
+- `mountParcel` (sometimes required, sometimes not): The `mountParcel` function provided by single-spa. In general, it is preferred to use an application's mountParcel function instead of the
+   single-spa's root mountParcel function, so that single-spa can keep track of the parent-child relationship and automatically unmount the application's parcels when the application unmounts.
+   Note that if the `<Parcel>` component is being rendered by a single-spa application that uses single-spa-react, it is **unnecessary** to pass in the prop, since `<Parcel>` can get the prop
+   from [SingleSpaContext](#singlespacontext)
+- `handleError` (optional): A function that will be called with errors thrown by the parcel. If not provided, errors will be thrown on the window, by default.
+- `parcelDidMount` (optional): A function that will be called when the parcel finishes loading and mounting.
+
+#### Examples
+>>>>>>> 0b6f9b112c1c70903c5a7c0dc0cc497dabe7805f
 ```jsx
+// Use this import path in environments that support package.json exports
+// See https://nodejs.org/dist/latest-v14.x/docs/api/packages.html#packages_package_entry_points
+// and see https://github.com/single-spa/single-spa-react/releases/tag/v3.0.0
+// Use this in Webpack 5 and recent versions of Node
 import Parcel from 'single-spa-react/parcel'
+
+// Use this import path in environments that don't support package.json exports
+// See https://nodejs.org/dist/latest-v14.x/docs/api/packages.html#packages_package_entry_points
+// and see https://github.com/single-spa/single-spa-react/releases/tag/v3.0.0
+// Use this in Webpack 4 and older versions of Node
+import Parcel from 'single-spa-react/lib/esm/parcel'
+
+
 import * as parcelConfig from './my-parcel.js'
 
 // config 必需. The parcel will be mounted inside of the
@@ -132,6 +189,14 @@ import * as parcelConfig from './my-parcel.js'
   wrapWith="div"
   wrapStyle={{ background: 'black' }}
 />
+
+// Add classNames to wrapWith element.
+<Parcel
+  config={parcelConfig}
+  wrapWith="div"
+  wrapClassName="wrapper"
+/>
+
 ```
 
 ## 创建 React 应用
