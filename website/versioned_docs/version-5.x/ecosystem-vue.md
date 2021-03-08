@@ -4,11 +4,10 @@ title: single-spa-vue
 sidebar_label: Vue
 ---
 
-<<<<<<< HEAD
 single-spa-vue是一个针对vue项目的初始化、挂载、卸载的库函数，可以实现[single-spa注册的应用](configuration#registering-applications)、[生命周期函数](building-applications.md#registered-application-lifecycle)等功能，详情请查看[single-spa-vue的github](https://github.com/single-spa/single-spa-vue)。
-=======
+
 single-spa-vue is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [Vue.js](https://vuejs.org/). Check out the [single-spa-vue github](https://github.com/single-spa/single-spa-vue).
->>>>>>> 1a98f4cb92de64f7ffe5a8f6011a199d43478998
+
 
 ## 入门案例
 
@@ -56,9 +55,9 @@ import { setPublicPath } from 'systemjs-webpack-interop';
 setPublicPath('appName');
 ```
 
-<<<<<<< HEAD
+
 将你的应用的入口文件改成如下内容：
-=======
+
 Note that if you are using the Vue CLI Plugin, your `main.ts` or `main.js` file will be updated with this code automatically and the `set-public-path.js` file
 will automatically be created with the app name being your package.json's name property.
 
@@ -76,7 +75,6 @@ export const mount = props => vueLifecycles.mount(props).then(instance => {
 ### Vue 2
 
 For Vue 2, change your application's entry file to be the following:
->>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
 
 ```js
 import './set-public-path';
@@ -100,15 +98,13 @@ export const mount = vueLifecycles.mount;
 export const unmount = vueLifecycles.unmount;
 ```
 
-<<<<<<< HEAD
 注意：如果你正在使用Vue CLI插件，你的`main.ts`或`main.js`文件将会被自动更新为上面这段代码，`set-public-path.js`文件也将自动被创建，你的应用的名字将作为package.json文件中name属性的值
 
 如果你想要获取到vue实例做一些操作，你可以通过如下指引修改mount方法。mount方法将会以Promise的形式返回Vue对象，该功能仅限于[v1.6.0](https://github.com/single-spa/single-spa-vue/releases/tag/v1.6.0)版本之后
-=======
+
 ### Vue 3
 
 For Vue 3, change your application's entry file to be the following:
->>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
 
 ```js
 import './set-public-path';
@@ -139,11 +135,11 @@ export const mount = vueLifecycles.mount;
 export const unmount = vueLifecycles.unmount;
 ```
 
-<<<<<<< HEAD
+
 ## 依赖共享
 
 出于性能上的考虑，Vue、Vue Router以及其他较大的库，最好使用相同的版本
-=======
+
 ## Custom props
 
 [Single-spa custom props](/docs/building-applications/#lifecycle-props) can be passed to your root component like so:
@@ -180,7 +176,6 @@ export default {
 ```
 
 ## Shared dependencies
->>>>>>> ae7047e961da30157547f594c3da846de6c48af4
 
 要实现不同应用间的依赖共享，添加你想要共享的依赖作为[webpack externals](https://webpack.js.org/configuration/externals)。然后使用
 一个工作在浏览器中的模块加载工具，比如[systemjs](https://github.com/systemjs/systemjs)，来为single-spa中的每个项目提供这些共享的依赖，将`vue`以及其他库添加到[import map](http://single-spa-playground.org/playground/import-map)中。
@@ -236,13 +231,8 @@ const vueLifecycles = singleSpaVue({
 
 ## 自定义数据
 
-<<<<<<< HEAD
 [single-spa 自定义数据](/docs/building-applications.html#custom-props)通常以`appOptions.data`添加到你的App组件中，可以通过`vm.$data`得到。参考[Vue文档中相关的说明](https://vuejs.org/v2/api/#data)获取更多内容。
-=======
+
 [single-spa custom props](/docs/building-applications.html#custom-props) are added to your App component as
 `appOptions.data`, and are accessible via `vm.$data`. See [this Vue documentation](https://vuejs.org/v2/api/#data)
 for more information on `appOptions.data`.
-<<<<<<< HEAD
->>>>>>> 11795bae2c1dd3a1852d98d9662468a8c138d50d
-=======
->>>>>>> 1a98f4cb92de64f7ffe5a8f6011a199d43478998
