@@ -100,6 +100,190 @@ singleSpa.registerApplication({
 
 [single-spa custom props](/docs/building-applications/#lifecycle-props) are made available as `$rootScope.singleSpaProps`.
 
+## Parcels
+
+### Creating AngularJS parcels
+
+The `singleSpaAngularJs()` function returns an object that can serve as either a [single-spa application](/docs/building-applications) or [single-spa parcel](/docs/parcels-overview).
+
+### Rendering parcels in AngularJS
+
+To render a single-spa parcel inside of your AngularJS application, you can use the `<single-spa-parcel>` directive. To do so, first add the `"single-spa-angularjs"` module as a dependency of your application:
+
+```js
+import 'single-spa-angularjs/lib/parcel.js';
+
+angular.module('myMainModule', [
+  'single-spa-angularjs'
+])
+```
+
+Then you can use the `<single-spa-parcel>` directive in your templates:
+
+```html
+<single-spa-parcel
+  parcel-config="parcelConfig"
+  props="parcelProps"
+  mount-parcel="mountRootParcel"
+/>
+```
+
+In your controller, set the corresponding values on the $scope:
+
+```js
+import { mountRootParcel } from 'single-spa';
+
+// The parcelConfig binding is required. It must be an object or loading function that resolves with an object.
+$scope.parcelConfig = {async mount() {}, async unmount() {}}
+
+// You can retrieve parcels from other microfrontends via cross-microfrontend imports
+// See https://single-spa.js.org/docs/recommended-setup#cross-microfrontend-imports
+// $scope.parcelConfig = () => System.import('@org/settings-modal');
+
+// The props binding is optional, defaulting to no custom props being passed into the parcel
+$scope.props = {
+  extra: 'info can be passed here'
+}
+
+// As long as you're using <single-spa-parcel> inside of another single-spa application or parcel,
+// the mountParcel binding is not needed. However, it is needed otherwise.
+$scope.mountParcel = mountRootParcel
+```
+
+If you run into issues related to `singleSpaProps` not being available for injection, this is likely caused by using `<single-spa-parcel>` outside of a single-spa application or parcel. It is okay to do so, but you'll need to manually provide the `singleSpaProps` value:
+
+```js
+import { mountRootParcel } from 'single-spa';
+
+angular.module('single-spa-angularjs').config(['$provide', ($provide) => {
+  // This can be an empty object, you just need the DI to not fail
+  const props = {};
+
+  // Alternatively, you can provide a mountParcel function that will be used as the default value for the mount-parcel attribute
+  // const props = {mountParcel: mountRootParcel}
+
+  $provide.value('singleSpaProps', props);
+}])
+```
+
+## Migrating
+
+Migrating an existing AngularJS application to single-spa can be a tricky. Here are some recommendations.
+
+### High level approach
+
+1. Convert the angularjs application to be a single-spa application via global variables.
+2. Switch the angularjs application from being a global variable to being SystemJS in-browser module.
+3. Add a new single-spa application (doesn't need to be angularjs)
+
+### Step 1: Convert to global variable
+
+1. Load single-spa and single-spa-angularjs as global variables in your main HTML file:
+
+```html
+<!--
+  Consider upgrading the versions of these libraries
+  They likely have had updates since this documentation was written
+-->
+<script src="https://cdn.jsdelivr.net/npm/single-spa@5.9.1/lib/umd/single-spa.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/single-spa-angularjs@4.2.1/lib/single-spa-angularjs.min.js"></script>
+```
+
+2. Change your angularjs application to not mount to the DOM. This is generally done removing the `ng-app` attribute in your main html file.
+3. In one of the first / main scripts loaded for your angularjs application, create your single-spa application as a global variable. See [this code](#as-a-global-variable).
+4. In your main HTML file, add the following:
+```html
+<script>
+  window.singleSpa.registerApplication({
+    name: "legacyAngularjsApp",
+    app: window.legacyAngularjsApp,
+    activeWhen: ['/']
+  })
+  window.singleSpa.start();
+</script>
+```
+5. Confirm that your application now is mounting again and works properly. Also, check that it's in `MOUNTED` status as a single-spa microfrontend:
+
+```js
+// in the browser console, check that it's in `MOUNTED` status
+console.log('legacyAngularjsApp status', singleSpa.getAppStatus('legacyAngularjsApp');
+```
+
+### Step 2: Convert to SystemJS module:
+
+This step is not required unless you want to do [cross microfrontend imports](/docs/recommended-setup#cross-microfrontend-imports) between your angularjs microfrontend and other microfrontends.
+
+1. Add systemjs to your index.html file:
+
+```html
+<!-- consider checking/upgrading systemjs version -->
+<script type="systemjs-importmap">
+  {
+    "imports": {
+      "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.1/lib/system/single-spa.min.js",
+      "@org/legacyAngularjsApp": "/main-angular-app.js"
+    }
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/systemjs@6.9.1/dist/system.min.js"></script>
+```
+
+2. Remove the global single-spa script:
+
+```diff
+- <script src="https://cdn.jsdelivr.net/npm/single-spa@5.9.1/lib/umd/single-spa.min.js"></script>
+```
+
+3. Modify your main / first angularjs script file to create a systemjs module instead of global variable. See [this code](/docs/ecosystem-angularjs#as-a-systemjs-module).
+
+4. Remove the `<script>` for loading that main / first angularjs script file. Replace it with a System.import.
+
+```diff
+- <script src="/main-angular-app.js"></script>
+```
+
+5. Modify the `<script>` in your main HTML file to load the angularjs app as a systemjs module instead of global variable:
+
+```diff
+ window.singleSpa.registerApplication({
+   name: "legacyAngularjsApp",
+-   app: window.legacyAngularjsApp,
++   app: function() { return System.import('@org/legacyAngularjsApp'); },
+   activeWhen: ['/']
+ })
+```
+
+6. Verify that the app continues working.
+
+### Step 3: Add new microfrontend
+
+In single-spa, it's encouraged to split microfrontends by route. During the migration/transition period, you may need to have the legacy angularjs application always active to show navigation menus, even for routes that are controlled by new microfrontends.
+
+It's recommended to create new microfrontends via the [single-spa CLI](/docs/create-single-spa).
+
+1. Add a new call to `registerApplication()` to your index.html file.
+```js
+window.singleSpa.registerApplication({
+  name: "new-microfrontend",
+  app: function () { return System.import("new-microfrontend"); },
+  activeWen: ["/route-for-new-microfrontend"]
+})
+```
+2. Add the new microfrontend to your import map in the index.html file.
+
+```html
+<script type="systemjs-importmap">
+  {
+    "imports": {
+      "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.1/lib/system/single-spa.min.js",
+      "@org/legacyAngularjsApp": "/main-angular-app.js",
+      "@org/new-microfrontend": "http://localhost:8080/new-microfrontend.js"
+    }
+  }
+</script>
+```
+3. Start a new microfrontend on the port in the import map. Go to the route for the new microfrontend and verify it is loaded.
+
 ## Examples
 
 - [polyglot microfrontends account settings](https://github.com/polyglot-microfrontends/account-settings): Gulp + angularjs@1.7 project integrated with Vue microfrontends.
