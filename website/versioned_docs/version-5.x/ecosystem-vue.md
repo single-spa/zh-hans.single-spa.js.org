@@ -8,10 +8,16 @@ single-spa-vue是一个针对vue项目的初始化、挂载、卸载的库函数
 
 single-spa-vue is a helper library that helps implement [single-spa registered application](configuration#registering-applications) [lifecycle functions](building-applications.md#registered-application-lifecycle) (bootstrap, mount and unmount) for use with [Vue.js](https://vuejs.org/). Check out the [single-spa-vue github](https://github.com/single-spa/single-spa-vue).
 
+<<<<<<< HEAD
 
 ## 入门案例
 
 先看一个功能完整的案例 [coexisting-vue-microfrontends](https://github.com/joeldenning/coexisting-vue-microfrontends).
+=======
+## Example
+
+For a full example, see [vue-microfrontends](https://github.com/vue-microfrontends).
+>>>>>>> f676b45e70bb9abbc38b2b2042e940f9106a89b8
 
 ## 功能更加丰富的案例
 
@@ -110,7 +116,7 @@ For Vue 3, change your application's entry file to be the following:
 import './set-public-path';
 import { h, createApp } from 'vue';
 import singleSpaVue from '../lib/single-spa-vue.js';
-
+import router from './router';
 import App from './App.vue';
 
 const vueLifecycles = singleSpaVue({
@@ -118,16 +124,17 @@ const vueLifecycles = singleSpaVue({
   appOptions: {
     render() {
       return h(App, {
-        props: {
-          // single-spa props are available on the "this" object. Forward them to your component as needed.
-          // https://single-spa.js.org/docs/building-applications#lifecyle-props
-          name: this.name,
-          mountParcel: this.mountParcel,
-          singleSpa: this.singleSpa,
-        },
+        // single-spa props are available on the "this" object. Forward them to your component as needed.
+        // https://single-spa.js.org/docs/building-applications#lifecyle-props
+        name: this.name,
+        mountParcel: this.mountParcel,
+        singleSpa: this.singleSpa,
       });
     },
   },
+  handleInstance: (app) => {
+    app.use(router);
+  }
 });
 
 export const bootstrap = vueLifecycles.bootstrap;
@@ -142,7 +149,7 @@ export const unmount = vueLifecycles.unmount;
 
 ## Custom props
 
-[Single-spa custom props](/docs/building-applications/#lifecycle-props) can be passed to your root component like so:
+[Single-spa custom props](/docs/building-applications/#custom-props) can be passed to your root component like so:
 
 ```js
 // main.js
@@ -151,10 +158,8 @@ const vueLifecycles = singleSpaVue({
   appOptions: {
     render(h) {
       return h(App, {
-        props: {
-          mountParcel: this.mountParcel,
-          otherProp: this.otherProp,
-        },
+        mountParcel: this.mountParcel,
+        otherProp: this.otherProp,
       });
     },
     router,
@@ -209,9 +214,16 @@ module.exports = {
 
 当调用`singleSpaVue(opts)`时，所有选项都是通过`opts`参数传入single-spa-vue的
 
+<<<<<<< HEAD
 - `Vue`: (必传项) 主Vue对象, 通常暴露在window对象上，或通过`require('vue')` `import Vue from 'vue'`获得
 - `appOptions`: (必传项) 类型为Object对象类型，用来实例化Vue应用。`appOptions`将直接透传为Vue构造函数实例化时的初始化参数`new Vue(appOptions)`。需要注意：如果你没有传el选项，插件就会自动创建一个div，并作为一个Vue项目的默认容器附加到DOM中。
 - `loadRootComponent`: (非必传，用于取代`appOptions.render`) 在懒加载时有用，一个以root component为成功回调参数的Promise对象。
+=======
+- `Vue`: (required) The main Vue object, which is generally either exposed onto the window or is available via `require('vue')` `import Vue from 'vue'`.
+- `appOptions`: (required) An object or async function which will be used to instantiate your Vue.js application. `appOptions` will pass directly through to `new Vue(appOptions)`. Note that if you do not provide an `el` to appOptions, that a div will be created and appended to the DOM as a default container for your Vue application.
+- `loadRootComponent`: (optional and replaces `appOptions.render`) A promise that resolves with your root component. This is useful for lazy loading.
+- `handleInstance`: (optional) A method can be used to handle Vue instance. Vue 3 brings [new instance API](https://v3.vuejs.org/guide/migration/global-api.html#a-new-global-api-createapp), and you can access *the app instance* from this, like `handleInstance: (app) => app.use(router)`. For Vue 2 users, a [Vue instance](https://vuejs.org/v2/guide/instance.html) can be accessed.
+>>>>>>> f676b45e70bb9abbc38b2b2042e940f9106a89b8
 
 可以用[appOptions.el](https://vuejs.org/v2/api/#el)配置single-spa要挂载到哪个dom元素上，:
 
@@ -225,14 +237,194 @@ const vueLifecycles = singleSpaVue({
 });
 ```
 
+<<<<<<< HEAD
 ## 作为一个single-spa应用
 
 想要创建一个single-spa应用，只需要从appOptions中去掉`el`选项，如此一来，dom元素将需要应用的开发者来指定，除此之外的其他选项都应该和上述案例保持一致
 
 ## 自定义数据
+=======
+To configure options asynchronously return a promise from appOptions function:
+
+```js
+const vueLifecycles = singleSpaVue({
+  Vue,
+  async appOptions() {
+    return {
+      router: await routerFactory(),
+      render: h => h(App)
+    }
+  },
+});
+```
+>>>>>>> f676b45e70bb9abbc38b2b2042e940f9106a89b8
 
 [single-spa 自定义数据](/docs/building-applications.html#custom-props)通常以`appOptions.data`添加到你的App组件中，可以通过`vm.$data`得到。参考[Vue文档中相关的说明](https://vuejs.org/v2/api/#data)获取更多内容。
 
-[single-spa custom props](/docs/building-applications.html#custom-props) are added to your App component as
-`appOptions.data`, and are accessible via `vm.$data`. See [this Vue documentation](https://vuejs.org/v2/api/#data)
-for more information on `appOptions.data`.
+[single-spa custom props](/docs/building-applications.html#custom-props) are available in the `render()` function in your main file. They can be passed as custom props to your App component.
+
+```js
+const vueLifecycles = singleSpaVue({
+  Vue,
+  appOptions: {
+    render(h) {
+      return h(App, {
+        props: {
+          // single-spa props are available on the "this" object. Forward them to your component as needed.
+          // https://single-spa.js.org/docs/building-applications#lifecyle-props
+          name: this.name,
+          mountParcel: this.mountParcel,
+          singleSpa: this.singleSpa,
+        },
+      });
+    },
+  },
+});
+```
+
+## Parcels
+
+### Creating a parcel
+
+A parcel config is an object that represents a component implemented in Vue, React, Angular, or any other framework.
+
+To create a VueJS single-spa parcel config object, simply omit the `el` option from your appOptions, since the dom element will be specified by the user of the Parcel. Every other
+option should be provided exactly the same as in the example above.
+
+```js
+const parcelConfig = singleSpaVue({...});
+```
+
+### Rendering a parcel
+
+To render a parcel config object in Vue, you can use single-spa-vue's `Parcel` component:
+
+```vue
+<template>
+  <Parcel
+    v-on:parcelMounted="parcelMounted()"
+    v-on:parcelUpdated="parcelUpdated()"
+    :config="parcelConfig"
+    :mountParcel="mountParcel"
+    :wrapWith="wrapWith"
+    :wrapClass="wrapClass"
+    :wrapStyle="wrapStyle"
+    :parcelProps="getParcelProps()"
+  />
+</template>
+
+<script>
+// For old versions of webpack
+import Parcel from 'single-spa-vue/dist/esm/parcel'
+// For new versions of webpack
+import Parcel from 'single-spa-vue/parcel'
+
+import { mountRootParcel } from 'single-spa'
+
+export default {
+  components: {
+    Parcel
+  },
+  data() {
+    return {
+      /*
+        parcelConfig (object, required)
+
+        The parcelConfig is an object, or a promise that resolves with a parcel config object.
+        The object can originate from within the current project, or from a different
+        microfrontend via cross microfrontend imports. It can represent a Vue component,
+        or a React / Angular component.
+        https://single-spa.js.org/docs/recommended-setup#cross-microfrontend-imports
+
+        Vanilla js object:
+        parcelConfig: {
+          async mount(props) {},
+          async unmount(props) {}
+        }
+
+        // React component
+        parcelConfig: singleSpaReact({...})
+
+        // cross microfrontend import is shown below
+      */
+      parcelConfig: System.import('@org/other-microfrontend').then(ns => ns.Widget),
+
+
+      /*
+        mountParcel (function, required)
+
+        The mountParcel function can be either the current Vue application's mountParcel prop or
+        the globally available mountRootParcel function. More info at
+        http://localhost:3000/docs/parcels-api#mountparcel
+      */
+      mountParcel: mountRootParcel,
+
+      /*
+        wrapWith (string, optional)
+
+        The wrapWith string determines what kind of dom element will be provided to the parcel.
+        Defaults to 'div'
+      */
+      wrapWith: 'div'
+
+      /*
+        wrapClass (string, optional)
+
+        The wrapClass string is applied to as the CSS class for the dom element that is provided to the parcel
+      */
+      wrapClass: "bg-red"
+
+      /*
+        wrapStyle (object, optional)
+
+        The wrapStyle object is applied to the dom element container for the parcel as CSS styles
+      */
+      wrapStyle: {
+        outline: '1px solid red'
+      },
+    }
+  },
+  methods: {
+    // These are the props passed into the parcel
+    getParcelProps() {
+      return {
+        text: `Hello world`
+      }
+    },
+    // Parcels mount asynchronously, so this will be called once the parcel finishes mounting
+    parcelMounted() {
+      console.log("parcel mounted");
+    },
+    parcelUpdated() {
+      console.log("parcel updated");
+    }
+  }
+}
+</script>
+```
+
+## Webpack Public Path
+
+[vue-cli-plugin-single-spa](https://github.com/single-spa/vue-cli-plugin-single-spa) sets the [webpack public path](https://webpack.js.org/guides/public-path/#root) via [SystemJSPublicPathWebpackPlugin](https://github.com/joeldenning/systemjs-webpack-interop). By default, the public path is set to match the following output directory structure:
+
+```sh
+dist/
+  js/
+    app.js
+  css/
+    main.css
+```
+
+With this directory structure (which is the Vue CLI default), the public path should **not** include the `js` folder. This is accomplished by setting [`rootDirectoryLevel`](https://github.com/joeldenning/systemjs-webpack-interop#as-a-webpack-plugin) to be `2`. If this doesn't match your directory structure or setup, you can change the `rootDirectoryLevel` with the following code in your vue.config.js or webpack.config.js:
+
+```js
+// vue.config.js
+module.exports = {
+  chainWebpack(config) {
+    config.plugin('SystemJSPublicPathWebpackPlugin').tap((args) => {
+      args[0].rootDirectoryLevel = 1;
+      return args;
+    });
+  }
+}
+```
