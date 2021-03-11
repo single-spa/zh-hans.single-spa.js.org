@@ -4,9 +4,13 @@ title: 微前端实验室
 sidebar_label: Playground
 ---
 
+<<<<<<< HEAD
 # 微前端实验室
 
 [点击这里亲自体验、尝试一把](http://single-spa-playground.org)
+=======
+[Playground website](http://single-spa-playground.org)
+>>>>>>> 57aa93b31cc827abc7cd46bd123fc62a16e59790
 
 [该项目的github仓库地址](https://github.com/single-spa/single-spa-playground)
 
