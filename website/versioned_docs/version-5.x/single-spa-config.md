@@ -8,6 +8,9 @@ The single-spa root config consists of the following:
 
 这两个根目录下的配置用于启动single-spa应用。
 
+* 所有微前端应用共享的根 HTML 页面
+* 调用 singleSpa.registerApplication() 的 JavaScript
+
 ## Index.html文件
 
 内容可参考[该示例](http://single-spa-playground.org/playground/html-file)。注意该文件不包含html元素(div, buttons等)，只是为了调用`registerApplication()`方法。
