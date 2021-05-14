@@ -85,9 +85,9 @@ registerApplication('applicationName', application, activityFunction)
 - 在single-spa上手动调用[`triggerAppChange`] 方法
 - `checkActivityFunctions`方法被调用时
 
-#### Custom props
+#### 自定义属性
 
-The optional fourth argument to `registerApplication` is [custom props](/docs/building-applications/#custom-props) that are passed to the application's single-spa lifecycle functions. The custom props may be either an object or a function that returns an object. Custom prop functions are called with the application name and current `window.location` as arguments.
+`registerApplication`函数可选的第四个参数是 [custom props](/docs/building-applications/#custom-props)。这个参数会传递给 single-spa 的 `lifecycle` 函数。自定义属性可以是一个对象，也可以是一个返回Object的函数。如果自定属性是一个函数，函数的参数是应用的名字（application name)和当前`window.location`。
 
 ### 使用对象参数
 
