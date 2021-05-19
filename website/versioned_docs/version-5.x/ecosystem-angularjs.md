@@ -104,4 +104,3 @@ singleSpa.registerApplication({
 
 - [polyglot microfrontends account settings](https://github.com/polyglot-microfrontends/account-settings): Gulp + angularjs@1.7 project integrated with Vue microfrontends.
 - [single-spa-es5-angularjs](https://github.com/joeldenning/single-spa-es5-angularjs): No build process - just global variables.
->>>>>>> f82762b71cedc633132ad4b93d35ed962a728494
