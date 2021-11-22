@@ -14,7 +14,7 @@ Single-spa 是一个将多个单页面应用聚合为一个整体应用的 JavaS
   ([React](ecosystem-react.md), [AngularJS](ecosystem-angularjs.md), [Angular](ecosystem-angular.md), [Ember](ecosystem-ember.md), 你正在使用的框架)
 - 独立部署每一个单页面应用
 - 新功能使用新框架，旧的单页应用不用重写可以共存
-- 改善初始加载时间，迟加载代码
+- 改善初始加载时间，延迟加载代码
 
 ## 演示和示例
 
