@@ -1,6 +1,6 @@
 ---
 id: contributing-overview
-title: Contributing to Single-spa
+title: 贡献给Single-spa
 sidebar_label: 整体预览
 ---
 
