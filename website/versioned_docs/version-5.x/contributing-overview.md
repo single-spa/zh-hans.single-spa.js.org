@@ -1,87 +1,85 @@
 ---
 id: contributing-overview
-title: Contributing to Single-spa
-sidebar_label: Overview
+title: 贡献给Single-spa
+sidebar_label: 整体预览
 ---
 
-[List of current contributors](/contributors)
+[当前贡献人员列表](/contributors)
 
-Thanks for checking out single-spa! We're excited to hear and learn from you.
+感谢你能关注single-spa! 我们非常愿意能够听到你的相关意见或者建议
 
-We've put together the following guidelines to help you figure out where you can best be helpful.
+我们已经将能够帮助你弄清流程的文档放在下面的指南中，希望能够对你有所帮助
 
-## Table of Contents
+## 目录
 
-0. [Types of contributions we're looking for](#types-of-contributions-were-looking-for)
-0. [Ground rules & expectations](#ground-rules-expectations)
-0. [How to contribute](#how-to-contribute)
-0. [Setting up your environment](#setting-up-your-environment)
-0. [Community](#community)
+0. [我们期望的贡献类型](#types-of-contributions-were-looking-for)
+0. [相关规则 & 期望](#ground-rules-expectations)
+0. [如何进行贡献](#how-to-contribute)
+0. [搭建你自己的本地环境](#setting-up-your-environment)
+0. [社区支持](#community)
 
-## Types of contributions we're looking for
+## 我们期望的贡献类型
 
-There are many ways you can directly contribute to the guides (in descending order of need):
+你有多种方式来直接贡献给指南（降序排列）
 
-* Examples
-* Helper Libraries (like single-spa-react) for missing frameworks
-* Bug fixes
-* Answering questions in the slack channel
-* new helper packages for frameworks
+* 例子
+* 为缺失的框架添加示例库（像single-spa-react）
+* 修复bug
+* 在slack channel中回答问题
+* 为框架添加帮助包
 
-Interested in making a contribution? Read on!
+是否想做一些贡献？那就继续往下读吧！
+## 相关规则 & 期望
 
-## Ground rules & expectations
+在我们开始之前，下面的注意事项我们期望你能看一下
 
-Before we get started, here are a few things we expect from you (and that you should expect from others):
+* 在讨论项目相关事情的时候可以有自己的想法，因为我们具有不同的背景和项目经验，所以我们有不同的视角来看待“开源应该如何来做”，你可以尝试一下多听取其他人而不是始终坚信自己的方式是对的
+* 请通过阅读single-spa[代码贡献指南](/docs/code-of-conduct/)来参与到本项目中，并同意遵守它的条款
+* 在你提交PR之前，请确保你贡献的代码通过了所有测试，并且需要强调相关失败的测试用例，这样便于我们合并你贡献的代码
+* 在你添加内容之前请先考虑是否它是有价值的。请不要添加参考链接到你或者你同事创建的页面中
+## 如何进行贡献
 
-* Be kind and thoughtful in your conversations around this project. We all come from different backgrounds and projects, which means we likely have different perspectives on "how open source is done." Try to listen to others rather than convince them that your way is correct.
-* Please read the single-spa [Contributor Code of Conduct](/docs/code-of-conduct/). By participating in this project, you agree to abide by its terms.
-* If you open a pull request, please ensure that your contribution passes all tests. If there are test failures, you will need to address them before we can merge your contribution.
-* When adding content, please consider if it is widely valuable. Please don't add references or links to things you or your employer have created as others will do so if they appreciate it.
+如果你想参与贡献，请通过[issues](https://github.com/single-spa/single-spa/issues)和[pull requests](https://github.com/single-spa/single-spa/pulls)来搜索是否有类似的问题或想法
 
-## How to contribute
+如果你没有搜索到你的idea, 你可以考虑它适合作为本指南的一个目标，可以选择下面的一种方式来做
 
-If you'd like to contribute, start by searching through the [issues](https://github.com/single-spa/single-spa/issues) and [pull requests](https://github.com/single-spa/single-spa/pulls) to see whether someone else has raised a similar idea or question.
+* **如果你贡献的PR是微小的,** 例如是一个小的字体改动或者bug修复，请开一个PR
+* **如果你贡献的PR是巨大的,** 例如是一个新的feature, 请先开一个issue，这样在你开始做之前其他人能够在讨论区衡量他的重要性
 
-If you don't see your idea listed, and you think it fits into the goals of this guide, do one of the following:
+## 搭建你自己的本地环境
 
-* **If your contribution is minor,** such as a small typo or bug fix, open a pull request.
-* **If your contribution is major,** such as a new feature, start by opening an issue first. That way, other people can weigh in on the discussion before you do any work.
-
-## Setting up your environment
-
-### Prerequisites
+### 前置条件
 
 1. Git
-1. Node: install version 8.4 or greater
-1. Yarn: See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/)
-1. A fork of the [single-spa repo](https://github.com/single-spa/single-spa)
-1. A clone of the repo on your local machine
+1. Node: 下载 version 8.4 or greater
+1. Yarn: 查看 [Yarn 站点安装说明](https://yarnpkg.com/lang/en/docs/install/)
+1. fork [single-spa 仓库](https://github.com/single-spa/single-spa)
+1. clone当前仓库到你的本地
 
-### Installation
+### 安装
 
-1. `cd single-spa` to go into the project root
-1. `yarn` to install single-spa's dependencies
+1. `cd single-spa` 渠道当前项目的根目录
+1. `yarn` 安装single-spa的相关依赖
 
-### Create a branch
+### 创建一个分支
 
-1. `git checkout master` from any folder in your local `single-spa` repository
-1. `git pull origin master` to ensure you have the latest main code
-1. `git checkout -b the-name-of-my-branch` (replacing `the-name-of-my-branch` with a suitable name) to create a branch
+1.  从你的本地 `single-spa` 仓库运行`git checkout master`
+1. `git pull origin master` 确保你的本地有最新的代码
+1. `git checkout -b the-name-of-my-branch` (用一个合适的名字来替换`the-name-of-my-branch`) 来创建分支
 
-### Test the change
+### 测试更改点
 
-1. Run `yarn test` from the project root.
+1. 从项目的根目录运行 `yarn test`
 
 ### Push it
 
-1. `git add . && git commit -m "My message"` (replacing `My message` with a commit message, such as `Fixed application lifecycles`) to stage and commit your changes
+1. `git add . && git commit -m "My message"` (用commit信息来替换 `My message`, 比如 `Fixed application lifecycles`) 来stage和提交你的更改
 1. `git push my-fork-name the-name-of-my-branch`
-1. Go to the [single-spa repo](https://github.com/single-spa/single-spa) and you should see recently pushed branches.
-1. Follow GitHub's instructions to submit a new Pull Request.
+1. 去到[single-spa 仓库](https://github.com/single-spa/single-spa) 这样能看到推送的分支.
+1. 遵循GitHub的说明来提交一个新的PR.
 
-## Community
+## 社区支持
 
-Discussions about single-spa take place on the single-spa repository's [Issues](https://github.com/single-spa/single-spa/issues) and [Pull Requests](https://github.com/single-spa/single-spa/pulls) sections. Anybody is welcome to join these conversations. There is also a [slack community](https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ) for regular updates.
+请在single-spa 仓库的[Issues](https://github.com/single-spa/single-spa/issues) 和 [Pull Requests](https://github.com/single-spa/single-spa/pulls)讨论single-spa的相关问题，任何人都是欢迎加入到讨论中的。这里也有[slack community](https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ)来做常规更新
 
-Wherever possible, do not take these conversations to private channels, including contacting the maintainers directly. Keeping communication public means everybody can benefit and learn from the conversation.
+如果可能的话，请不要直接私聊我们的维护人员(maintainers)。保持公开沟通便于每一个人都可以从对话中受益
