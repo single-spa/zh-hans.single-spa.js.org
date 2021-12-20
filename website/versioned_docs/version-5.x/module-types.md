@@ -1,7 +1,7 @@
 ---
 id: module-types
-title: single-spa Microfrontend Types
-sidebar_label: Microfrontend Types
+title: 微前端类型
+sidebar_label: 微前端类型
 ---
 
 # 概念: 微前端的不同类型

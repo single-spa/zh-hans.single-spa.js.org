@@ -1,7 +1,7 @@
 ---
 id: examples
 title: Single-spa 例子
-sidebar_label: Resources
+sidebar_label: 相关示例
 ---
 
 ## 核心团队的案例

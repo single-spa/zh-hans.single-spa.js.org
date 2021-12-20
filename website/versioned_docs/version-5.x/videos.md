@@ -1,7 +1,7 @@
 ---
 id: videos
-title: Video Tutorials
-sidebar_label: Videos
+title: 视频教程
+sidebar_label: 视频
 ---
 
 # Video Tutorials

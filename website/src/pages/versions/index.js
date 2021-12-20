@@ -19,17 +19,17 @@ function Version() {
       permalink="/versions"
       description="single-spa Versions page listing all documented site versions">
       <div className="container margin-vert--xl">
-        <h1>single-spa documentation versions</h1>
+        <h1>single-spa 文档版本</h1>
         <div className="margin-bottom--lg">
-          <h3 id="latest">Latest version (Stable)</h3>
-          <p>Here you can find the latest documentation.</p>
+          <h3 id="latest">最新版本（稳定版）</h3>
+          <p>下面是最新的文档</p>
           <table>
             <tbody>
               <tr>
                 <th>{latestVersion}</th>
                 <td>
                   <Link to={useBaseUrl('/docs/getting-started-overview')}>
-                    Documentation
+                    文档
                   </Link>
                 </td>
                 <td>
@@ -43,9 +43,9 @@ function Version() {
         </div>
         {pastVersions.length > 0 && (
           <div className="margin-bottom--lg">
-            <h3 id="archive">Past Versions</h3>
+            <h3 id="archive">以前的版本</h3>
             <p>
-              Here you can find documentation for previous versions of single-spa.
+              下面的旧single-spa版本的文档
             </p>
             <table>
               <tbody>
@@ -54,7 +54,7 @@ function Version() {
                     <th>{version}</th>
                     <td>
                       <Link to={useBaseUrl(`/docs/${version}/getting-started-overview`)}>
-                        Documentation
+                        文档
                       </Link>
                     </td>
                     <td>

@@ -1,30 +1,32 @@
 ---
 id: layout-overview
-title: Layout Engine
-sidebar_label: Overview
+title: 布局引擎
+sidebar_label: 概览
 ---
 
-## Introduction
+## 介绍
 
-[Github repository](https://github.com/single-spa/single-spa-layout/)
+[Github 仓库](https://github.com/single-spa/single-spa-layout/)
 
 The `single-spa-layout` npm package is an optional add-on to single-spa. The layout engine provides a routing API that controls your top level routes, applications, and dom elements. Using single-spa-layout makes it easier to accomplish the following:
+`single-spa-layout` npm 包是一个可选的single-spa扩展插件。它提供了路由API来控制顶层路由，应用和DOM元素。使用`single-spa-layout`可以轻松完成下面的功能
 
-- DOM placement and ordering of applications.
-- Loading UIs when applications are downloaded.
-- Default routes for Not Found / 404 pages.
-- Transitions between routes (implementation pending).
+- DOM生成和应用排序.
+- 在应用加载完成后加载UI.
+- 为Not Found / 404设置默认路由.
+- 路由过渡（待实现）.
 
 The layout engine performs two major tasks:
+布局引擎主要有下面两个功能：
 
-1. Generate [single-spa registration config](/docs/api/#configuration-object) from an HTML Element and/or JSON object.
-1. Listen to [routing events](/docs/api/#events) to ensure that all DOM elements are laid out correctly before the single-spa applications are mounted.
+1. 从HTML / JSON对象生成 [single-spa 注册配置](/docs/api/#configuration-object)
+1. 监听 [路由事件](/docs/api/#events)来确保在single-spa挂载完成之前DOM元素加载正确.
 
 `single-spa-layout` is 3.2kb gzipped (9kb ungzipped).
 
-## Installation
+## 下载
 
-You only need to install the layout engine into your [root config](/docs/configuration/) (not in any other application).
+你只需要下载`single-spa-layout`到 [root config](/docs/configuration/) (不要放到其他的应用里).
 
 ```sh
 npm install --save single-spa-layout@beta
@@ -33,22 +35,20 @@ npm install --save single-spa-layout@beta
 yarn add single-spa-layout@beta
 ```
 
-### Project status
+### 项目状态
 
-`single-spa-layout` is new and currently released under the `beta` dist-tag on npm. We are gathering feedback and improving the layout engine in preparation for a stable release. Although we do not expect the layout engine to change drastically, we do not recommend using it in a production setting until it is released as stable.
+`single-spa-layout` 是一个新的并且当前在npm上有`beta`标签。我们正在收集反馈来改善并为了有一个稳定的版本做准备。虽然我们不希望layout-engine有一个彻底的改变，但是我们推荐在layout-engine稳定后再应用到生产环境
+### 浏览器支持
 
-### Browser support
+`single-spa-layout` 可以在所有浏览器中运行，包括IE11
 
-`single-spa-layout` works in all browsers supported by single-spa, including IE11.
+### 要求
 
-### Requirements
+你需要在single-spa@>=5.4.0的版本里面使用layout engine，另外，你不用在你的任何single-spa应用中提供自定义`domElementGetter` ，因为他们会覆盖 `single-spa-layout` 的配置
 
-You must use single-spa@>=5.4.0 in order for the layout engine to work. Additionally, you may not provide custom `domElementGetter` functions for any of your single-spa applications, as those override the configuration within single-spa-layout.
+## 基本用法
 
-## Basic usage
-
-In your root html file, add a `<template>` element to the head. It should have a `<single-spa-router>` element that contains `<route>` elements, `<application>` elements, and any other dom elements:
-
+在你的根html文件中添加 `template`元素到head标签中，他需要有一个`<single-spa-router>`元素并且需要包含 `<route` 和 `<application>` 元素，并包含其他DOM元素  
 ```html
 <html>
   <head>
@@ -74,7 +74,7 @@ In your root html file, add a `<template>` element to the head. It should have a
 </html>
 ```
 
-Then inside of your root-config's JavaScript code, add the following:
+在你的root-config js代码里添加下面的代码
 
 ```js
 import { registerApplication, start } from 'single-spa';

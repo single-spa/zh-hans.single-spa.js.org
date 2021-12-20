@@ -1,7 +1,7 @@
 ---
 id: layout-definition
-title: Layout Definition
-sidebar_label: Layout Definition
+title: Layout 定义
+sidebar_label: Layout 定义
 ---
 
 A layout is a combination of HTMLElements, routes, and [single-spa applications](/docs/building-applications/). Layout is defined statically in your [root config](/docs/configuration/) to handle your top level routes and dom elements. Single-spa-layout should not be used outside of the root config; instead, a UI framework (React, Angular, Vue) should handle layouts within the applications.
@@ -9,6 +9,7 @@ A layout is a combination of HTMLElements, routes, and [single-spa applications]
 You may define layouts as either HTML templates or JSON objects. Defining in JSON is supported for organizations who prefer storing their layout definitions in a database instead of code. Both HTML and JSON layouts have the same feature set. However, storing layouts in code is generally preferred and encouraged by default. If you're just getting started with single-spa-layout, we encourage using an HTML template.
 
 Once you define your layout, you should `constructRoutes`, `constructApplications`, and `constructLayoutEngine`.
+
 
 ## HTML Layouts
 

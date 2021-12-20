@@ -1,7 +1,7 @@
 ---
 id: create-single-spa
-title: create-single-spa
-sidebar_label: create-single-spa
+title: 创建single-spa
+sidebar_label: 创建single-spa
 ---
 
 对于那些喜欢自动生成和管理webpack，babel，jest等配置的用户，Single-spa提供了一个CLI。您不一定非得用CLI来生成single-spa的配置。

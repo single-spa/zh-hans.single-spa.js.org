@@ -1,7 +1,7 @@
 ---
 id: parcels-overview
-title: Parcels
-sidebar_label: Overview
+title: Parcels 概览
+sidebar_label: 概览
 ---
 Parcels是single-spa的一个高级特性。在对single-spa的注册相关api有更多了解之前，请尽量避免使用该特性。一个single-spa 的 parcel，指的是一个与框架无关的组件，由一系列功能构成，可以被应用手动挂载，无需担心由哪种框架实现。Parcels 和注册应用的api一致，不同之处在于parcel组件需要手动挂载，而不是通过activity方法被激活。
 
