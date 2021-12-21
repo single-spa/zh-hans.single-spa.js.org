@@ -1,14 +1,14 @@
 ---
 id: layout-api
-title: Layout Engine API
+title: 布局引擎 API
 sidebar_label: API
 ---
 
-The single-spa-layout library exposes several javascript functions as a public API.
+`single-spa-layout`库暴露了多个javascript方法作为公共API
 
 ## constructRoutes
 
-The `constructRoutes` API transforms your [Layout Definition](/docs/layout-definition/) into an opaque "resolved routes" object. We call it "opaque" because the shape of the object is irrelevant, as you will only use it when calling other APIs within single-spa-layout.
+constructRoutes API将布局定义转换为不透明的“已解析路由”对象。我们称之为“不透明”，因为形状是不相关的，因为您将只在单个spa布局中调用其他API时使用它。
 
 ```js
 import { constructRoutes } from 'single-spa-layout';
@@ -29,19 +29,18 @@ const layoutData = {
 const resolvedRoutes = constructRoutes(htmlTemplate, layoutData)
 ```
 
-**Arguments**
+**参数**
 
-- `routesConfig` (required): Routes config is a [JSON Layout Definition](/docs/layout-definition/#json-layouts), an [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), or a [parse5 HTML element](https://github.com/inikulin/parse5). If it is an HTMLElement, it must be a `<single-spa-router>` element or a `<template>` that contains a single-spa-router element.
-- `layoutData` (optional): Layout data is an optionally provided object that defines [props](/docs/layout-definition/#props) and [loaders](/docs/layout-definition/#props) for [HTML Layouts](/docs/layout-definition/#html-layouts). You can omit it if using a [JSON Layout](/docs/layout-definition/#json-layout) or if you do not need to define props or loaders in your HTML Layout. The layoutData object should have top level properties `props` and `loaders` that are each objects. Each of those objects' keys is the name of a prop or loader and its corresponding value.
+- `routesConfig` (必填): Routes config 是一个 [JSON Layout 定义](/docs/layout-definition/#json-layouts), 一个 [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement), 或者一个[parse5 HTML element](https://github.com/inikulin/parse5). 如果他是一个HTML元素, 他必须是一个 `<single-spa-router>` 元素或者一个包含 `<single-spa-router>`标签的`<template>`.
+- `layoutData` (可选): Layout data 是一个可选的对象它定义了 [props](/docs/layout-definition/#props) 和为[HTML Layouts](/docs/layout-definition/#html-layouts)定义的[loaders](/docs/layout-definition/#props). 如果你使用[JSON Layout](/docs/layout-definition/#json-layout)可以省略或者你不需要在你的HTML Layout里面定义props或者loaders。layoutData对象应该有顶层属性`props`和`loaders`，每一个对象的主键的prop和loader和对应的值
 
-**Return value**
+**返回值**
 
-An opaque `resolvedRoutes` object. It is opaque because you will only use the object when calling other single-spa-layout APIs and do not need to read or modify the resolvedRoutes.
+一个不透明`resolvedRoutes`对象。因为当你调用其他signle-spa-layout API只需要使用这个对象并不需要读取读取或者修改这个`resolvedReroutes`
 
 ## constructApplications
 
-The `constructApplications` API transforms your `resolvedRoutes` into [single-spa application registration objects](/docs/configuration#registering-applications). These application registration objects are then used to call [singleSpa.registerApplication()](/docs/api/#registerapplication).
-
+`constructApplications` API 将你的`resolvedRoute`转换成[single-spa 应用注册对象](/docs/configuration#registering-applications)。这个应用注册对象经常去调用[singleSpa.registerApplication()](/docs/api/#registerapplication).
 ```js
 import { constructRoutes, constructApplications } from 'single-spa-layout';
 import { registerApplication } from 'single-spa';
@@ -54,20 +53,20 @@ const applications = constructApplications({
 applications.forEach(registerApplication);
 ```
 
-**Arguments**
+**参数**
 
-`constructApplications` accepts a single object as an argument, with the following properties:
+`constructApplications` 接收一个带有下面属性的对象作为参数:
 
-- `routes` (required): The opaque `resolvedRoutes` object returned from `constructRoutes`.
-- `loadApp` (required): A function that is given an application object and must return a [loading function](/docs/configuration/#loading-function-or-application).
+- `routes` (必填): 这个不透明的`resolvedRoutes`对象返回`constructRoutes`
+- `loadApp` (必填): 是一个应用对象并且必须返回[loading function](/docs/configuration/#loading-function-or-application)
 
-**Return value**
+**返回值**
 
-`constructApplications` returns an array of [single-spa registration objects](/docs/configuration/#registering-applications).
+`constructApplications` 返回一个数组[single-spa registration objects](/docs/configuration/#registering-applications).
 
 ## constructLayoutEngine
 
-The `constructLayoutEngine` API transforms your `resolvedRoutes` and `applications` into a `layoutEngine` object. The layout engine is responsible for creating, destroying, and rearranging dom elements during route transitions.
+`constructLayoutEngine` API 将`resolvedRoutes`和`applications`转换成一个 `layoutEngine`对象。布局引擎(layout engine)负责创建，销毁和再路由转换过程中重排DOM元素
 
 ```js
 import { constructRoutes, constructApplications, constructLayoutEngine } from 'single-spa-layout';
@@ -85,26 +84,25 @@ applications.forEach(registerApplication);
 start();
 ```
 
-**Arguments**
+**参数**
 
-`constructLayoutEngine` accepts a single object as an argument, with the following properties:
+`constructLayoutEngine` 接收一个带有下面属性的对象作为参数:
 
-- `routes` (required): The opaque `resolvedRoutes` object returned from `constructRoutes`.
-- `applications` (required): The array of [application registration objects](/docs/configuration/#registering-applications) returned from `constructApplications`.
-- `active` (optional): A boolean that indicates whether the layout engine should start out active or not. Defaults to true.
+- `routes` (必填): 一个不透明的`resolvedRoutes`对象不返回`constructRoutes`
+- `applications` (必填): 一个数组[application registration objects](/docs/configuration/#registering-applications)返回`constructApplications`
+- `active` (可选): 一个布尔型标志是否启动layout engine,默认是true
 
-**Return Value**
+**返回值**
 
-A `layoutEngine` object, with the following properties:
+一个带有下面属性的对象`layoutEngine`:
 
-- `isActive`: a function that accepts no arguments and returns a boolean indicating whether the layout engine is active or not. When active, the layout engine will change the DOM during route transitions.
-
-- `activate`: a function that accepts no arguments and returns `undefined`. Calling this function activates the layout engine, which includes setting up routing event listeners so that the layout engine can change the DOM during route transitions.
-- `deactivate`: a function that accepts no arguments and returns `undefined`. Calling this function deactivates the layout engine, which includes tearing down all routing event listeners so that the layout engine no longer changes the DOM during route transitions.
+- `isActive`: 一个不带参数的函数并返回一个布尔型标志当前layout engine是否启动。当处于启动状态，layout engine将会在路由转换过程中改变DOM
+- `activate`:  一个不带参数并返回`undefined`.调用这个方法可以启动layout engine, 其中包含了路由事件监听便于引擎会在路由转换过程中改变DOM
+- `deactivate`: 一个不带参数并返回`undefined`。调用这个方法会停掉layout engine,其中包含了停掉所有路由事件监听这样便于layout engine不会在路由转换过程中改变DOM
 
 ## matchRoute
 
-The `matchRoute` API primarily exists for server rendering. It returns a filtered `resolvedRoutes` object that contains only the routes that match a particular string path.
+`matchRoute` API 主要是用于服务端渲染。他返回一个过滤后的`resolvedRoutes`对象，它仅包含匹配一个特殊路径的路由
 
 ```js
 import { constructRoutes, matchRoute } from 'single-spa-layout';
@@ -115,11 +113,10 @@ const settingsRoutes = matchRoute(resolvedRoutes, "/settings")
 const dashboardRoutes = matchRoute(resolvedRoutes, "/dashboard")
 ```
 
-**Arguments**
+**参数**
 
-- `routes` (required): The opaque `resolvedRoutes` object returned from `constructRoutes`.
-- `path` (required): A string path representing the URL fragment to match the routes with. Note that the path is not a full URL - it only is the pathname part of a browser's URL. In server rendering contexts, this is often available as `req.url`.
+- `routes` (必填): 从`constructRoutes`返回一个不透明的`resolvedRoutes`
+- `path` (必填): 一个匹配路由的字符串路径。注意这个路径不是一个URL - 它只是一个浏览器URL的路径名。在服务端渲染的上下文中，可以使用req.url
 
-**Return Value**
-
-An opaque `resolvedRoutes` object. It is opaque because you will only use the object when calling other single-spa-layout APIs and do not need to read or modify the resolvedRoutes.
+**返回值**
+一个不透明的`resolvedRoutes`对象。因为你只会在调用其他single-spa-layout APIs的时候使用这个对象并且不需要进行读取或修改`resolvedRoutes`
