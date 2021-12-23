@@ -61,7 +61,7 @@ singleSpa.registerApplication({
 	<dt>name: string</dt>
 	<dd>应用的名字将会在single-spa中注册和引用, 并在开发工具中标记。</dd>
 	<dt>app: Application | () => Application | Promise&lt;Application&gt; </dt>
-	<dd>必须是一个应用对象，返回一个家在函数。</dd>
+	<dd>必须是一个应用对象，返回一个加载函数。</dd>
 	<dt>activeWhen: string | (location) => boolean | (string | (location) => boolean)[]</dt>
 	<dd>可以是一个路径前缀，它将匹配每个以该路径开头的URL，也可以是激活函数(如简单参数中所述)或一个数组两者都包含在内。如果任何条件为真，则保留应用活动。路径前缀也接受动态值(以':'开头)，因为有些路径会接收url参数，但仍然应该激活您的应用。
 	Examples:
