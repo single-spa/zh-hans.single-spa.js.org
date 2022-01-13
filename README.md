@@ -1,5 +1,4 @@
 # single-spa中文文档
-[![CircleCI](https://circleci.com/gh/single-spa/zh-hans.single-spa.js.org.svg?style=svg)](https://circleci.com/gh/single-spa/single-spa.js.org)
 
 此仓库包含 [single-spa中文文档](https://github.com/single-spa/zh-hans.single-spa.js.org) 的文档及源码，并由官方实时同步。
 
