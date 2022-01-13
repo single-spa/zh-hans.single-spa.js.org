@@ -24,6 +24,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           yarn build
+
   deploy:
     name: Deploy to GitHub Pages
     if: github.ref == 'refs/heads/master' && github.repository_owner == 'single-spa'
