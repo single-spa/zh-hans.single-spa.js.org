@@ -1,7 +1,7 @@
 ---
 id: configuration
-title: Configuring single-spa
-sidebar_label: Configuring single-spa
+title: 配置 single-spa
+sidebar_label: 配置 single-spa
 ---
 
 The single-spa root config consists of the following:

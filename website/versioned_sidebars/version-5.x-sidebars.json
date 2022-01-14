@@ -2,7 +2,7 @@
   "version-5.x/docs": [
     {
       "type": "category",
-      "label": "Overview",
+      "label": "概览",
       "items": [
         {
           "type": "doc",
@@ -12,7 +12,7 @@
     },
     {
       "type": "category",
-      "label": "Examples",
+      "label": "示例",
       "items": [
         {
           "type": "doc",
@@ -22,7 +22,7 @@
     },
     {
       "type": "category",
-      "label": "Tutorials",
+      "label": "教程",
       "items": [
         {
           "type": "doc",
@@ -46,7 +46,7 @@
     },
     {
       "type": "category",
-      "label": "Concept: Microfrontend",
+      "label": "概念：微前端",
       "items": [
         {
           "type": "doc",
@@ -60,7 +60,7 @@
     },
     {
       "type": "category",
-      "label": "Concept: Root Config",
+      "label": "概念：Root Config",
       "items": [
         {
           "type": "doc",
@@ -70,7 +70,7 @@
     },
     {
       "type": "category",
-      "label": "Concept: Application",
+      "label": "概念：Application",
       "items": [
         {
           "type": "doc",
@@ -88,7 +88,7 @@
     },
     {
       "type": "category",
-      "label": "Concept: Parcel",
+      "label": "概念：Parcel",
       "items": [
         {
           "type": "doc",
@@ -98,7 +98,7 @@
     },
     {
       "type": "category",
-      "label": "Layout Engine (Beta)",
+      "label": "布局引擎 (Beta)",
       "items": [
         {
           "type": "doc",
@@ -220,7 +220,7 @@
     },
     {
       "type": "category",
-      "label": "Contributing",
+      "label": "贡献",
       "items": [
         {
           "type": "doc",

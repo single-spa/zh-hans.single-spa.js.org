@@ -7,10 +7,9 @@ function Help() {
   return (
     <Layout title="Help">
       <div className="container container--fluid padding-horiz--xl margin-top--lg">
-        <h1>Need help?</h1>
+        <h1>需要帮助？</h1>
         <p>
-          If you need help with single-spa, you can try one of the mechanisms
-          below.
+          你可以通过下面的方式获取关于single-spa的帮助
         </p>
 
         <div className="row text--center">

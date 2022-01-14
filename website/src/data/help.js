@@ -1,32 +1,32 @@
 const supportLinks = [
   {
     content:
-      'Learn more about single-spa using the [official docs](/docs/building-applications/)',
-    title: 'Browse Docs',
+      '通过[官方文档](/docs/building-applications/)来更好了解single-spa',
+    title: '官方文档',
   },
   {
     content:
-      'You can join the conversation on [Slack](https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ) on one of our channels: #general for user help and #maintainers for contributing help .',
+      '加入[Slack](https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ) 对话，#general 来获取用户帮助，#maintainers来获取贡献帮助.',
     title: 'Slack',
   },
   {
     content:
-      'At our [GitHub repo](https://github.com/single-spa/single-spa) Browse and [submit issues](https://github.com/single-spa/single-spa/issues) or [pull requests](https://github.com/single-spa/single-spa/pulls) for bugs you find or any new features you may want implemented. Be sure to also check out our [contributing information]().',
+      '请在[GitHub 仓库](https://github.com/single-spa/single-spa)来[提交 issues](https://github.com/single-spa/single-spa/issues) 或者通过提交[pull requests](https://github.com/single-spa/single-spa/pulls)来提交你想实现的新feature, 请确保你已经查看了我们的[贡献指南]()',
     title: 'Github',
   },
   {
     content:
-      "Paid, hands-on consulting with a single-spa core team member is available. Our [core team members](/contributors/) have done this before and can help you set up single-spa. Services range from a one hour debugging session to an ongoing relationship while you're seeing your project to completion. Inquire at singlespa.info@gmail.com.",
-    title: 'Phone call / Consulting',
+      "可以付费咨询single-spa的核心开发人员。我们的[核心开发人员](/contributors/)有过成功经验并帮助你搭建single-spa。从单次咨询或者长期合作知道项目上线。请咨询singlespa.info@gmail.com",
+    title: '电话咨询',
   },
   {
     content:
-      'Use the [single-spa tag](http://stackoverflow.com/questions/tagged/single-spa) on StackOverflow.',
+      '在StackOverflow使用 [single-spa 标签](http://stackoverflow.com/questions/tagged/single-spa).',
     title: 'Stack Overflow',
   },
   {
     content:
-      'You can follow and contact us on [Twitter](https://twitter.com/Single_spa).',
+      '关注 [Twitter](https://twitter.com/Single_spa)来联系我们.',
     title: 'Twitter',
   },
 ];

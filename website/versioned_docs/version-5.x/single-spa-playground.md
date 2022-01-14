@@ -1,7 +1,7 @@
 ---
 id: single-spa-playground
 title: 微前端实验室
-sidebar_label: Playground
+sidebar_label: 练习广场
 ---
 
 # 微前端实验室

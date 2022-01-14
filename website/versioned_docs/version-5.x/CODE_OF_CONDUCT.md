@@ -1,47 +1,47 @@
 ---
 id: code-of-conduct
-title: Code of Conduct
-sidebar_label: Code of Conduct
+title: 代码行为准则
+sidebar_label: 代码行为准则
 ---
 
-This code of conduct outlines our expectations for participants within the single-spa community, as well as steps to reporting unacceptable behavior. We are committed to providing a welcoming and inspiring community for all and expect our code of conduct to be honored. Anyone who violates this code of conduct may be banned from the community.
+此行为准则是对我们single-spa社区的参与者提出的一些期望，同时这也是报告不合理行为的步骤。我们保证为大家创建一个受欢迎和积极的社区并希望我们的行为准则是受大家认可的。任何人违背此行为准则会被社区移除
 
 Our open source community strives to:
+我们的开源社区强调：
 
-* **Be friendly and patient.**
-* **Be welcoming:** We strive to be a community that welcomes and supports people of all backgrounds and identities. This includes, but is not limited to members of any race, ethnicity, culture, national origin, color, immigration status, social and economic class, educational level, sex, sexual orientation, gender identity and expression, age, size, family status, political belief, religion, and mental and physical ability.
-* **Be considerate:** Your work will be used by other people, and you in turn will depend on the work of others. Any decision you take will affect users and colleagues, and you should take those consequences into *account when making decisions. Remember that we’re a world-wide community, so you might not be communicating in someone else’s primary language.
-* **Be respectful:** Not all of us will agree all the time, but disagreement is no excuse for poor behavior and poor manners. We might all experience some frustration now and then, but we cannot allow that frustration *to turn into a personal attack. It’s important to remember that a community where people feel uncomfortable or threatened is not a productive one.
-* **Be careful in the words that you choose:** we are a community of professionals, and we conduct ourselves professionally. Be kind to others. Do not insult or put down other participants. Harassment and other *exclusionary behavior aren’t acceptable. This includes, but is not limited to:
-  * Violent threats or language directed against another person.
-  * Discriminatory jokes and language.
-  * Posting sexually explicit or violent material.
-  * Posting (or threatening to post) other people’s personally identifying information (“doxing”).
-  * Personal insults, especially those using racist or sexist terms.
-  * Unwelcome sexual attention.
-  * Advocating for, or encouraging, any of the above behavior.
-  * Repeated harassment of others. In general, if someone asks you to stop, then stop.
-  * **When we disagree, try to understand why:** Disagreements, both social and technical, happen all the time. It is important that we resolve disagreements and differing views constructively.
-  * **Remember that we’re different.** The strength of our community comes from its diversity, people from a wide range of backgrounds. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to err and blaming each other doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
-  
-This code is not exhaustive or complete. It serves to distill our common understanding of a collaborative, shared environment, and goals. We expect it to be followed in spirit as much as in the letter.
+* **保持友好和耐心.**
+* **保持受欢迎:** 我们强调创建一个受不同背景和身份人们的欢迎和支持的社区。这包括但不限于任何种族、民族、文化、民族血统、肤色、移民身份、社会和经济阶层、教育水平、性别、性取向、性别认同和表达、年龄、大小、家庭状况、政治信仰、宗教以及身心能力。
+* **保持考虑周全:** 你的工作会被其他人使用，同时你也依赖其他人的工作。所以你的任何决定将会影响用户和其他同事，所以当你做决定的时候你需要把这些后果都考虑在内。请注意我们是一个全球话的社区，所以请不要用其他人的母语来进行沟通交流
+* **保持尊重:** 不是我们总是都保持同意，但意见分歧并不能成为行为不端和举止失礼的借口。我们可能会时不时地经历一些挫折，我们不能让这种挫折变成人身攻击。重要的是让人感觉不舒服或者受到威胁并不是一个富有成效的社区
+* **保持用语恰当:** 我们是一个专业化的社区，我们让自己变得专业化。不要侮辱或贬低其他参与者。骚扰和排他行为是不可接受的，它包括但不限于：
+  * 针对他人的暴力威胁或语言攻击
+  * 歧视性笑话或语言
+  * 发布色情或暴力内容
+  * 发布（或威胁发布）他人的个人身份信息（“打瞌睡”）
+  * 人身侮辱，尤指使用种族主义或性别歧视术语的人身侮辱。
+  * 不受欢迎性关注
+  * 提倡或鼓动上述任何行为
+  * 反复骚扰他人，总之，如果有人让你住嘴那你就不要再说了
+  * **当我们有分歧，尝试理解为什么:** 无论是社交还是技术上经常都在发生分歧，我们需要建设性的解决分歧和不同观点
+  * **请记住我们不一样.** 我们社区的强大来自于它的多样化，这里的人们有不同的背景，不同的人对于问题有不同的观点。不能理解他人所持观点并不意味着他们就是错误的。别忘了犯错是人的本性，互相指责并不会让我们有任何结果。相反，专注于帮助解决问题和从错误中学习。
 
-## Diversity Statement
 
-We encourage everyone to participate and are committed to building a community for all. Although we may not be able to satisfy everyone, we all agree that everyone is equal. Whenever a participant has made a mistake, we expect them to take responsibility for it. If someone has been harmed or offended, it is our responsibility to listen carefully and respectfully, and do our best to right the wrong.
+此准则不是详尽的或完整的。它有助于提炼出我们对协作、共享环境和目标的共同理解。我们期望它在精神上和在文字上都得到遵守
 
-Although this list cannot be exhaustive, we explicitly honor diversity in age, gender, gender identity or expression, culture, ethnicity, language, national origin, political beliefs, profession, race, religion, sexual orientation, socioeconomic status, and technical ability. We will not tolerate discrimination based on any of the protected characteristics above, including participants with disabilities.
+## 多样化表述
 
-## Reporting Issues
+我们鼓励每个人参与并被认可为所有人创建社区。虽然我们不会对所有人满意，但是我们同意每个人都是平等的。当某个参与者犯了错误的时候，我们期望可以对此负责。如果某个人受到伤害或者遭受侮辱。这是我们的责任去仔细聆听并尽最大努力改正错误
 
-If you experience or witness unacceptable behavior—or have any other concerns—please report it by sending a Twitter DM to https://twitter.com/Single_spa. All reports will be handled with discretion. In your report please include:
+尽管这个列表不是非常详尽，但我们明确尊重年龄、性别、性别认同或表达、文化、种族、语言、民族血统、政治信仰、职业、种族、宗教、性取向、社会经济地位和技术能力的多样性。我们不会容忍基于上述任何受保护特征的歧视，包括残疾参与者。
+## 报告 Issues
 
-* Your contact information.
-* Names (real, nicknames, or pseudonyms) of any individuals involved. If there are additional witnesses, please include them as well. Your account of what occurred, and if you believe the incident is ongoing. If there is a publicly available record (e.g. a mailing list archive or a public IRC logger), please include a link.
-* Any additional information that may be helpful.
+如果你经历过或者见证了不可接受的行为或者有任何埋冤，请通过Twitter DM 到 https://twiiter.com/Single_Spa 来报告。所有的报告都会被酌情处理。请在你的报告里包含：
 
-After filing a report, a representative will contact you personally. If the person who is harassing you is part of the response team, they will recuse themselves from handling your incident. A representative will then review the incident, follow up with any additional questions, and make a decision as to how to respond. We will respect confidentiality requests for the purpose of protecting victims of abuse.
+* 你的联系方式
+* 名字（真实姓名，昵称，笔名）相关的个人。如果还有其他证据请一并添加上。你发生的账号，你相信这个事件还在继续。如果有公开可用的记录（例如邮件列表存档或公共IRC记录器），请包含链接。
+* 任何额外的信息都是有帮助的
 
-Anyone asked to stop unacceptable behavior is expected to comply immediately. If an individual engages in unacceptable behavior, the representative may take any action they deem appropriate, up to and including a permanent ban from our community without warning.
+在你填写完报告后，有一个代表会私下联系你。如果骚扰你的人是团队的一员，他们将回避处理你的问题，代表将会审查这个事件并跟进任何其他问题，并决定如何回应。我们将尊重为保护虐待者而提出的保密要求
+任何被要求停止不可接受行为的人都应立即遵守。如果个人从事不可接受的行为，代表可以采取他们认为适当的任何行动，包括在没有警告的情况下永久禁止我们的社区。
 
-This Code Of Conduct follows the [template](https://github.com/todogroup/opencodeofconduct) established by the [TODO Group](http://todogroup.org/).
+这份行为指南遵循由[TODO Group](http://todogroup.org/)创建的[template](https://github.com/todogroup/opencodeofconduct).
