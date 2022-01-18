@@ -56,7 +56,7 @@ start();
 `registerApplication`的第一个参数表示应用名称，`name`必须是string类型
 
 #### Loading Function or Application
-`registerApplication`的第二个参数可以是一个Promise类型的 [加载函数](configuration#loading-function)，也可以是一个已经被解析的应用。
+`registerApplication`的第二个参数可以是一个Promise类型的 [加载函数](#loading-function)，也可以是一个已经被解析的应用。
 
 ##### Application as second argument
 你可以选择将一个已经被解析过的应用作为`registerApplication`的第二个参数，这个应用其实是一个包含各个生命周期函数的对象。我们既可以从另外一个文件中引入该对象，也可以在single-spa的配置文件中定义这个对象。
