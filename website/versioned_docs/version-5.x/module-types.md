@@ -10,7 +10,7 @@ Single-spa有[不同类别](/docs/microfrontends-concept/#types-of-microfrontend
 
 这是每个single-spa概念上的工作方式，这些信息有助于你理解我们的[建议](/docs/recommended-setup/#applications-versus-parcels-versus-utility-modules)。
 
-| 主题                | 应用程序                       | 沙箱                              | 公共模块                              |
+| 概念               | 应用程序                       | 沙箱                              | 公共模块                              |
 | -------------------- | --------------------------------- | ------------------------------------ | ------------------------------------ |
 | 路由              | 有多个路由              | 无路由                         | 无路由                        |
 | API                  | 声明API                   | 必要的API                        | 没有single-spa API                   |
