@@ -205,8 +205,6 @@ export function Foo(props) {
 
 使用[Import Maps](#import-maps)共享依赖，你可以使用[webpack externals](https://webpack.js.org/configuration/externals/#root), [rollup externals](https://rollupjs.org/guide/en/#external),或者类似配置，使依赖包作为外部依赖，告诉你的应用不在node_modules里寻找，而是去运行时的模块中寻找。
 
-To make the shared dependencies available as in-browser modules, they must be present in your import map. A good way of managing them is to create a repository called `shared-dependencies` that has a partial import map in it. The CI process for that repository updates your deployed import map. Upgrading the shared dependencies can then be achieved by making a pull request to that repository.
-
 要使共享依赖项作为运行时模块可用，它们在import map中。管理它们的一个好方法是创建一个名为“共享依赖”的存储库，其中有部分import map。存储库的CI流程更新已部署的import map。然后可以通过向存储库发出拉请求来升级共享依赖项。
 
 不是所有的模块都发布SystemJs格式的包，这种情况下，可以先查看https://github.com/esm-bundle 有没有SystemJs的版本，或者在[SystemJS extras](https://github.com/systemjs/systemjs#extras)查找适合UMD格式的包。
@@ -214,8 +212,6 @@ To make the shared dependencies available as in-browser modules, they must be pr
 在 https://github.com/polyglot-microfrontends/shared-dependencies 网址下，每一个依赖共享仓库都有一个可用的CI，
 
 ### 模块联合共享
-
-At the time of this writing, module federation is new and still changing. Check out [this example repo](https://github.com/joeldenning/mfe-webpack-demo/tree/system) which uses systemjs to load the microfrontends, but module federation to share `react`, `react-dom`, and `react-router`.
 
 在撰写本文时，模块联合还是一个新事物，而且还在不断变化。看看[这个示例repo](https://github.com/joeldenning/mfe webpack-demo/tree/system)，它使用systemjs加载微前端，但是模块联合来共享`react`, `react-dom`, 和 `react-router`
 
