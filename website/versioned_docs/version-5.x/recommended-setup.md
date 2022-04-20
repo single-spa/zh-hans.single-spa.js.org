@@ -63,8 +63,6 @@ single-spa 是一种组织微前端路由的方案。模块联合是microfronten
 
 使用模块联合，您必须选择如何加载microfrontend本身。single-spa核心团队建议使用SystemJS + import map作为微前端的模块加载器。 作为替代, 你可以使用全局变量和 `<script>` 标签。 一个使用SystemJS和模块联合加载微前端的例子在 https://github.com/ScriptedAlchemy/mfe-webpack-demo/pull/2.
 
-The single-spa core team recommends choosing either import maps or module federation for your shared, third-party dependencies. We do not recommend sharing some third-party dependencies via import map and others via module federation. When choosing between the two approaches, we have a preference towards import maps, but no objection to module federation. See the [shared dependencies section](#shared-dependencies) for a comparison.
-
 single-spa核心团队建议为共享的第三方依赖项选择import maps或模块联合。我们不建议通过import map共享一些第三方依赖项，另一些通过模块联合共享其他依赖项。在选择这两种方法时，我们倾向于import maps，但不反对模块联合。请参阅[共享依赖项部分](#shared-dependencies)进行比较。
 
 ## SystemJS
