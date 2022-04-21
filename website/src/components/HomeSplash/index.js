@@ -18,15 +18,15 @@ export const HomeSplash = () => {
           <Link
             className="button"
             to={useBaseUrl('docs/getting-started-overview')}>
-            Get Started
+            快速开始
           </Link>
 
           <Link className="button" to="https://vue.microfrontends.app/rate-doggos">
-            See a live example
+            线上演示
           </Link>
 
           <Link className="button" to="https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ">
-            Join Slack Chat
+            加入 Slack
           </Link>
         </div>
       </div>

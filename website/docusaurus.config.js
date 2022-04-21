@@ -6,7 +6,7 @@ const versions = require('./versions.json');
 
 module.exports = {
   title: 'single-spa',
-  tagline: 'a javascript framework for front-end microservices',
+  tagline: '一个基于 javascript 的微前端框架',
   url: 'https://single-spa.github.io/zh-hans.single-spa.js.org',
   baseUrl: '/',
   projectName: 'single-spa',
@@ -38,57 +38,57 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: '文档',
           items: [
             {
-              label: 'FAQ',
+              label: '常用问答',
               to: 'docs/faq/',
             },
             {
-              label: 'Getting Started',
+              label: '快速开始',
               to: 'docs/getting-started-overview/',
             },
             {
-              label: 'API Reference',
+              label: 'API 文档',
               to: 'docs/api/',
             },
           ],
         },
         {
-          title: 'Community',
+          title: '社区',
           items: [
             {
-              label: 'User Showcase',
+              label: '用户展示',
               to: 'users/',
             },
             {
-              label: 'Contributors',
+              label: '贡献者',
               to: 'contributors/',
             },
             {
-              label: 'Chat in Slack',
+              label: '联系我们',
               href:
                 'https://join.slack.com/t/single-spa/shared_invite/enQtODAwNTIyMzc4OTE1LWUxMTUwY2M1MTY0ZGMzOTUzMGNkMzI1NzRiYzYwOWM1MTEzZDM1NDAyNWM3ZmViOTAzZThkMDcwMWZmNTFmMWQ',
             },
             {
-              label: 'Twitter',
+              label: '推特',
               href: 'https://twitter.com/Single_spa/',
             },
           ],
         },
         {
-          title: 'More',
+          title: '更多',
           items: [
             {
               label: 'GitHub',
               href: libRepoUrl,
             },
             {
-              label: 'Donate',
+              label: '捐赠',
               href: 'https://opencollective.com/single-spa',
             },
             {
-              label: 'Blog',
+              label: '博客',
               to: 'blog/',
             },
           ],
@@ -113,11 +113,11 @@ module.exports = {
             textDecoration: 'underline',
           },
         },
-        { to: 'docs/faq/', label: 'FAQ' },
-        { to: 'docs/', label: 'Docs' },
-        { to: 'help/', label: 'Help' },
-        { to: 'blog/', label: 'Blog' },
-        { href: 'https://opencollective.com/single-spa', label: 'Donate' },
+        { to: 'docs/faq/', label: '常见问答' },
+        { to: 'docs/', label: '文档' },
+        { to: 'help/', label: '帮助' },
+        { to: 'blog/', label: '博客' },
+        { href: 'https://opencollective.com/single-spa', label: '捐赠' },
         { href: 'https://github.com/single-spa/single-spa', label: 'GitHub' },
         { to: 'languages', label: '简Жहि Languages'},
       ],
