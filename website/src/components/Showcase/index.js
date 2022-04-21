@@ -29,9 +29,9 @@ export const Showcase = ({ showAll }) => {
         className={classnames('showcaseHeading', {
           [styles.showcaseHeadingColored]: !showAll,
         })}>
-        Who&apos;s Using This?
+        谁在使用？
       </h2>
-      <p>This project is used by all these organizations</p>
+      <p>Single-spa 被这些组织认可使用</p>
       <div className={styles.showcaseLogos}>{showcase}</div>
       {showAll ? (
         <>
@@ -45,7 +45,7 @@ export const Showcase = ({ showAll }) => {
       ) : (
         <div className="more-users">
           <a className="button" href={useBaseUrl('users')}>
-            More {siteConfig.title} Users
+            更多 {siteConfig.title} 的用户
           </a>
         </div>
       )}

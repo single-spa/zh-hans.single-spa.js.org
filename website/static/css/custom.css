@@ -204,8 +204,14 @@ html[data-theme='dark'] .args-list > dt {
   width: 1px;
 }
 
+.navbar .navbar__items--right {
+  flex: 0 0 auto;
+}
+
 @media (min-width: 997px) {
   main .row > [class="col"] {
     max-width: 75%;
   }
 }
+
+

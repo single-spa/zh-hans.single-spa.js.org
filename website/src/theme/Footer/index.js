@@ -75,7 +75,7 @@ function Footer() {
                                 href={useBaseUrl(
                                   'img/icons/148705-essential-collection/license/license.html',
                                 )}>
-                                License for icons
+                                MIT License
                               </a>
                             </li>
                           </>
@@ -96,7 +96,7 @@ function Footer() {
             />
           )}
           <div>
-            Originally developed at <a href='https://getcanopy.com'>Canopy</a>
+            最初开发于 <a href='https://getcanopy.com'>Canopy</a>
           </div>
           {copyright && copyright}
         </div>

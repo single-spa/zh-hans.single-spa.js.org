@@ -6,20 +6,20 @@ import classnames from 'classnames';
 const data = [
   {
     content:
-      'Use multiple frameworks in a single-page application, allowing you to split code by functionality and have Angular, React, Vue.js, etc. apps all living in harmony.',
+      '让多个框架如 React，Vue.js，Angular 和谐运行在一个 single-spa 构建的应用中',
     imageUrl: 'img/icons/148705-essential-collection/svg/paper-plane.svg',
-    title: 'Framework freedom',
+    title: '框架无限制',
   },
   {
-    content: `Stand up new apps next to the old one. You write the applications, single-spa makes them work together and won't load them until they're needed.`,
+    content: `single-spa 允许新老项目共同存在一个应用中，仅在必要的时候将他们启动`,
     imageUrl: 'img/icons/148705-essential-collection/svg/download.svg',
-    title: 'Lazy load applications',
+    title: '应用懒加载',
   },
   {
     content:
-      'Combine many small apps, empowering teams to choose their technology. Stay nimble as your team, product, and tech stack grows and changes over time.',
+      '聚合很多不同技术栈的微应用，支持这些应用敏捷的迭代发展',
     imageUrl: 'img/icons/148705-essential-collection/svg/settings-1.svg',
-    title: 'Front-end microservices',
+    title: '前端微服务',
   },
 ];
 
