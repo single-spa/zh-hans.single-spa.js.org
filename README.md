@@ -7,20 +7,20 @@
 ### 提前准备
 
 1. Git
-1. Node: install version 8.4 or greater
-1. Yarn: See [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/)
-1. A fork of the repo (for any contributions)
-1. A clone of the [single-spa.js.org repo](https://github.com/single-spa/single-spa.js.org) on your local machine
+1. Node: 安装 8.4 或更高版本
+1. Yarn: 请查看 [Yarn website for installation instructions](https://yarnpkg.com/lang/en/docs/install/)
+1. fork 本代码仓库（每一位贡献者都可以）
+1. 将 [single-spa.js.org repo](https://github.com/single-spa/single-spa.js.org) 的代码 clone 到本地
 
 ### 如何安装
 
-1. `git clone git@github.com:single-spa/single-spa.js.org.git`
-1. `cd single-spa.js.org/website` to go into the website root
-1. `yarn` to install the website's npm dependencies
+1. 执行 `git clone git@github.com:single-spa/single-spa.js.org.git`
+1. 执行 `cd single-spa.js.org/website` 进入到 website 目录
+1. 执行 `yarn` 来安装启动此文档站点所需要的 npm 依赖
 
 ### 本地执行
 
-1. `cd website` 然后 `yarn start` 开启本地热更新服务。 (powered by [Docusaurus](https://docusaurus.io/))
+1. `cd website` 然后 `yarn start` 开启本地热更新服务。 (由 [Docusaurus](https://docusaurus.io/) 提供)
 1. `open http://localhost:3000` 打开浏览器查看效果。
 
 ## 贡献翻译
