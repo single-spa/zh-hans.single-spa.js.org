@@ -159,7 +159,7 @@ function unmount(props) {
 - 使用single-spa parcels
 
 从`App1`导出一个parcel，包括创建联系人的功能。这样就可以在不丢失应用高内聚特性的基础上，在跨框架的应用间共享组件行为。
-App1可以将moadel导出作为parcel，App2导入该parcel并使用。在下面的例子中，一个主要的好处在于从App1导出的parcel/modal也将会被卸载，而无需卸载/加载App1。
+App1可以将modal导出作为parcel，App2导入该parcel并使用。在下面的例子中，一个主要的好处在于从App1导出的parcel/modal也将会被卸载，而无需卸载/加载App1。
 
 ```js
 // App1
