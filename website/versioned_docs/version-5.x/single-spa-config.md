@@ -4,7 +4,7 @@ title: 配置 single-spa
 sidebar_label: 配置 single-spa
 ---
 
-The single-spa root config consists of the following:
+single-spa根配置包括以下内容：
 
 这两个根目录下的配置用于启动single-spa应用。
 
@@ -15,7 +15,7 @@ The single-spa root config consists of the following:
 
 内容可参考[该示例](http://single-spa-playground.org/playground/html-file)。注意该文件不包含html元素(div, buttons等)，只是为了调用`registerApplication()`方法。
 
-See [this example root config](https://github.com/polyglot-microfrontends/root-config/blob/master/src/index.ejs) for what a root HTML file looks like.
+请查看[根配置示例](https://github.com/polyglot-microfrontends/root-config/blob/master/src/index.ejs)以了解根HTML文件的样子。
 
 **在使用single-spa时，不必使用SystemJS**，不过为了能够[独立部署](/docs/separating-applications.html)各应用，很多示例和教程会推荐使用SystemJS。
 
@@ -146,7 +146,7 @@ singleSpa.registerApplication({
 
 #### config.customProps
 
-The optional `customProps` property provides [custom props](/docs/building-applications/#custom-props) that are passed to the application's single-spa lifecycle functions. The custom props may be either an object or a function that returns an object. Custom prop functions are called with the application name and current `window.location` as arguments.
+可选的 `customProps` 属性提供了 [自定义属性](/docs/building-applications/#custom-props)，这些属性会传递给应用程序的 single-spa 生命周期函数。自定义属性可以是一个对象或者返回一个对象的函数。自定义属性函数将以应用程序名称和当前 `window.location` 作为参数进行调用。
 
 ## Calling singleSpa.start()
 [`start()方法`](api.md#start) **必须**被single-spa配置文件的js调用，这时应用才会被真正挂载。在`start`被调用之前，应用先被下载，但不会初始化/挂载/卸载。`start`方法可以协助我们更好提升应用的性能。举个例子，我们可能会马上注册一个应用(为了立刻下载代码)，但不能马上就在DOM节点上挂载该应用，而是需要等一个AJAX请求(可能会获取用户的登录信息)完成后，再根据结果进行挂载。这种情况下，最佳实践是先调用`registerApplication`，等AJAX请求完成后再调用`start`。
