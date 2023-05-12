@@ -25,8 +25,8 @@ sidebar_label: 相关示例
 
 - [single-spa-login-example-with-npm-packages](https://github.com/jualoppaz/single-spa-login-example-with-npm-packages) 是一个基于npm依赖、登录身份认证相关的single-spa案例.
 - [demo-single-spa-with-spax](https://github.com/crossjs/spax/tree/master/packages/demo-single-spa) 是一个基于react-scripts和craco的小型案例 [spax](https://spax.js.org).
-- [single-spa-html with js example](https://github.com/filoxo/single-spa-html-with-js-example): an example repo of using single-spa-html that is enhanced with plain JavaScript.
-- [coexisting-angular-microfrontends/login](https://github.com/Vallerious/coexisting-angular-microfrontends/tree/feature/login) is a branch that implements a login functionality between Angular apps. It uses localStorage as shared memory space to store and retrieve a token.
-- [single-spa-angular-cli](https://github.com/matt-gold/single-spa-angular-cli) is an all-Angular example repo that uses SystemJS to load single-spa-angular applications into a containing Angular CLI application at different routes.
+- [single-spa-html with js example](https://github.com/filoxo/single-spa-html-with-js-example): 是一个使用纯JavaScript增强的single-spa-html示例仓库.
+- [coexisting-angular-microfrontends/login](https://github.com/Vallerious/coexisting-angular-microfrontends/tree/feature/login) 是一个实现Angular应用程序之间登录功能的分支。它使用localStorage作为共享内存空间来存储和检索token.
+- [single-spa-angular-cli](https://github.com/matt-gold/single-spa-angular-cli) 是一个 all-Angular 示例仓库，使用SystemJS将single-spa-angular应用程序加载到包含不同路由的Angular CLI应用程序中.
 
 你也有这样一个精彩的项目吗? [点击提交一个PR](https://github.com/single-spa/single-spa.js.org/edit/master/docs/examples.md) 来将你的案例也添加到这里.
