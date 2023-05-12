@@ -184,7 +184,7 @@ module.exports = webpackConfigEnv => {
 
 [Github project](https://github.com/single-spa/create-single-spa/tree/master/packages/webpack-config-single-spa-ts)
 
-A shareable, customizable webpack config that adds typescript-specific configuration to `webpack-config-single-spa`. Note that webpack-config-single-spa-ts has a peerDependency on `typescript`.
+一个可共享、可定制的 webpack 配置，它在 `webpack-config-single-spa` 基础上添加了针对 typeScript 的特定配置。请注意，`webpack-config-single-spa-ts` 需要依赖于 `typescript`。
 
 ### Installation
 
@@ -230,6 +230,8 @@ const finalConfig = singleSpaDefaults.modifyConfig(myOtherWebpackConfig)
 [Github project](https://github.com/single-spa/create-single-spa/tree/master/packages/webpack-config-single-spa-react-ts)
 
 A shareable, customizable webpack config that creates a webpack config that works with both react and typescript. Note that webpack-config-single-spa-react-ts simply merges the config from webpack-config-single-spa-react with that of webpack-config-single-spa-ts.
+
+一个可共享、可定制的Webpack配置，可以创建同时适用于 react 和 typeScript 的 Webpack 配置。请注意，webpack-config-single-spa-react-ts 只是将 webpack-config-single-spa-react 和 webpack-config-single-spa-ts 的配置合并在一起。
 
 ### Installation
 
