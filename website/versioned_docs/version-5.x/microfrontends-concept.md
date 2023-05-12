@@ -48,5 +48,4 @@ single-spa是一个小于5kb（gzip）npm包，用于协调微前端的挂载和
 ## 性能
 相比于原生应用，微前端性能更佳。这是由于[懒加载](/docs/api/#registerapplication) 和其他相关的优化。微前端为我们提供一种迁移方式，从而解决我们原生项目中隐藏的问题。出于性能考虑，强烈建议框架（如：React, Vue, or Angular等）级别的实例仅引用一次，[具体做法参考](/docs/recommended-setup#shared-dependencies)。
 
-
-Microfrontends are often more performant than the monoliths from which they originate. This is due to built-in lazy loading (via [loading functions](/docs/api/#registerapplication)) and other performance-related best practices. Your monolith likely has "skeletons in its closet" - microfrontends gives you a migration path that will expose and resolve the problems caused by those skeletons. One important performance consideration is to share a single instance of large libraries (such as React, Vue, or Angular), which is highly encouraged. To do so, see our [recommended setup](/docs/recommended-setup#shared-dependencies).
+微前端通常比它们来源的单体应用更具性能优势。这是由于内置的惰性加载（通过[加载函数](/docs/api/#registerapplication))）和其他与性能相关的最佳实践所致。你的单体应用很可能有“隐患”——微前端提供了一条迁移路径，可以暴露并解决这些问题。一个重要的性能考虑因素是共享大型库（如React、Vue或Angular）的单个实例，这是高度鼓励的。为此，请参阅我们的[推荐设置](/docs/recommended-setup#shared-dependencies).
